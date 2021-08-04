@@ -1,0 +1,78 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: normal;
+}
+.sidebar-header {
+    width: 17%;
+    float: left;
+    height: 100vh;
+    position: fixed;
+    background-color: rgb(255, 255, 255);
+    border-right: 1px solid rgb(209, 203, 203);
+    text-align: left;
+}
+.components {
+    border-color: red;
+    width: 82%;
+    height: max-content;
+    float: right;
+    padding: 30px;
+    position: relative;
+    margin-top: 0.5%;
+    background-color:#FFFFFF;
+    font-weight: 100;
+    scroll-behavior: inherit;
+    overflow-x: auto;
+}
+li {
+    list-style-type: none;
+    text-align: right;
+    transition: ease-in-out, width .35s ease-in-out;
+}
+li::placeholder {
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+}
+.btn-sidebar {
+    border-radius: 1%;
+    border-radius: 5px;
+    text-align: start;
+    align-content: center;
+    font-weight: 400;
+}
+.sidebar-header a {
+    color: black;
+    font-weight: bolder;
+    height: auto;
+    text-align: start;
+    padding: 12px 12px;
+  }
+  a :hover {
+      color: rgb(156, 156, 248);
+      background-color: aqua;
+  }
+  a:active {
+      background-color: lightblue;
+  }
+  a:focus {
+      background-color: #F2F5FF;
+  }
+  a:target {
+    background-color: #F2F5FF;
+  }
+  .header {
+      font-size: xx-large;
+  }
+
+#submit {
+    position: center;
+}
+span {
+    color: red;
+}
+textarea {
+    resize: none;
+}
