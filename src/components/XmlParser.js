@@ -125,57 +125,41 @@ const XmlParser = () => {
                     return (
                       <p key={url.index}>
                           <strong className="col-sm-3">Single Logout Url:</strong>
-                        {" "}
-                        <p className="col-sm-8">{url.Url} <br />{" "}</p>
-                        <b>
-                          <p className="col-sm-3">Single logout Binding:</p>
-                        </b>{" "}
-                        <p className="col-sm-8">{url.Binding}</p>
+                          <p className="col-sm-8">{url.Url}</p>
+                        
+                          <strong className="col-sm-3">Single logout Binding:</strong>
+                          <p className="col-sm-8">{url.Binding}</p>
                       </p>
                     );
                   })
                 : null}
             </div>
+            
             <div>
               {resp.acsUrls != null
                 ? resp.acsUrls.map((acsUrl) => {
                     return (
                       <p key={acsUrl.index}>
-                        <b>
-                          <p className="col-sm-3">Acs url: </p>
-                        </b>
-                        <p className="col-sm-8">{acsUrl.url}{" "}</p>
-                        <br/>
-                        <b>
-                          <p className="col-sm-3"> Acs url binding: </p>
-                        </b>
+                        <strong className="col-sm-3">Acs url:  </strong>
+                        <p className="col-sm-8">{acsUrl.url}{" "}</p>   
+                        <strong className="col-sm-3"> Acs url binding: </strong>
                         <p className="col-sm-8">{acsUrl.binding}</p>
                       </p>
                     );
                   })
                 : null}
             </div>
-
+            
             <div className="signon">
-              {" "}
               {resp.singleSignonService != null
                 ? resp.singleSignonService.map((signon) => {
                     return (
                       <p key={signon.index} >
-                        <br/>
-                        <br/>
-                        <b>
                           <strong className="col-sm-3">Single sign on url: </strong>
-                        </b>{" "}
-                        <p className="col-sm-8">{signon.url}</p>
-                        <br />{" "}
-                        <br/>
-                        <b>
-                          <p className="col-sm-3">Single sign on Binding: </p>
-                        </b>
-                        <p className="col-sm-8">{signon.binding}{" "}</p>
-
-
+                          <p className="col-sm-8">{signon.url}</p>
+                        
+                          <strong className="col-sm-3">Single sign on Binding: </strong>
+                          <p className="col-sm-8">{signon.binding}{" "}</p>
                       </p>
                     );
                   })
@@ -188,19 +172,20 @@ const XmlParser = () => {
               ? resp.certificates.map((cert) => {
                   return (
                     <p key={cert.index}>
-                      <br/>
-                      <br/>
-                      <b className="col-sm-3">
+                      
+                      <strong className="col-sm-3">
                         CERTIFICATE
-                      </b>{" "}
-                      <br /> <p className="col-sm-8">{cert.content}</p>
+                      </strong>{" "}
+                      <p className="col-sm-8">{cert.content}</p>
                     </p>
                   );
                 })
               : null}
               {error !== null ? <span>{error}</span>: null}
           </div>
+
         </div>
+        
       </div>
     </form>
   );

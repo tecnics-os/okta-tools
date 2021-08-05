@@ -1,6 +1,4 @@
-body {
-    font-family: 'Segoe UI';
-}
+
 .sidebar-header {
     width: 17%;
     float: left;
@@ -42,11 +40,12 @@ li::placeholder {
     align-content: center;
 }
 .sidebar-header a {
-    color: black;
+    color: rgba(0, 0, 0, 0.787);
     height: auto;
     text-align: start;
     padding: 12px 12px;
     font-weight: bold;
+    font-size: 12px;
   }
   a :hover {
       color: rgb(156, 156, 248);
@@ -62,7 +61,7 @@ li::placeholder {
     background-color: #F2F5FF;
   }
   .header {
-      font-size: normal;
+      font-size: initial;
   }
 
 #submit {
