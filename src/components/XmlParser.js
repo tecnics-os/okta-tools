@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 import "../App.css";
 const XmlParser = () => {
-  const file = useRef("")
-  const url = useRef("")
+  const file = useRef("");
+  const url = useRef("");
   const { REACT_APP_BACKEND_URL } = process.env;
   const [resp, setResp] = useState({
     entityID: null,
@@ -20,8 +20,8 @@ const XmlParser = () => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-    file.current.value = null
-    url.current.value = null
+    file.current.value = null;
+    url.current.value = null;
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
@@ -31,12 +31,14 @@ const XmlParser = () => {
         body: data,
       })
         .then((res) => {
-          if(res.status === 500){
-            throw new Error('Please check the url/data entered. Encountered 500 Error')
-          }else if(res.status === 200){
-            return res.json()
-          }else if(res.status === 404){
-            throw new Error("404 error")
+          if (res.status === 500) {
+            throw new Error(
+              "Please check the url/data entered. Encountered 500 Error"
+            );
+          } else if (res.status === 200) {
+            return res.json();
+          } else if (res.status === 404) {
+            throw new Error("404 error");
           }
         })
         .then((json) =>
@@ -48,9 +50,9 @@ const XmlParser = () => {
             singleSignonService: json.singleSignonService,
           })
         )
-        .catch((error)=>{
+        .catch((error) => {
           setError(error.message);
-        })
+        });
     }
   };
   const handleUrl = (e) => {
@@ -80,24 +82,22 @@ const XmlParser = () => {
             accept="xml"
           />
           <br />
-
-          <legend>(OR)</legend>
+          <legend>OR</legend>
           <div className="col-sm-6">
-              <strong>Paste URL here: {" "}</strong>
-              <input
-                id="url"
-                className="form-control"
-                ref={url}
-                onChange={(e) => {
-                  handleUrl(e);
-                }}
-              />
-
+            <strong>Paste URL here: </strong>
+            <input
+              id="url"
+              className="form-control"
+              ref={url}
+              onChange={(e) => {
+                handleUrl(e);
+              }}
+            />
           </div>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
+          <br />
           <div className="col-sm-3">
             <button
               className="btn btn-primary"
@@ -109,13 +109,14 @@ const XmlParser = () => {
             </button>
           </div>
           <br />
-          <hr/>
+          <hr />
           <div>
             <div>
               {resp.entityID != null ? (
                 <div>
                   {" "}
-                  <strong  className="col-sm-3">Entity Id:</strong> <p className="col-sm-8">{resp.entityID}{" "}</p>
+                  <strong className="col-sm-3">Entity Id:</strong>{" "}
+                  <p className="col-sm-8">{resp.entityID} </p>
                 </div>
               ) : null}
             </div>
@@ -124,24 +125,26 @@ const XmlParser = () => {
                 ? resp.singleLogoutService.map((url) => {
                     return (
                       <p key={url.index}>
-                          <strong className="col-sm-3">Single Logout Url:</strong>
-                          <p className="col-sm-8">{url.Url}</p>
-                        
-                          <strong className="col-sm-3">Single logout Binding:</strong>
-                          <p className="col-sm-8">{url.Binding}</p>
+                        <strong className="col-sm-3">Single Logout Url:</strong>
+                        <p className="col-sm-8">{url.Url}</p>
+
+                        <strong className="col-sm-3">
+                          Single logout Binding:
+                        </strong>
+                        <p className="col-sm-8">{url.Binding}</p>
                       </p>
                     );
                   })
                 : null}
             </div>
-            
+
             <div>
               {resp.acsUrls != null
                 ? resp.acsUrls.map((acsUrl) => {
                     return (
                       <p key={acsUrl.index}>
-                        <strong className="col-sm-3">Acs url:  </strong>
-                        <p className="col-sm-8">{acsUrl.url}{" "}</p>   
+                        <strong className="col-sm-3">Acs url: </strong>
+                        <p className="col-sm-8">{acsUrl.url} </p>
                         <strong className="col-sm-3"> Acs url binding: </strong>
                         <p className="col-sm-8">{acsUrl.binding}</p>
                       </p>
@@ -149,18 +152,25 @@ const XmlParser = () => {
                   })
                 : null}
             </div>
-            
+
             <div className="signon">
               {resp.singleSignonService != null
                 ? resp.singleSignonService.map((signon) => {
                     return (
-                      <p key={signon.index} >
-                          <strong className="col-sm-3">Single sign on url: </strong>
-                          <p className="col-sm-8">{signon.url}</p>
-                        
-                          <strong className="col-sm-3">Single sign on Binding: </strong>
-                          <p className="col-sm-8">{signon.binding}{" "}</p>
+                      <p key={signon.index}>
+                      
+                        <strong className="col-sm-3">
+                          Single sign on url:{" "}
+                        </strong>
+                        <p className="col-sm-8">{signon.url}</p>
+
+                        <strong className="col-sm-3">
+                          Single sign on Binding:{" "}
+                        </strong>
+                        <p className="col-sm-8">{signon.binding} </p>
+
                       </p>
+                      
                     );
                   })
                 : null}{" "}
@@ -172,20 +182,15 @@ const XmlParser = () => {
               ? resp.certificates.map((cert) => {
                   return (
                     <p key={cert.index}>
-                      
-                      <strong className="col-sm-3">
-                        CERTIFICATE
-                      </strong>{" "}
+                      <strong className="col-sm-3">CERTIFICATE</strong>{" "}
                       <p className="col-sm-8">{cert.content}</p>
                     </p>
                   );
                 })
               : null}
-              {error !== null ? <span>{error}</span>: null}
+            {error !== null ? <span>{error}</span> : null}
           </div>
-
         </div>
-        
       </div>
     </form>
   );

@@ -20,7 +20,7 @@ class saml:
         sql_query = '''CREATE TABLE IF NOT EXISTS metadata(
         entityId varchar(255) primary key,
         signOnUrl varchar(255));'''
-        execute_sql_query(sql_query)
+        saml.execute_sql_query(sql_query)
 
     def execute_sql_query(sql_query):
         conn = sqlite3.connect(database_name)
