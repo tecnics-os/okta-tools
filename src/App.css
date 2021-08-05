@@ -1,6 +1,6 @@
 html{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: medium;
+    font-size: normal;
 }
 legend {
     align-items: center;
@@ -9,15 +9,11 @@ legend {
     border: 1px;
 }
 .wrap-xml {
-    display: flex;  
+    display: flex;
     flex-wrap: wrap;
 }
 #certificate-text-area {
     width: 500px;
     height: 300px;
     resize: none;
-}
-
-#certificate {
-    
 }

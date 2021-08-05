@@ -11,16 +11,16 @@ const Sidebar = ()=> {
     return <Router>
       <div className='sidebar-header'>
           <li>
-            <Link className="btn btn-sidebar" to="/parse-xml">Parse XML</Link>
+            <Link className="btn btn-sidebar" to="/parse-xml">Parse Metadata</Link>
           </li>
           <li>
-            <Link className="btn btn-sidebar" to="/build-metadata">Build Metadata</Link>
+            <Link className="btn btn-sidebar" to="/build-metadata">Build IDP Metadata</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/certificateWithHeader">Format Certificate</Link>
+            <Link className="btn btn-sidebar" to="/certificateWithHeader">Format X509 Certificate</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/upload-metadata">Upload metadata</Link>
+            <Link className="btn btn-sidebar" to="/upload-metadata">Upload Metadata</Link>
           </li>
           <li >
             <Link className="btn btn-sidebar" to="/download-metadata">Download Metadata</Link>

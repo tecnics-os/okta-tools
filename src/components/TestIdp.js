@@ -7,11 +7,13 @@ const TestIdp = ()=> {
         data: null,
         error: null
     });
+    const { REACT_APP_BACKEND_URL } = process.env;
 
-    const validateEntityId = (e)=> {  
+    const validateEntityId = (e)=> {
         e.preventDefault();
+        console.log(`${REACT_APP_BACKEND_URL}`)
         if(entityid.length > 1) {
-            fetch('http://127.0.0.1:5000/validateEntityId', {
+            fetch(`${REACT_APP_BACKEND_URL}/validateEntityId`, {
             method: 'POST',
             type: 'CORS',
             body: entityid
@@ -24,7 +26,7 @@ const TestIdp = ()=> {
         }else{
             alert("Please enter entity Id first")
         }
-        
+
     }
     const changeLink = (e)=> {
         e.target.className=""
@@ -39,7 +41,7 @@ const TestIdp = ()=> {
     return <form>
         <div className="col-sm-4">
         <p><label>Entity Id </label></p>
-        <input className="form-control"  onChange={e=>{handleEntityid(e)} }></input> 
+        <input className="form-control"  onChange={e=>{handleEntityid(e)} }></input>
         <br/>
         <div className="text-center">
             <Link id="submit" className="btn btn-primary" onClick={(e)=>{validateEntityId(e)}}>Submit</Link>

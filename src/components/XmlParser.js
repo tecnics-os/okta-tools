@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import dotenv from 'dotenv'
 import "../App.css";
 const XmlParser = () => {
   const file = useRef("")
   const url = useRef("")
+  const { REACT_APP_BACKEND_URL } = process.env;
   const [resp, setResp] = useState({
     entityID: null,
     certificate: null,
@@ -23,7 +25,7 @@ const XmlParser = () => {
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
-      await fetch("http://127.0.0.1:5000/api", {
+      await fetch(`${REACT_APP_BACKEND_URL}/parse_metadata`, {
         method: "POST",
         mode: "cors",
         body: data,
@@ -66,8 +68,8 @@ const XmlParser = () => {
   return (
     <form>
       <div id="xml-parser" className="form-group col-sm-12">
-        <div>
-          <label>Upload File</label>
+        <div className="col-sm-8">
+          <label>Upload a file</label>
           <input
             type="file"
             name="file"
@@ -78,11 +80,10 @@ const XmlParser = () => {
             accept="xml"
           />
           <br />
-      
+
           <legend>(OR)</legend>
-          <div className="col-sm-4">
-            <p>
-              PASTE URL HERE:{" "}
+          <div className="col-sm-6">
+              <strong>Paste URL here: {" "}</strong>
               <input
                 id="url"
                 className="form-control"
@@ -91,13 +92,13 @@ const XmlParser = () => {
                   handleUrl(e);
                 }}
               />
-            </p>
+
           </div>
           <br/>
           <br/>
           <br/>
           <br/>
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <button
               className="btn btn-primary"
               onClick={(e) => {
@@ -154,7 +155,7 @@ const XmlParser = () => {
                   })
                 : null}
             </div>
-          
+
             <div className="signon">
               {" "}
               {resp.singleSignonService != null
@@ -173,15 +174,15 @@ const XmlParser = () => {
                           <p className="col-sm-3">Single sign on Binding: </p>
                         </b>
                         <p className="col-sm-8">{signon.binding}{" "}</p>
-                        
-                        
+
+
                       </p>
                     );
                   })
                 : null}{" "}
             </div>
           </div>
-        
+
           <div className="certificate">
             {resp.certificates != null
               ? resp.certificates.map((cert) => {

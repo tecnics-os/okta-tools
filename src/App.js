@@ -9,8 +9,7 @@ function App() {
             </nav>
             <div id="content">
             </div>
-
-            </div>     
+          </div>
         </div>
   );
 }

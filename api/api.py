@@ -6,24 +6,33 @@ import urllib3
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import config
+import logging
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+database_name = config.database
+log_file= config.log_file
 
 class saml:
-    database_name = config.database
-    conn = sqlite3.connect(database_name)
+
     def database_init():
-        conn.execute('''CREATE TABLE IF NOT EXISTS metadata(
+        sql_query = '''CREATE TABLE IF NOT EXISTS metadata(
         entityId varchar(255) primary key,
-        signOnUrl varchar(255));''')
-        conn.close()
+        signOnUrl varchar(255));'''
+        execute_sql_query(sql_query)
 
     def execute_sql_query(sql_query):
-        cursor = conn.execute(sql_query);
+        conn = sqlite3.connect(database_name)
+        try:
+            cursor = conn.execute(sql_query);
+            conn.commit()
+            return cursor
+        except sqlite3.Error as err:
+            f = open(log_file, "a")
+            f.write(str(e))
+            f.close()
         conn.close()
-        return cursor
 
     def decode_request_body_to_string(request_body):
         request_body_in_string = str(request_body.decode('UTF-8'))
@@ -32,7 +41,7 @@ class saml:
     def get_xml_body(request_body_in_string):
         if(request_body_in_string.startswith("http")):
             http = urllib3.PoolManager()
-            r = http.request('GET', xml_body_in_string)
+            r = http.request('GET', request_body_in_string)
             data = r.data
             xml_body = str(data.decode('UTF-8'))
             return xml_body
@@ -51,7 +60,7 @@ class saml:
             counter = counter + 64
         return formatted_certificate
 
-    @app.route("/api", methods=['POST', 'GET'])
+    @app.route("/parse_metadata", methods=['POST', 'GET'])
     @cross_origin()
     def saml_parser():
         if request.method == 'POST':
@@ -60,14 +69,14 @@ class saml:
             xml_body = saml.get_xml_body(request_body_in_string)
             root = ET.fromstring(xml_body)
             acsURls = []
+            singleSignOnService = []
+            singleLogoutService = []
+            certificates = []
             acs_urls_index = 1
             certificate_index = 1
             single_logout_service_index = 1
             single_signon_service_index = 1
-            certificates = []
             entityID = None
-            singleLogoutService = []
-            singleSignOnService = []
 
             for child in root.findall("."):
                 if child.tag.__contains__("EntityDescriptor"):
@@ -85,7 +94,6 @@ class saml:
                     certificate_index + 1
 
                 elif child.tag.__contains__("AssertionConsumerService"):
-
                     acsURls.append({
                         "index": acs_urls_index,
                         "url": child.attrib['Location'],
@@ -94,7 +102,6 @@ class saml:
                     acs_urls_index = acs_urls_index + 1
 
                 elif child.tag.__contains__("SingleLogoutService"):
-
                     singleLogoutService.append({
                         "index": single_logout_service_index,
                         "Url": child.attrib['Location'],
@@ -144,6 +151,8 @@ class saml:
             cert_data_in_string = saml.decode_request_body_to_string(certificate_data)
             format_cert = saml.format_certificate(cert_data_in_string)
             return format_cert
+        else:
+            return "SORRY THE PAGE YOU ARE ACCESSING IS NOT ACCESSIBLE"
 
     @app.route("/uploadmetadata", methods=['POST', 'GET'])
     @cross_origin()
@@ -163,11 +172,7 @@ class saml:
                 for child in root.findall('.//'):
                     if(child.tag.__contains__('X509Certificate')):
                         certificate_data = child.text.replace(" ", "")
-                        counter = 0
-                        data = ""
-                        while(counter <= len(certificate_data)):
-                            data = data + certificate_data[counter: counter + 64].replace("\n", "") + "\n"
-                            counter = counter + 64
+                        data = saml.format_certificate(certificate_data)
                         xml_data = xml_body.replace(child.text, data)
 
                 root = ET.fromstring(xml_body)
@@ -179,9 +184,8 @@ class saml:
                         entityID = child.attrib['entityID']
 
                 sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
-                conn.execute(sql_query)
-                conn.commit()
-                conn.close()
+                saml.execute_sql_query(sql_query)
+
             else:
                 error = "XML is invalid"
 
@@ -202,14 +206,9 @@ class saml:
             sql_query = "select signOnUrl from metadata where entityId=\'" + entityId + "\'";
             error = None
             signOnUrl = ""
-            try:
-                cursor = saml.execute_sql_query(sql_query)
-                for row in cursor:
-                    signOnUrl = row[0]
-
-            except sqlite3.Error as err:
-                print('SQLite error: %s' % (' '.join(err.args)));
-                error = err.args
+            cursor = saml.execute_sql_query(sql_query)
+            for row in cursor:
+                signOnUrl = row[0]
 
             metadata = {
                     "data": signOnUrl,

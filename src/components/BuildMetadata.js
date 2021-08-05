@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import XMLViewer from "react-xml-viewer";
-import '../components/BuildMetadata.css'
 
 const BuildMetadata = ()=> {
     const [xml, setXml] = useState(null);
@@ -17,9 +16,9 @@ const BuildMetadata = ()=> {
     const [tecnicalContactEmail, setTecnicalContactEmail] = useState(null)
     const [supportContactName, setSupportContactName] = useState(null);
     const [supportContactEmail, setSupportContactEmail] = useState(null);
-    
+
     const input = useRef();
-    
+
     const handleEntityId = (e)=> {
         setEntityId(e.target.value)
     }
@@ -27,17 +26,11 @@ const BuildMetadata = ()=> {
         setSignOnService(e.target.value)
     }
     const handleLogout = (e)=> {
-        setLogoutService(e.target.value)   
+        setLogoutService(e.target.value)
     }
     const handleCert = (e)=> {
         let cert = e.target.value;
-        fetch("http://127.0.0.1:5000/formatCertificate", {
-            method: "POST",
-            mode: "cors",
-            body: cert,
-        })
-        .then((res) => res.json())
-        .then((json) => setCertificate(json))
+        setCertificate(cert)
     }
     const handleNameId = (e)=> {
         setNameId(e.target.value)
@@ -48,7 +41,7 @@ const BuildMetadata = ()=> {
         }
     }
     const handleOrganization = (e) => {
-        setOrganisationName(e.target.value);   
+        setOrganisationName(e.target.value);
     }
 
     const handleOrganizationDisplayName = (e) => {
@@ -72,7 +65,7 @@ const BuildMetadata = ()=> {
     const handleSupportEmail = (e)=> {
         setSupportContactEmail(e.target.value)
     }
-    
+
     const generateMetadata =(e)=>{
         e.preventDefault();
         input.current.value = null
@@ -102,10 +95,10 @@ const BuildMetadata = ()=> {
                 document.getElementById('cert').innerHTML = "This field is required"
             }
         }else{
-            console.log(metadata)
+
             formataDataToXml(metadata);
         }
-        
+
     }
     const formataDataToXml = (metadata)=> {
         if(metadata.entityId.length < 1 || metadata.signOnService.length < 1 || metadata.certificate.length < 1){
@@ -126,7 +119,7 @@ const BuildMetadata = ()=> {
                 xml = xml + `<md:NameIDFormat>${metadata.nameId}</md:NameIDFormat>`
             }
             xml = xml + `<md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="${metadata.signOnService}"/></md:IDPSSODescriptor>`
-            
+
             if(metadata.organisationName != null || metadata.organisationDisplayName != null || metadata.setOrganisationUrl != null) {
                 xml = xml + `<md:Organization>`;
                 if(metadata.organisationName != null){
@@ -162,9 +155,7 @@ const BuildMetadata = ()=> {
             }
             xml = xml + `</md:EntityDescriptor>`
             setXml(xml)
-            
         }
-        ;
     }
     return (<div className="container">
         <form classNameName="form-group">
@@ -176,7 +167,7 @@ const BuildMetadata = ()=> {
                 <span id="entityId"></span>
             </div>
             <br/>
-            <br/>   
+            <br/>
             <div className="form-group">
                 <label for="SingleSignOnService" className="col-sm-2 control-label">Single Sign On Service End point <span>*</span></label>
                 <div className="col-sm-4">
@@ -185,7 +176,7 @@ const BuildMetadata = ()=> {
                 <span id="sso"></span>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">Single logout service end point</label>
                 <div className="col-sm-4">
@@ -193,7 +184,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">SP X.509 cert (same cert for sign/encrypt) <span>*</span></label>
                 <div className="col-sm-4">
@@ -229,7 +220,7 @@ const BuildMetadata = ()=> {
             </div>
             <br/>
             <br/>
-            <label for="organisation info" className="col-sm-4">ORGANISATION INFO(optional)</label> 
+            <label for="organisation info" className="col-sm-4">ORGANISATION INFO(optional)</label>
             <br/>
             <br/>
             <div className="form-group">
@@ -239,7 +230,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">Organisation Display Name</label>
                 <div className="col-sm-4">
@@ -247,7 +238,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">Organisation Url</label>
                 <div className="col-sm-4">
@@ -255,7 +246,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <label className="col-sm-4 control-label">TECHNICAL CONTACT(optional)</label>
             <br/>
             <br/>
@@ -266,7 +257,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">Email</label>
                 <div className="col-sm-4">
@@ -285,7 +276,7 @@ const BuildMetadata = ()=> {
                 </div>
             </div>
             <br/>
-            <br/> 
+            <br/>
             <div className="form-group">
                 <label for="inputType" className="col-sm-2 control-label">Email</label>
                 <div className="col-sm-4">
@@ -298,8 +289,8 @@ const BuildMetadata = ()=> {
             <button className="btn btn-primary btn-center" onClick={(e)=>{generateMetadata(e)}}>Build IDP Metadata</button>
             </div>
         </form>
-        <br/>   
-        <br/>          
+        <br/>
+        <br/>
         <div>
             {xml != null ? <p><XMLViewer  xml={xml}/></p> : null}
         </div>
