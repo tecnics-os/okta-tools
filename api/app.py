@@ -1,4 +1,4 @@
-from api import saml
+from api_methods import saml
 import sys
 
 from flask import Flask
