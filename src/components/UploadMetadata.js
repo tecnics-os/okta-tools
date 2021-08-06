@@ -1,36 +1,38 @@
 import { useRef, useState } from "react"
 import XMLViewer from 'react-xml-viewer'
 const UploadMetadata = ()=> {
-    const [data, setData] = useState();
+    const [postData, setPostData] = useState();
     const [xml, setXml] = useState();
     const input = useRef();
     const handleUrl = (e)=> {
-        setData(e.target.value)
+        setPostData(e.target.value)
     }
     const handleFile = (e)=> {
         let file = e.target.files[0];
         let reader = new FileReader();
         reader.readAsText(file)
         reader.onload = (e) => {
-            setData(e.target.result);
+            setPostData(e.target.result);
         }
     }
     const handleSubmission = async (e) => {
         e.preventDefault();
-        console.log("fetch")
-        if(data === undefined) {
+        if(postData === undefined) {
             alert("Please upload a file or enter url")
         }else{
             await fetch('http://127.0.0.1:5000/uploadmetadata', {
                 method: 'POST',
                 type: 'CORS',
-                body: data
+                body: postData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
               })
               .then(res => res.json())
               .then(data => setXml(data))
         }
-        console.log("xml");
-        input.current.value=null     
+        input.current.value=null
     }
     return <form>
     <div className="form-group">
@@ -45,12 +47,12 @@ const UploadMetadata = ()=> {
         <input ref={input} type="file" name="file" onChange ={(e)=>{handleFile(e)}} ></input>
         <br/>
         <button className="btn btn-primary" onClick={(e)=>{handleSubmission(e)}}>Fetch</button>
-    
+
         <div>
-            {xml !== undefined ?<div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.data}/> </p> 
+            {xml !== undefined ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
             </div> : null }
         </div>
-        
+
     </div>
     </div>
     </div>

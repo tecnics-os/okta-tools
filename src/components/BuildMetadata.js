@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import XMLViewer from "react-xml-viewer";
+import { useDebouncedValue } from './useDebouncedValue';
 
 const BuildMetadata = ()=> {
     const [xml, setXml] = useState(null);
@@ -18,6 +19,8 @@ const BuildMetadata = ()=> {
     const [supportContactEmail, setSupportContactEmail] = useState(null);
 
     const input = useRef();
+    const debouncedQuery = useDebouncedValue(query, 400);
+    const { REACT_APP_BACKEND_URL } = process.env;
 
     const handleEntityId = (e)=> {
         setEntityId(e.target.value)
@@ -30,7 +33,14 @@ const BuildMetadata = ()=> {
     }
     const handleCert = (e)=> {
         let cert = e.target.value;
-        setCertificate(cert)
+        fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
+            method: 'POST',
+            type: 'CORS',
+            body: cert
+        })
+        .then(res=> res.json())
+        .then(data => setCertificate(cert))
+        
     }
     const handleNameId = (e)=> {
         setNameId(e.target.value)
