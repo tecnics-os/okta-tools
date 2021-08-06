@@ -31,8 +31,11 @@ class saml_tool():
     @app.route("/uploadmetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parse():
-        xml_content = saml.get_xml_content()
-        return { "content": xml_content}
+        xml = saml.get_xml_content()
+        return { 
+            "content": xml['xml-content'],
+            "error": xml['error']
+        }
     
     @app.route("/validateEntityId", methods=['POST', 'GET'])
     @cross_origin()

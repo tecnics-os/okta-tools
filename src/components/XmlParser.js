@@ -11,11 +11,12 @@ const XmlParser = () => {
     acsUrls: null,
     singleLogoutService: null,
     singleSignonService: null,
+    error: null
   });
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
-    console.log(resp);
+    console.log(resp)
   }, [resp]);
 
   const handleSubmission = async (e) => {
@@ -43,11 +44,12 @@ const XmlParser = () => {
         })
         .then((json) =>
           setResp({
-            entityID: json.entityId,
-            certificates: json.certificate,
-            acsUrls: json.acsUrls,
-            singleLogoutService: json.singleLogoutService,
-            singleSignonService: json.singleSignonService,
+            entityID: json.metadata.entityId,
+            certificates: json.metadata.certificate,
+            acsUrls: json.metadata.acsUrls,
+            singleLogoutService: json.metadata.singleLogoutService,
+            singleSignonService: json.metadata.singleSignonService,
+            error: json.error
           })
         )
         .catch((error) => {
@@ -189,6 +191,10 @@ const XmlParser = () => {
                 })
               : null}
             {error !== null ? <span>{error}</span> : null}
+          </div>
+
+          <div>
+            {resp.error !== null ? <p>{resp.error}</p>: null}
           </div>
         </div>
       </div>
