@@ -3,7 +3,7 @@ import XMLViewer from 'react-xml-viewer'
 const UploadMetadata = ()=> {
     const [postData, setPostData] = useState();
     const [xml, setXml] = useState({
-        "xml-content": undefined,
+        "content": undefined,
         "error": undefined
     });
     const input = useRef();
@@ -35,12 +35,12 @@ const UploadMetadata = ()=> {
               })
               .then(res => res.json())
               .then(data => setXml({
-                  "xml-content": data.content,
+                  "content": data.content,
                   "error": data.error
               }))
         }
-        console.log(xml)
         input.current.value=null
+        console.log(xml);
     }
     return <form>
     <div className="form-group">
@@ -57,7 +57,7 @@ const UploadMetadata = ()=> {
         <button className="btn btn-primary" onClick={(e)=>{handleSubmission(e)}}>Fetch</button>
 
         <div>
-            {xml.content !== undefined ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
+            {xml.error === null ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
             </div> : <p><br/><span className="col-sm-12">{xml.error}</span></p> }
         </div>
 

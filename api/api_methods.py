@@ -50,19 +50,19 @@ class saml:
             xml_body = parse_xml.get_xml_body(xml_body_in_string)
             xml_content = None
             error = None
-            if(xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate')):
+            if(xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate') & xml_body.__contains__('SingleSignOnService') ):
                 metadata = parse_xml.parse_metadata(xml_body)
                 entityID = ""
                 signOnUrl = ""
+                print()
                 entityID = metadata['entityId']
-                signOnUrl_list = metadata['singleSignonService']
-                signOnUrl = signOnUrl_list[0]['url']
+                signOnUrl = metadata['singleSignonService'][0]['url']
                 xml_content = parse_xml.format_metadata_with_certificate(xml_body)
                 sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
                 database.execute_sql_query(sql_query)
                 
             else:
-                error = "XML File does not contain metadata. Please check and re-upload metadata."
+                error = "XML Parsing error. Please check and re-upload metadata."
             xml =  {
                 "xml-content": xml_content,
                 "error": error
