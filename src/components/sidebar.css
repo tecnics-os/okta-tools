@@ -60,6 +60,9 @@ li::placeholder {
   a:target {
     background-color: #F2F5FF;
   }
+    .btn-sidebar.is-selected {
+        color: red;
+    }
   .header {
       font-size: initial;
   }
