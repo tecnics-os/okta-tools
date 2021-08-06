@@ -80,6 +80,7 @@ const BuildMetadata = ()=> {
             "supportContactEmail": values.supportContactEmail
         }
         if(values.entityID === null || values.signOnService === null || cert === null) {
+            window.scrollTo(0, 0)
             if(values.entityID === null){
                 document.getElementById('entityId').innerHTML = "This field is required"
             }

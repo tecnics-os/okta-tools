@@ -117,7 +117,7 @@ const XmlParser = () => {
               {resp.entityID != null ? (
                 <div>
                   {" "}
-                  <strong className="col-sm-3">Entity Id:</strong>{" "}
+                  <strong className="col-sm-3">Entity Id:</strong>
                   <p className="col-sm-8">{resp.entityID} </p>
                 </div>
               ) : null}
