@@ -5,9 +5,9 @@ Project is built on top of React and Flask.
 
 ## Available tools
 
-    * SAML metadata generator.
-    * SAML metadata parser.
-    * SAML SP to test Okta as IDP
+    * SAML metadata generator. 🔥
+    * SAML metadata parser.💧
+    * SAML SP to test Okta as IDP.🧊
 
 ## Running the project
 
