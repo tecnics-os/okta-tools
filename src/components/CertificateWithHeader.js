@@ -37,7 +37,7 @@ const CertificateWithHeader = ()=> {
             <textarea id="certificate-text-area" className="form-control"  onChange={(e)=>{handleCertificate(e)}}></textarea>
             <br/>
             <button className="btn btn-primary" onClick={(e)=>{formatCertificate(e)}}>format certificate</button>
-            {certificateWithHeader != null ? <p className="col-sm-10">{certificateWithHeader.data} <br/><button className="btn btn-primary" onClick={handleCertificateSave}>download certificate</button></p>: null}
+            {certificateWithHeader != null ? <p className="col-sm-10">{certificateWithHeader.certificate} <br/><button className="btn btn-primary" onClick={handleCertificateSave}>download certificate</button></p>: null}
           </div>
         </div>
     </form>

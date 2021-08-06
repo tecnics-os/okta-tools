@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import XMLViewer from "react-xml-viewer";
-import { useDebouncedValue } from './useDebouncedValue';
+import useDebounce from "./useDebounce";
 
 const BuildMetadata = ()=> {
     const [xml, setXml] = useState(null);
@@ -17,10 +17,20 @@ const BuildMetadata = ()=> {
     const [tecnicalContactEmail, setTecnicalContactEmail] = useState(null)
     const [supportContactName, setSupportContactName] = useState(null);
     const [supportContactEmail, setSupportContactEmail] = useState(null);
-
+    const [cert, setCert] = useState("");
     const input = useRef();
-    const debouncedQuery = useDebouncedValue(query, 400);
+    const debounce = useDebounce();
     const { REACT_APP_BACKEND_URL } = process.env;
+
+    useEffect(()=> {
+        fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
+            method: 'POST',
+            type: 'CORS',
+            body: cert
+        })
+        .then(res=> res.json())
+        .then(data => setCertificate(data.certificate))
+    }, [cert, REACT_APP_BACKEND_URL])
 
     const handleEntityId = (e)=> {
         setEntityId(e.target.value)
@@ -32,15 +42,8 @@ const BuildMetadata = ()=> {
         setLogoutService(e.target.value)
     }
     const handleCert = (e)=> {
-        let cert = e.target.value;
-        fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
-            method: 'POST',
-            type: 'CORS',
-            body: cert
-        })
-        .then(res=> res.json())
-        .then(data => setCertificate(cert))
-        
+        let certificate_value = e.target.value;
+        debounce(()=> setCert(certificate_value), 1000)        
     }
     const handleNameId = (e)=> {
         setNameId(e.target.value)
@@ -94,6 +97,7 @@ const BuildMetadata = ()=> {
             "supportContactName": supportContactName,
             "supportContactEmail": supportContactEmail
         }
+        
         if(entityID === null || signOnService === null || certificate === null) {
             if(entityID === null){
                 document.getElementById('entityId').innerHTML = "This field is required"

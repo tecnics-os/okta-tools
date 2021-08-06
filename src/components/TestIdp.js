@@ -4,37 +4,27 @@ import { Link } from "react-router-dom";
 const TestIdp = ()=> {
     const [entityid, setEntityid] = useState("");
     const [signOnUrl, setSignOnUrl] = useState({
-        data: null,
-        error: null
+        data: null
     });
     const { REACT_APP_BACKEND_URL } = process.env;
 
     const validateEntityId = (e)=> {
         e.preventDefault();
-        console.log(`${REACT_APP_BACKEND_URL}`)
         if(entityid.length > 1) {
             fetch(`${REACT_APP_BACKEND_URL}/validateEntityId`, {
-            method: 'POST',
-            type: 'CORS',
-            body: entityid
+                method: 'POST',
+                type: 'CORS',
+                body: entityid
             })
             .then(res => res.json())
             .then(data => setSignOnUrl({
-                "data": data.data,
-                "error": data.err
+                "data": data.signOnUrl
             }))
-        }else{
+        } else {
             alert("Please enter entity Id first")
         }
+    }
 
-    }
-    const changeLink = (e)=> {
-        e.target.className=""
-    }
-    const changeButton = (e)=> {
-        e.target.className = "btn btn-primary"
-        e.target.style.position = "center"
-    }
     const handleEntityid = (e)=> {
         setEntityid(e.target.value);
     }
