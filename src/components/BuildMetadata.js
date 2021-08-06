@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import XMLViewer from "react-xml-viewer";
-import useDebounce from "./useDebounce";
+import debounce from "lodash.debounce";
 
 const initialValues = {
     entityID: null,
@@ -20,12 +20,20 @@ const initialValues = {
 const BuildMetadata = ()=> {
     const [xml, setXml] = useState(null);
     const [certificate, setCertificate] = useState(null)
-    const [cert, setCert] = useState("");
+    const [cert, setCert] = useState(null);
     const input = useRef();
     const [values, setValues ] = useState(initialValues);
-    const debounce = useDebounce();
     const { REACT_APP_BACKEND_URL } = process.env;
 
+    function useDebounce(callback, delay) {
+        const debouncedFn = useCallback(
+          debounce((...args) => callback(...args), delay),
+          [delay] // will recreate if delay changes
+        );
+        return debouncedFn;
+    }
+    const debouncedSave = useDebounce((X509_certificate) => setCertificate(X509_certificate), 1000);
+    
     useEffect(()=> {
         if(cert !=="" || cert !== null) {
             fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
@@ -37,7 +45,7 @@ const BuildMetadata = ()=> {
             .then(data => setCertificate(data.certificate))
         }
         
-    }, [cert, REACT_APP_BACKEND_URL])
+    }, [REACT_APP_BACKEND_URL, cert, certificate])
 
     
     const handleInputChange = (e) => {
@@ -50,11 +58,8 @@ const BuildMetadata = ()=> {
     
     const handleCert = (e)=> {
         let certificate_value = e.target.value;
-        
-        if(certificate_value !== null) {
-            debounce(()=> setCert(certificate_value), 1000);
-        }
-        
+        setCert(certificate_value);
+        debouncedSave(certificate_value)
     }
 
     const generateMetadata =(e)=>{
@@ -74,14 +79,14 @@ const BuildMetadata = ()=> {
             "supportContactName": values.supportContactName,
             "supportContactEmail": values.supportContactEmail
         }
-        if(values.entityID === null || values.signOnService === null || certificate === '\n') {
+        if(values.entityID === null || values.signOnService === null || cert === null) {
             if(values.entityID === null){
                 document.getElementById('entityId').innerHTML = "This field is required"
             }
             if(values.signOnService === null){
                 document.getElementById('sso').innerHTML = "This field is required"
             }
-            if(certificate === null){
+            if(cert === null){
                 document.getElementById('cert').innerHTML = "This field is required"
             }
         }else{
@@ -202,7 +207,7 @@ const BuildMetadata = ()=> {
                 <div className="col-sm-4">
                     <select name= "authnRequesteNeeded"  onChange={(e)=>{handleInputChange(e)}} >
                         <option >True</option>
-                        <option selected >False</option>
+                        <option defaultValue >False</option>
                     </select>
                 </div>
             </div>

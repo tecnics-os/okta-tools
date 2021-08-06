@@ -94,10 +94,10 @@ const XmlParser = () => {
               }}
             />
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <div className="col-sm-3">
             <button
               className="btn btn-primary"
