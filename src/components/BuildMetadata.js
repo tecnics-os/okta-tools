@@ -27,7 +27,7 @@ const BuildMetadata = ()=> {
     const { REACT_APP_BACKEND_URL } = process.env;
 
     useEffect(()=> {
-        if(cert !== " " || cert !== null) {
+        if(cert !=="" || cert !== null) {
             fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
                 method: 'POST',
                 type: 'CORS',
@@ -37,7 +37,7 @@ const BuildMetadata = ()=> {
             .then(data => setCertificate(data.certificate))
         }
         
-    }, [cert])
+    }, [cert, REACT_APP_BACKEND_URL])
 
     
     const handleInputChange = (e) => {
@@ -50,10 +50,11 @@ const BuildMetadata = ()=> {
     
     const handleCert = (e)=> {
         let certificate_value = e.target.value;
+        
         if(certificate_value !== null) {
-            debounce(()=> setCert(certificate_value), 400);
+            debounce(()=> setCert(certificate_value), 1000);
         }
-        console.log(cert);   
+        
     }
 
     const generateMetadata =(e)=>{
@@ -73,8 +74,7 @@ const BuildMetadata = ()=> {
             "supportContactName": values.supportContactName,
             "supportContactEmail": values.supportContactEmail
         }
-        console.log(metadata)
-        if(values.entityID === null || values.signOnService === null || certificate === null) {
+        if(values.entityID === null || values.signOnService === null || certificate === '\n') {
             if(values.entityID === null){
                 document.getElementById('entityId').innerHTML = "This field is required"
             }
@@ -186,9 +186,9 @@ const BuildMetadata = ()=> {
                 <label for="NameId Format" className="col-sm-2 control-label">NameId Format</label>
                 <div className="col-sm-4">
                     <select name="nameId" onChange={(e)=>{handleInputChange(e)}}>
-                        <option >urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</option>
-                        <option >urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</option>
-                        <option >urn:oasis:names:tc:SAML:1.1:nameid-format:entity</option>
+                        <option>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</option>
+                        <option>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</option>
+                        <option>urn:oasis:names:tc:SAML:1.1:nameid-format:entity</option>
                         <option>urn:oasis:names:tc:SAML:1.1:nameid-format:transient</option>
                         <option>urn:oasis:names:tc:SAML:1.1:nameid-format:persistent</option>
                         <option>urn:oasis:names:tc:SAML:1.1:nameid-format:encrypted</option>
