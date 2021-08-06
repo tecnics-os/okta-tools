@@ -1,7 +1,7 @@
 
 const DownloadMetadata = ()=> {
   return <>
-    <p className="downloadMetadata">Download test METADATA</p>
+    <p className="downloadMetadata">Under developement</p>
   </>
 }
 export default DownloadMetadata
