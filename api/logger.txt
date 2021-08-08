@@ -1,0 +1,2 @@
+no such table: sp_metadata
+no such table: sp_metadata

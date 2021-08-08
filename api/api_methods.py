@@ -11,13 +11,12 @@ class saml:
             xml_body = parse_xml.get_xml_body(request_body_in_string)
             metadata = parse_xml.parse_metadata(xml_body)
             error = None
-            if(metadata['entityId'] == None):
+            if(metadata['entityId'] == None or metadata['error'] != None):
                 error = "Oops, entered url or file is not a valid metadata. Please check." 
             
             return {
                 "metadata": metadata,
                 "error": error
-
             } 
         else:
             return "Invalid request"
@@ -50,17 +49,21 @@ class saml:
             xml_body = parse_xml.get_xml_body(xml_body_in_string)
             xml_content = None
             error = None
-            if(xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate') & xml_body.__contains__('SingleSignOnService') ):
+            if(xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate') & xml_body.__contains__('SingleSignOnService') or xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate') & xml_body.__contains__('AssertionConsumerService')):
                 metadata = parse_xml.parse_metadata(xml_body)
                 entityID = ""
                 signOnUrl = ""
-                print()
                 entityID = metadata['entityId']
-                signOnUrl = metadata['singleSignonService'][0]['url']
-                xml_content = parse_xml.format_metadata_with_certificate(xml_body)
-                sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
-                database.execute_sql_query(sql_query)
+                sql_query = ""
+                if(metadata['singleSignonService'] == []):
+                    acsUrl = metadata['acsUrls'][0]['url']
+                    sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + acsUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + acsUrl + "\')"
+                else:
+                    signOnUrl = metadata['singleSignonService'][0]['url']
+                    sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
                 
+                xml_content = parse_xml.format_metadata_with_certificate(xml_body)
+                database.execute_sql_query(sql_query)
             else:
                 error = "XML Parsing error. Please check and re-upload metadata."
             xml =  {
@@ -82,6 +85,7 @@ class saml:
             for row in cursor:
                 signOnUrl = row[0]
             
+            print(signOnUrl)
             return signOnUrl
 
         else:

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import dotenv from "dotenv";
+
 import "../App.css";
+
 const XmlParser = () => {
   const file = useRef("");
   const url = useRef("");
@@ -14,15 +15,23 @@ const XmlParser = () => {
     error: null
   });
   const [data, setData] = useState(null);
-  const [error, setError] = useState("");
+ 
   useEffect(() => {
-    console.log(resp)
+    
   }, [resp]);
 
   const handleSubmission = async (e) => {
     e.preventDefault();
     file.current.value = null;
     url.current.value = null;
+    setResp({
+      entityID: null,
+      certificates: null,
+      acsUrls: null,
+      singleLogoutService: null,
+      singleSignonService: null,
+      error: null
+    })
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
@@ -31,17 +40,7 @@ const XmlParser = () => {
         mode: "cors",
         body: data,
       })
-        .then((res) => {
-          if (res.status === 500) {
-            throw new Error(
-              "Please check the url/data entered. Encountered 500 Error"
-            );
-          } else if (res.status === 200) {
-            return res.json();
-          } else if (res.status === 404) {
-            throw new Error("404 error");
-          }
-        })
+        .then((res) => res.json())
         .then((json) =>
           setResp({
             entityID: json.metadata.entityId,
@@ -52,9 +51,7 @@ const XmlParser = () => {
             error: json.error
           })
         )
-        .catch((error) => {
-          setError(error.message);
-        });
+        
     }
   };
   const handleUrl = (e) => {
@@ -68,9 +65,9 @@ const XmlParser = () => {
       setData(e.target.result);
     };
   };
-
+  
   return (
-    <form>
+    <form id="form">
       <div id="xml-parser" className="form-group col-sm-12">
         <div className="col-sm-6">
           <label>Upload a file</label>
@@ -95,12 +92,7 @@ const XmlParser = () => {
                 handleUrl(e);
               }}
             />
-         
           <br/>
-          <br/>
-          <br/>
-          <br/>
-          
             <button
               className="btn btn-primary"
               onClick={(e) => {
@@ -112,7 +104,7 @@ const XmlParser = () => {
             
           <br />
           <hr />
-          <div>
+          <div id="values">
             <div>
               {resp.entityID != null ? (
                 <div>
@@ -190,7 +182,6 @@ const XmlParser = () => {
                   );
                 })
               : null}
-            {error !== null ? <span>{error}</span> : null}
           </div>
 
           <div>

@@ -1,3 +1,4 @@
+from database import database
 from api_methods import saml
 import sys
 
@@ -42,6 +43,12 @@ class saml_tool():
     def validate_entity_id():
         signOnUrl = saml.validate_entity_id()
         return {"signOnUrl": signOnUrl}
+    
+    @app.before_first_request
+    def init_database():
+        database.init_table()
+
 
 if __name__ == "__main__":
     app.run()
+    
