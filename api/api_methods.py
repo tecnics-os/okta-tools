@@ -9,15 +9,48 @@ class saml:
             request_body = request.get_data()
             request_body_in_string = parse_xml.decode_request_body_to_string(request_body)
             xml_body = parse_xml.get_xml_body(request_body_in_string)
-            metadata = parse_xml.parse_metadata(xml_body)
-            error = None
-            if(metadata['entityId'] == None or metadata['error'] != None):
-                error = "Oops, entered url or file is not a valid metadata. Please check." 
-            
+            error = ""
+            entityID_error=""
+            certificate_error=""
+            sso_error=""
+            acs_error=""
+            metadata=""
+
+            if(not xml_body.__contains__('entityID')):
+                entityID_error = "No entity id"
+            elif(not xml_body.__contains__('X509Certificate')):
+                certificate_error += "There is no certificate."
+
+            if(xml_body.__contains__('IDPSSODescriptor')):
+                if(not xml_body.__contains__('SingleSignOnService')):
+                    sso_error += "SSO unavailable"
+                error = {
+                    "entityID_error": entityID_error,
+                    "certificate_error": certificate_error,
+                    "sso_error": sso_error
+                }
+            elif(xml_body.__contains__('SPSSODescriptor')):
+                if(not xml_body.__contains__('AssertionConsumerService')):
+                    acs_error += "ACS Url missing"
+                error = {
+                    "entityID_error": entityID_error,
+                    "certificate_error": certificate_error,
+                    "acs_error": acs_error
+                }
+            else:
+                error = "Given data is not a valid metadata. It is neither sp nor idp"
+
+            if(error == None):
+                metadata = parse_xml.parse_metadata(xml_body)
+            else:
+                metadata = ""
+
+
+
             return {
                 "metadata": metadata,
                 "error": error
-            } 
+            }
         else:
             return "Invalid request"
 
@@ -61,7 +94,7 @@ class saml:
                 else:
                     signOnUrl = metadata['singleSignonService'][0]['url']
                     sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
-                
+
                 xml_content = parse_xml.format_metadata_with_certificate(xml_body)
                 database.execute_sql_query(sql_query)
             else:
@@ -84,10 +117,9 @@ class saml:
             cursor = database.execute_sql_query(sql_query)
             for row in cursor:
                 signOnUrl = row[0]
-            
+
             print(signOnUrl)
             return signOnUrl
 
         else:
             return "404 ERROR"
-

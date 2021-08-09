@@ -15,9 +15,9 @@ const XmlParser = () => {
     error: null
   });
   const [data, setData] = useState(null);
- 
+
   useEffect(() => {
-    
+
   }, [resp]);
 
   const handleSubmission = async (e) => {
@@ -51,7 +51,7 @@ const XmlParser = () => {
             error: json.error
           })
         )
-        
+
     }
   };
   const handleUrl = (e) => {
@@ -65,7 +65,7 @@ const XmlParser = () => {
       setData(e.target.result);
     };
   };
-  
+
   return (
     <form id="form">
       <div id="xml-parser" className="form-group col-sm-12">
@@ -82,7 +82,7 @@ const XmlParser = () => {
           />
           <br />
           <legend>OR</legend>
-          
+
             <strong>Paste URL here: </strong>
             <input
               id="url"
@@ -101,7 +101,7 @@ const XmlParser = () => {
             >
               Submit
             </button>
-            
+
           <br />
           <hr />
           <div id="values">
@@ -152,7 +152,7 @@ const XmlParser = () => {
                 ? resp.singleSignonService.map((signon) => {
                     return (
                       <p key={signon.index}>
-                      
+
                         <strong className="col-sm-3">
                           Single sign on url:{" "}
                         </strong>
@@ -164,7 +164,7 @@ const XmlParser = () => {
                         <p className="col-sm-8">{signon.binding} </p>
 
                       </p>
-                      
+
                     );
                   })
                 : null}{" "}
@@ -185,8 +185,8 @@ const XmlParser = () => {
           </div>
 
           <div>
-            {resp.error !== null ? <p>{resp.error}</p>: null}
-          </div>
+            {typeof resp.error  === 'object' && resp.error !== null ? <p></p>: <p>{resp.error}}</p>}
+            </div>
         </div>
       </div>
     </form>
