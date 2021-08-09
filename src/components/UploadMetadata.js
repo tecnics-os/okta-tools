@@ -24,7 +24,7 @@ const UploadMetadata = ()=> {
         if(postData === undefined) {
             alert("Please upload a file or enter url")
         }else{
-            await fetch(`${REACT_APP_BACKEND_URL}/uploadmetadata`, {
+            await fetch(`${REACT_APP_BACKEND_URL}/uploadMetadata`, {
                 method: 'POST',
                 type: 'CORS',
                 body: postData,

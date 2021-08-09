@@ -11,7 +11,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 class saml_tool():
-    @app.route("/parse_metadata", methods=['POST', 'GET'])
+    @app.route("/parseMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parser():
         metadata = saml.extract_xml_attributes()
@@ -29,7 +29,7 @@ class saml_tool():
         certificate = saml.format_certificate()
         return {"certificate": certificate }
 
-    @app.route("/uploadmetadata", methods=['POST', 'GET'])
+    @app.route("/uploadMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parse():
         xml = saml.get_xml_content()

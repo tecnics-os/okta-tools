@@ -17,14 +17,14 @@ class saml:
             metadata=""
 
             if(not xml_body.__contains__('entityID')):
-                entityID_error = "No entity id"
+                entityID_error = "Given file does not have any entityID."
             elif(not xml_body.__contains__('X509Certificate')):
-                certificate_error += "There is no certificate."
+                certificate_error += "Given file does not have any certificate."
 
 
             if(xml_body.__contains__('IDPSSODescriptor')):
                 if(not xml_body.__contains__('SingleSignOnService')):
-                    sso_error += "SSO unavailable"
+                    sso_error += "Given file does not have single sign on service url."
                 error = {
                     "entityID_error": entityID_error,
                     "certificate_error": certificate_error,
@@ -35,7 +35,7 @@ class saml:
 
             elif(xml_body.__contains__('SPSSODescriptor')):
                 if(not xml_body.__contains__('AssertionConsumerService')):
-                    acs_error += "ACS Url missing"
+                    acs_error += "Given file does not have acs url."
                 error = {
                     "entityID_error": entityID_error,
                     "certificate_error": certificate_error,
@@ -45,7 +45,7 @@ class saml:
                     metadata = parse_xml.parse_metadata(xml_body)
 
             elif(not xml_body.__contains__('SPSSODescriptor') or xml_body.__contains__('IDPSSODescriptor')):
-                error = "Given data is not a valid metadata. It is neither sp nor idp"
+                error = "Given data is not a valid metadata."
     
             return {
                 "metadata": metadata,
@@ -73,7 +73,7 @@ class saml:
             format_cert = parse_xml.format_certificate(cert_data_in_string)
             return format_cert
         else:
-            return "SORRY THE PAGE YOU ARE ACCESSING IS NOT ACCESSIBLE"
+            return "Invalid request"
 
     def get_xml_content():
         if request.method == 'POST':
@@ -100,22 +100,20 @@ class saml:
                 xml_content = parse_xml.format_metadata_with_certificate(xml_body)
                 database.execute_sql_query(sql_query)
             else:
+                if(not xml_body.__contains__('entityId')):
+                        error += "Given file does not have Entity ID.\n"
+                elif(not xml_body.__contains__('X509Certificate')):
+                    error += "Given file does not have certificate.\n"
+
                 if(xml_body.__contains__('IDPSSODescriptor')):
                     if(not xml_body.__contains__('singleSignonService')):
-                        error += "Given file does not have single sign on url\n"
-                    elif(not xml_body.__contains__('entityId')):
-                        error += "Given file does not have Entity ID\n"
-                    elif(not xml_body.__contains__('X509Certificate')):
-                        error += "Given file does not have certificate\n"
+                        error += "Given file does not have single sign on url.\n"
+                    
                 elif(xml_body.__contains__('SPSSODescriptor')):
                     if(not xml_body.__contains__('AssertionConsumerService')):
-                        error += "Given file does not have acs url\n"
-                    elif(not xml_body.__contains__('entityId')):
-                        error += "Given file does not have Entity ID\n"
-                    elif(not xml_body.__contains__('X509Certificate')):
-                        error += "Given file does not have certificate\n" 
+                        error += "Given file does not have acs url.\n"
                 else:
-                    error += "Given file is not a valid metadata file. Please check."
+                    error = "Given file is not a valid metadata file"
 
             xml =  {
                 "xml-content": xml_content,

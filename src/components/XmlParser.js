@@ -38,7 +38,7 @@ const XmlParser = () => {
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
-      await fetch(`${REACT_APP_BACKEND_URL}/parse_metadata`, {
+      await fetch(`${REACT_APP_BACKEND_URL}/parseMetadata`, {
         method: "POST",
         mode: "cors",
         body: data,
