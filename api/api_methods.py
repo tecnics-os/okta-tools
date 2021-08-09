@@ -9,7 +9,7 @@ class saml:
             request_body = request.get_data()
             request_body_in_string = parse_xml.decode_request_body_to_string(request_body)
             xml_body = parse_xml.get_xml_body(request_body_in_string)
-            error = ""
+            error = None
             entityID_error=""
             certificate_error=""
             sso_error=""
@@ -21,6 +21,7 @@ class saml:
             elif(not xml_body.__contains__('X509Certificate')):
                 certificate_error += "There is no certificate."
 
+
             if(xml_body.__contains__('IDPSSODescriptor')):
                 if(not xml_body.__contains__('SingleSignOnService')):
                     sso_error += "SSO unavailable"
@@ -29,6 +30,9 @@ class saml:
                     "certificate_error": certificate_error,
                     "sso_error": sso_error
                 }
+                if(error['entityID_error'] == "" or error['certificate_error'] == "" or error['sso_error'] == "" ):
+                    metadata = parse_xml.parse_metadata(xml_body)
+
             elif(xml_body.__contains__('SPSSODescriptor')):
                 if(not xml_body.__contains__('AssertionConsumerService')):
                     acs_error += "ACS Url missing"
@@ -37,16 +41,12 @@ class saml:
                     "certificate_error": certificate_error,
                     "acs_error": acs_error
                 }
-            else:
+                if(error['entityID_error'] == "" or error['certificate_error'] == "" or error['acs_error'] == "" ):
+                    metadata = parse_xml.parse_metadata(xml_body)
+
+            elif(not xml_body.__contains__('SPSSODescriptor') or xml_body.__contains__('IDPSSODescriptor')):
                 error = "Given data is not a valid metadata. It is neither sp nor idp"
-
-            if(error == None):
-                metadata = parse_xml.parse_metadata(xml_body)
-            else:
-                metadata = ""
-
-
-
+    
             return {
                 "metadata": metadata,
                 "error": error

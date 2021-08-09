@@ -14,54 +14,53 @@ class parse_xml:
         single_logout_service_index = 1
         single_signon_service_index = 1
         error=""
-        try:
-            root = ET.fromstring(xml_body)
-            for child in root.findall("."):
-                if child.tag.__contains__("EntityDescriptor"):
-                    entityid  = None
-                    if(child.attrib.__contains__('entityID')):
-                        entityid = child.attrib['entityID']
-                    else:
-                        error = "Given Xml does not have entityID."
-                    entityID.append({
-                        "content": entityid
-                    })
+        root = ET.fromstring(xml_body)
+        print(root)
+        for child in root.findall("."):
+            if child.tag.__contains__("EntityDescriptor"):
+                entityid  = None
+                if(child.attrib.__contains__('entityID')):
+                    entityid = child.attrib['entityID']
+                else:
+                    error = "Given Xml does not have entityID."
+            entityID.append({
+                "content": entityid
+            })
 
-            for child in root.findall(".//"):
+        for child in root.findall(".//"):
 
-                if child.tag.__contains__("X509Certificate"):
-                    certificate_data = child.text.replace(" ", "")
-                    certificate_data = parse_xml.format_certificate(certificate_data)
-                    certificates.append({
-                        "content": certificate_data
-                    })
+            if child.tag.__contains__("X509Certificate"):
+                certificate_data = child.text.replace(" ", "")
+                certificate_data = parse_xml.format_certificate(certificate_data)
+                certificates.append({
+                    "content": certificate_data
+                })
 
 
-                if child.tag.__contains__("AssertionConsumerService"):
-                    url = child.attrib['Location']
-                    binding = child.attrib['Binding']
-                    acsURls.append({
-                        "url": url,
-                        "binding": binding
-                    })
+            if child.tag.__contains__("AssertionConsumerService"):
+                url = child.attrib['Location']
+                binding = child.attrib['Binding']
+                acsURls.append({
+                    "url": url,
+                    "binding": binding
+                })
 
-                if child.tag.__contains__("SingleLogoutService"):
-                    singleLogoutService.append({
-                        "index": single_logout_service_index,
-                        "Url": child.attrib['Location'],
-                        "Binding": child.attrib['Binding']
-                    })
-                    single_logout_service_index + 1
-                if child.tag.__contains__('SingleSignOnService'):
-                    singleSignOnService.append( {
-                        "index": single_signon_service_index,
-                        "url": child.attrib['Location'],
-                        "binding": child.attrib['Binding']
-                    })
-                    single_signon_service_index + 1
-        except Exception as e:
-            print("Error: ",e)
-            error = e
+            if child.tag.__contains__("SingleLogoutService"):
+                singleLogoutService.append({
+                    "index": single_logout_service_index,
+                    "Url": child.attrib['Location'],
+                    "Binding": child.attrib['Binding']
+                })
+                single_logout_service_index + 1
+            if child.tag.__contains__('SingleSignOnService'):
+                singleSignOnService.append( {
+                    "index": single_signon_service_index,
+                    "url": child.attrib['Location'],
+                    "binding": child.attrib['Binding']
+                })
+                single_signon_service_index + 1
+
+
         metadata =  {
             "entityId": entityID,
             "certificate": certificates,

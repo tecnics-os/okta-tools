@@ -16,13 +16,13 @@ class saml_tool():
     def xml_parser():
         metadata = saml.extract_xml_attributes()
         return metadata
-    
+
     @app.route("/certificateWithHeader", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate_with_header():
         certificate = saml.get_certificate_with_header()
         return {"certificate": certificate}
-    
+
     @app.route("/formatCertificate", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate():
@@ -33,17 +33,17 @@ class saml_tool():
     @cross_origin()
     def xml_parse():
         xml = saml.get_xml_content()
-        return { 
+        return {
             "content": xml['xml-content'],
             "error": xml['error']
         }
-    
+
     @app.route("/validateEntityId", methods=['POST', 'GET'])
     @cross_origin()
     def validate_entity_id():
         signOnUrl = saml.validate_entity_id()
         return {"signOnUrl": signOnUrl}
-    
+
     @app.before_first_request
     def init_database():
         database.init_table()
@@ -51,4 +51,3 @@ class saml_tool():
 
 if __name__ == "__main__":
     app.run()
-    

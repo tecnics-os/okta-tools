@@ -12,7 +12,8 @@ const XmlParser = () => {
     acsUrls: null,
     singleLogoutService: null,
     singleSignonService: null,
-    error: null
+    error: null,
+    metadata_error: null
   });
   const [data, setData] = useState(null);
 
@@ -30,8 +31,10 @@ const XmlParser = () => {
       acsUrls: null,
       singleLogoutService: null,
       singleSignonService: null,
-      error: null
+      error: null,
+      metadata_error: null
     })
+    
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
@@ -40,18 +43,19 @@ const XmlParser = () => {
         mode: "cors",
         body: data,
       })
-        .then((res) => res.json())
-        .then((json) =>
-          setResp({
-            entityID: json.metadata.entityId,
-            certificates: json.metadata.certificate,
-            acsUrls: json.metadata.acsUrls,
-            singleLogoutService: json.metadata.singleLogoutService,
-            singleSignonService: json.metadata.singleSignonService,
-            error: json.error
-          })
-        )
-
+      .then((res) => res.json())
+      .then((json) =>
+        setResp({
+          entityID: json.metadata.entityId,
+          certificates: json.metadata.certificate,
+          acsUrls: json.metadata.acsUrls,
+          singleLogoutService: json.metadata.singleLogoutService,
+          singleSignonService: json.metadata.singleSignonService,
+          error: json.error,
+          metadata_error: json.metadata.error
+        })
+      )
+      console.log(resp)
     }
   };
   const handleUrl = (e) => {
@@ -104,16 +108,19 @@ const XmlParser = () => {
 
           <br />
           <hr />
+          
           <div id="values">
             <div>
               {resp.entityID != null ? (
                 <div>
                   {" "}
                   <strong className="col-sm-3">Entity Id:</strong>
-                  <p className="col-sm-8">{resp.entityID} </p>
+                  <p className="col-sm-8">{resp.entityID.map(res => {
+                    return <p>{res.content}</p>})} </p>
                 </div>
               ) : null}
             </div>
+            
             <div>
               {resp.singleLogoutService != null
                 ? resp.singleLogoutService.map((url) => {
@@ -183,10 +190,9 @@ const XmlParser = () => {
                 })
               : null}
           </div>
-
-          <div>
-            {typeof resp.error  === 'object' && resp.error !== null ? <p></p>: <p>{resp.error}}</p>}
-            </div>
+          <div className="col-sm-9">
+            { typeof resp.error === 'object' && resp.error !== null ? <span>{resp.error.entityID_error} <br/> {resp.error.certificate_error} <br/> {resp.error.sso_error} <br/> {resp.error.acs_error} </span> : <span>{resp.error}</span> }
+          </div>
         </div>
       </div>
     </form>
