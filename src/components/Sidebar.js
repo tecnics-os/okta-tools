@@ -20,7 +20,7 @@ const Sidebar = ()=> {
             <Link className="btn btn-sidebar" to="/certificateWithHeader">Format X509 Certificate</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/upload-metadata">Upload Metadata</Link>
+            <Link className="btn btn-sidebar" to="/upload-metadata">Upload IDP Metadata</Link>
           </li>
           <li >
             <Link className="btn btn-sidebar" to="/download-metadata">Download Metadata</Link>

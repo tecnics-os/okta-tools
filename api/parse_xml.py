@@ -1,50 +1,56 @@
+from logging import error
 import xml.etree.ElementTree as ET
 import urllib3
 
 class parse_xml:
     def parse_metadata(xml_body):
-        root = ET.fromstring(xml_body)
         acsURls = []
         singleSignOnService = []
         singleLogoutService = []
         certificates = []
-        acs_urls_index = 1
-        certificate_index = 1
+        entityID = []
+        
         single_logout_service_index = 1
         single_signon_service_index = 1
-        entityID = None
-
+        error=""
+        root = ET.fromstring(xml_body)
         for child in root.findall("."):
             if child.tag.__contains__("EntityDescriptor"):
-                entityID = child.attrib['entityID']
+                entityid  = None
+                if(child.attrib.__contains__('entityID')):
+                    entityid = child.attrib['entityID']
+                else:
+                    error = "Given Xml does not have entityID."
+            entityID.append({
+                "content": entityid
+            })
 
         for child in root.findall(".//"):
-            splitdata = ""
+
             if child.tag.__contains__("X509Certificate"):
                 certificate_data = child.text.replace(" ", "")
-                data = parse_xml.format_certificate(certificate_data)
+                certificate_data = parse_xml.format_certificate(certificate_data)
                 certificates.append({
-                    "index": certificate_index,
-                    "content": data
+                    "content": certificate_data
                 })
-                certificate_index + 1
 
-            elif child.tag.__contains__("AssertionConsumerService"):
+
+            if child.tag.__contains__("AssertionConsumerService"):
+                url = child.attrib['Location']
+                binding = child.attrib['Binding']
                 acsURls.append({
-                    "index": acs_urls_index,
-                    "url": child.attrib['Location'],
-                    "binding": child.attrib['Binding']
+                    "url": url,
+                    "binding": binding
                 })
-                acs_urls_index = acs_urls_index + 1
 
-            elif child.tag.__contains__("SingleLogoutService"):
+            if child.tag.__contains__("SingleLogoutService"):
                 singleLogoutService.append({
                     "index": single_logout_service_index,
                     "Url": child.attrib['Location'],
                     "Binding": child.attrib['Binding']
                 })
                 single_logout_service_index + 1
-            elif child.tag.__contains__('SingleSignOnService'):
+            if child.tag.__contains__('SingleSignOnService'):
                 singleSignOnService.append( {
                     "index": single_signon_service_index,
                     "url": child.attrib['Location'],
@@ -57,20 +63,21 @@ class parse_xml:
             "certificate": certificates,
             "acsUrls": acsURls ,
             "singleLogoutService": singleLogoutService,
-            "singleSignonService": singleSignOnService
+            "singleSignonService": singleSignOnService,
+            "error": error
         }
 
         return metadata
-    
+
     def format_metadata_with_certificate(xml_body):
         root = ET.fromstring(xml_body)
         for child in root.findall('.//'):
             if(child.tag.__contains__('X509Certificate')):
-                certificate_data = child.text.replace(" ", "")
+                certificate_data = child.text
                 data = parse_xml.format_certificate(certificate_data)
                 xml_content = xml_body.replace(child.text, data)
                 return xml_content
-            
+
 
     def decode_request_body_to_string(request_body):
         request_body_in_string = str(request_body.decode('UTF-8'))
@@ -82,10 +89,10 @@ class parse_xml:
             r = http.request('GET', request_body_in_string)
             data = r.data
             xml_body = str(data.decode('UTF-8'))
-            
+
         else:
             xml_body = request_body_in_string
-        
+
         return xml_body
 
     def format_certificate(certificate_in_string):
@@ -98,9 +105,3 @@ class parse_xml:
             formatted_certificate = formatted_certificate + certificate_with_no_newline_tag[counter: counter + 64] + "\n"
             counter = counter + 64
         return formatted_certificate
-
-            
-
-
-
-

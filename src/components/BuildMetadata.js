@@ -6,8 +6,8 @@ const initialValues = {
     entityID: null,
     signOnService: null,
     logoutService: null,
-    nameId: "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
-    authnRequestNeeded: false,
+    nameId: null,
+    authnRequestNeeded: null,
     organisationName: null,
     organisationDisplayName: null,
     organisationUrl: null,
@@ -28,7 +28,7 @@ const BuildMetadata = ()=> {
     function useDebounce(callback, delay) {
         const debouncedFn = useCallback(
           debounce((...args) => callback(...args), delay),
-          [delay] // will recreate if delay changes
+          [delay] 
         );
         return debouncedFn;
     }
@@ -50,10 +50,13 @@ const BuildMetadata = ()=> {
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setValues({
           ...values,
           [name]: value,
         }); 
+        console.log(values);
+    
     }
     
     const handleCert = (e)=> {
@@ -64,6 +67,7 @@ const BuildMetadata = ()=> {
 
     const generateMetadata =(e)=>{
         e.preventDefault();
+        
         let metadata = {
             "entityId": values.entityID,
             "signOnService": values.signOnService,
@@ -80,6 +84,7 @@ const BuildMetadata = ()=> {
             "supportContactEmail": values.supportContactEmail
         }
         if(values.entityID === null || values.signOnService === null || cert === null) {
+            window.scrollTo(0, 0)
             if(values.entityID === null){
                 document.getElementById('entityId').innerHTML = "This field is required"
             }
@@ -205,9 +210,9 @@ const BuildMetadata = ()=> {
             <div className="form-group">
                 <label for="inputType"  className="col-sm-2 control-label">WantAuthnRequestsSigned</label>
                 <div className="col-sm-4">
-                    <select name= "authnRequesteNeeded"  onChange={(e)=>{handleInputChange(e)}} >
-                        <option >True</option>
-                        <option defaultValue >False</option>
+                    <select name="authnRequestNeeded" onChange={(e)=>{handleInputChange(e)}} >
+                        <option>True</option>
+                        <option>False</option>
                     </select>
                 </div>
             </div>

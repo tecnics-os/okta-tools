@@ -3,7 +3,7 @@ import XMLViewer from 'react-xml-viewer'
 const UploadMetadata = ()=> {
     const [postData, setPostData] = useState();
     const [xml, setXml] = useState({
-        "xml-content": undefined,
+        "content": undefined,
         "error": undefined
     });
     const input = useRef();
@@ -24,7 +24,7 @@ const UploadMetadata = ()=> {
         if(postData === undefined) {
             alert("Please upload a file or enter url")
         }else{
-            await fetch(`${REACT_APP_BACKEND_URL}/uploadmetadata`, {
+            await fetch(`${REACT_APP_BACKEND_URL}/uploadMetadata`, {
                 method: 'POST',
                 type: 'CORS',
                 body: postData,
@@ -35,12 +35,12 @@ const UploadMetadata = ()=> {
               })
               .then(res => res.json())
               .then(data => setXml({
-                  "xml-content": data.content,
+                  "content": data.content,
                   "error": data.error
               }))
         }
-        console.log(xml)
         input.current.value=null
+        
     }
     return <form>
     <div className="form-group">
@@ -55,12 +55,12 @@ const UploadMetadata = ()=> {
         <input ref={input} type="file" name="file" onChange ={(e)=>{handleFile(e)}} ></input>
         <br/>
         <button className="btn btn-primary" onClick={(e)=>{handleSubmission(e)}}>Fetch</button>
-
+        <br/>
+        <br/>
         <div>
-            {xml.content !== undefined ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
+            {xml.error === "" ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
             </div> : <p><br/><span className="col-sm-12">{xml.error}</span></p> }
         </div>
-
     </div>
     </div>
     </div>
