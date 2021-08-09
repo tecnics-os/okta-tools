@@ -15,7 +15,6 @@ class parse_xml:
         single_signon_service_index = 1
         error=""
         root = ET.fromstring(xml_body)
-        print(root)
         for child in root.findall("."):
             if child.tag.__contains__("EntityDescriptor"):
                 entityid  = None

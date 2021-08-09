@@ -136,7 +136,7 @@ class saml:
             for row in cursor:
                 signOnUrl = row[0]
 
-            print(signOnUrl)
+            
             return signOnUrl
 
         else:
