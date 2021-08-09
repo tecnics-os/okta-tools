@@ -40,7 +40,7 @@ const UploadMetadata = ()=> {
               }))
         }
         input.current.value=null
-        console.log(xml);
+        
     }
     return <form>
     <div className="form-group">
@@ -57,7 +57,7 @@ const UploadMetadata = ()=> {
         <button className="btn btn-primary" onClick={(e)=>{handleSubmission(e)}}>Fetch</button>
 
         <div>
-            {xml.error === null ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
+            {xml.error === "" ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
             </div> : <p><br/><span className="col-sm-12">{xml.error}</span></p> }
         </div>
 

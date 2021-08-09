@@ -1,2 +1,11 @@
 no such table: sp_metadata
 no such table: sp_metadata
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
+near "': '": syntax error
