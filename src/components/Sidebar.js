@@ -6,8 +6,11 @@ import DownloadMetadata from './DownloadMetadata'
 import TestIdp from './TestIdp'
 import UploadMetadata from './UploadMetadata'
 import XmlParser from './XmlParser'
+import Home from './Home'
 import { BrowserRouter as Router } from 'react-router-dom'
+
 const Sidebar = ()=> {
+  
     return <Router>
       <div className='sidebar-header'>
           <li>
@@ -31,6 +34,9 @@ const Sidebar = ()=> {
         </div>
         <div className="components overflow-auto">
         <Switch>
+            <Route path="/" exact>
+              <Home/>
+            </Route>
             <Route path="/parse-xml" exact>
               <XmlParser/>
             </Route>
@@ -53,4 +59,4 @@ const Sidebar = ()=> {
     </div>
     </Router>
 }
-export default Sidebar
+export default Sidebar;

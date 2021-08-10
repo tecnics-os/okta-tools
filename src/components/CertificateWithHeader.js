@@ -5,6 +5,7 @@ const CertificateWithHeader = ()=> {
 
   const [certificate, setCertificate] = useState();
   const [certificateWithHeader, setCertificateWithHeader] = useState();
+  const { REACT_APP_BACKEND_URL } = process.env;
   const handleCertificate = (e)=> {
     setCertificate(e.target.value)
   }
@@ -13,7 +14,7 @@ const CertificateWithHeader = ()=> {
     if(certificate === null || certificate === undefined){
       alert("Please enter a valid certificate")
     }else{
-      fetch('http://127.0.0.1:5000/certificateWithHeader', {
+      fetch(`${REACT_APP_BACKEND_URL}/certificateWithHeader`, {
           method: 'POST',
           body: certificate,
       })
@@ -22,7 +23,7 @@ const CertificateWithHeader = ()=> {
           setCertificateWithHeader(data)
       })
     }
-    
+
   }
   const handleCertificateSave = ()=> {
     var date = new Date();

@@ -34,7 +34,7 @@ const XmlParser = () => {
       error: null,
       metadata_error: null
     })
-    
+
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
@@ -43,7 +43,7 @@ const XmlParser = () => {
         mode: "cors",
         body: data,
       })
-      .then((res) => res.json())
+      .then((res) => { return res.json() })
       .then((json) =>
         setResp({
           entityID: json.metadata.entityId,
@@ -55,7 +55,6 @@ const XmlParser = () => {
           metadata_error: json.metadata.error
         })
       )
-      console.log(resp)
     }
   };
   const handleUrl = (e) => {
@@ -107,7 +106,7 @@ const XmlParser = () => {
 
           <br />
           <hr />
-         
+
           <br/>
           <div id="values">
             <div>
@@ -115,25 +114,26 @@ const XmlParser = () => {
                 <div>
                   {" "}
                   <strong className="col-sm-4">Entity Id:</strong>
-                  <p className="col-sm-8">{resp.entityID.map(res => {
-                    return <p>{res.content}</p>})} </p>
+                  <div className="col-sm-8" >{resp.entityID.map(res => {
+                    return <p key={res.index}>{res.content}</p>})}
+                  </div>
                 </div>
               ) : null}
             </div>
-            
+
             <div>
               {resp.singleLogoutService != null
                 ? resp.singleLogoutService.map((url) => {
                     return (
-                      <p key={url.index}>
+                      <div key={url.index}>
                         <strong className="col-sm-4">Single Logout Url:</strong>
                         <p className="col-sm-8">{url.Url}</p>
-                        
+
                         <strong className="col-sm-4">
                           Single logout Binding:
                         </strong>
                         <p className="col-sm-8">{url.Binding}</p>
-                      </p>
+                      </div>
                     );
                   })
                 : null}
@@ -143,12 +143,12 @@ const XmlParser = () => {
               {resp.acsUrls != null
                 ? resp.acsUrls.map((acsUrl) => {
                     return (
-                      <p key={acsUrl.index}>
+                      <div key={acsUrl.index}>
                         <strong className="col-sm-4">Acs url: </strong>
                         <p className="col-sm-8">{acsUrl.url} </p>
                         <strong className="col-sm-4"> Acs url binding: </strong>
                         <p className="col-sm-8">{acsUrl.binding}</p>
-                      </p>
+                      </div>
                     );
                   })
                 : null}
@@ -158,7 +158,7 @@ const XmlParser = () => {
               {resp.singleSignonService != null
                 ? resp.singleSignonService.map((signon) => {
                     return (
-                      <p key={signon.index}>
+                      <div key={signon.index}>
                         <strong className="col-sm-4">
                           Single sign on url:{" "}
                         </strong>
@@ -169,7 +169,7 @@ const XmlParser = () => {
                         </strong>
                         <p className="col-sm-8">{signon.binding} </p>
 
-                      </p>
+                      </div>
                     );
                   })
                 : null}{" "}
@@ -180,10 +180,10 @@ const XmlParser = () => {
             {resp.certificates != null
               ? resp.certificates.map((cert) => {
                   return (
-                    <p key={cert.index}>
+                    <div key={cert.index}>
                       <strong className="col-sm-4">CERTIFICATE</strong>{" "}
                       <p className="col-sm-8">{cert.content}</p>
-                    </p>
+                    </div>
                   );
                 })
               : null}

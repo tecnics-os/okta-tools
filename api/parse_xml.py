@@ -9,7 +9,9 @@ class parse_xml:
         singleLogoutService = []
         certificates = []
         entityID = []
-        
+        entityID_index = 1
+        certificate_index = 1
+        acsUrl_index = 1
         single_logout_service_index = 1
         single_signon_service_index = 1
         error=""
@@ -22,8 +24,10 @@ class parse_xml:
                 else:
                     error = "Given Xml does not have entityID."
             entityID.append({
+                "index": str(entityID) + "entityId",
                 "content": entityid
             })
+            entityID_index = entityID_index + 1
 
         for child in root.findall(".//"):
 
@@ -31,32 +35,37 @@ class parse_xml:
                 certificate_data = child.text.replace(" ", "")
                 certificate_data = parse_xml.format_certificate(certificate_data)
                 certificates.append({
+                    "index": str(certificate_index) + "certificate",
                     "content": certificate_data
                 })
+                certificate_index += 1
 
 
             if child.tag.__contains__("AssertionConsumerService"):
                 url = child.attrib['Location']
                 binding = child.attrib['Binding']
                 acsURls.append({
+                    "index": str(acsUrl_index) + "acs_url",
                     "url": url,
                     "binding": binding
                 })
+                acsUrl_index += 1
 
             if child.tag.__contains__("SingleLogoutService"):
                 singleLogoutService.append({
-                    "index": single_logout_service_index,
+                    "index": str(single_logout_service_index) + "SLO",
                     "Url": child.attrib['Location'],
                     "Binding": child.attrib['Binding']
                 })
-                single_logout_service_index + 1
+                single_logout_service_index += 1
+
             if child.tag.__contains__('SingleSignOnService'):
                 singleSignOnService.append( {
-                    "index": single_signon_service_index,
+                    "index": str(single_signon_service_index) + "SSO",
                     "url": child.attrib['Location'],
                     "binding": child.attrib['Binding']
                 })
-                single_signon_service_index + 1
+                single_signon_service_index += 1
 
         metadata =  {
             "entityId": entityID,

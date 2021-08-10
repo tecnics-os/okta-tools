@@ -16,11 +16,13 @@ class saml_tool():
     def xml_parser():
         metadata = saml.extract_xml_attributes()
         return metadata
+
     @app.route("/certificateWithHeader", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate_with_header():
         certificate = saml.get_certificate_with_header()
         return {"certificate": certificate}
+        
     @app.route("/formatCertificate", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate():

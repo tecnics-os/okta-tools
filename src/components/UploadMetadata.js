@@ -40,7 +40,7 @@ const UploadMetadata = ()=> {
               }))
         }
         input.current.value=null
-        
+
     }
     return <form>
     <div className="form-group">
@@ -59,7 +59,7 @@ const UploadMetadata = ()=> {
         <br/>
         <div>
             {xml.error === "" ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
-            </div> : <p><br/><span className="col-sm-12">{xml.error}</span></p> }
+            </div> : <div><br/><span className="col-sm-12">{xml.error}</span></div> }
         </div>
     </div>
     </div>

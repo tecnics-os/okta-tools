@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import XMLViewer from "react-xml-viewer";
-import debounce from "lodash.debounce";
+import React from 'react'
 
 const initialValues = {
     entityID: null,
     signOnService: null,
     logoutService: null,
-    nameId: null,
-    authnRequestNeeded: null,
+    nameId: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+    authnRequestNeeded: true,
     organisationName: null,
     organisationDisplayName: null,
     organisationUrl: null,
@@ -25,49 +25,48 @@ const BuildMetadata = ()=> {
     const [values, setValues ] = useState(initialValues);
     const { REACT_APP_BACKEND_URL } = process.env;
 
-    function useDebounce(callback, delay) {
-        const debouncedFn = useCallback(
-          debounce((...args) => callback(...args), delay),
-          [delay] 
-        );
-        return debouncedFn;
-    }
-    const debouncedSave = useDebounce((X509_certificate) => setCertificate(X509_certificate), 1000);
-    
     useEffect(()=> {
-        if(cert !=="" || cert !== null) {
-            fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
-                method: 'POST',
-                type: 'CORS',
-                body: cert
-            })
-            .then(res=> res.json())
-            .then(data => setCertificate(data.certificate))
-        }
-        
-    }, [REACT_APP_BACKEND_URL, cert, certificate])
+      if(cert !=="" || cert !== null) {
+        fetch(`${REACT_APP_BACKEND_URL}/formatCertificate`, {
+            method: 'POST',
+            type: 'CORS',
+            body: cert
+        })
+        .then(res=> res.json())
+        .then(data => setCertificate(data.certificate))
+      }
+    }, [cert, REACT_APP_BACKEND_URL])
 
-    
+    const debounce = (func) => {
+      let timer;
+      return function (...args) {
+        const context = this;
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(()=> {
+          timer = null
+          func.apply(context, args);
+        }, 1000)
+      }
+    }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value)
         setValues({
           ...values,
           [name]: value,
-        }); 
-        console.log(values);
-    
+        });
     }
-    
+
     const handleCert = (e)=> {
         let certificate_value = e.target.value;
         setCert(certificate_value);
-        debouncedSave(certificate_value)
     }
+
+    const useDebounce = useCallback(debounce(handleCert), [])
 
     const generateMetadata =(e)=>{
         e.preventDefault();
-        
+
         let metadata = {
             "entityId": values.entityID,
             "signOnService": values.signOnService,
@@ -156,9 +155,9 @@ const BuildMetadata = ()=> {
         }
     }
     return (<div className="container">
-        <form classNameName="form-group">
-            <div classNameName="form-group">
-                <label for="Entity Id" className="col-sm-2 control-label">Entity Id <span>*</span></label>
+        <form className="form-group">
+            <div className="form-group">
+                <label htmlFor="Entity Id" className="col-sm-2 control-label">Entity Id <span>*</span></label>
                 <div className="col-sm-4">
                     <input name="entityID" ref={input} type="text" className="form-control" id="input" placeholder="Entity Id" onChange={(e)=>{handleInputChange(e)}} required />
                 </div>
@@ -167,7 +166,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="SingleSignOnService" className="col-sm-2 control-label">Single Sign On Service End point <span>*</span></label>
+                <label htmlFor="SingleSignOnService" className="col-sm-2 control-label">Single Sign On Service End point <span>*</span></label>
                 <div className="col-sm-4">
                     <input name="signOnService" ref={input} type="text" className="form-control" id="input" placeholder="Single Sign on Service" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -176,7 +175,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Single logout service end point</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Single logout service end point</label>
                 <div className="col-sm-4">
                     <input ref={input} name="logoutService" type="text" className="form-control" id="input" placeholder="Single logout service" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -184,16 +183,16 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">SP X.509 cert (same cert for sign/encrypt) <span>*</span></label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">SP X.509 cert (same cert for sign/encrypt) <span>*</span></label>
                 <div className="col-sm-4">
-                    <textarea ref={input} name="certificate" type="text" className="form-control" id="certificate" placeholder="Certificate" onChange={(e)=>{handleCert(e)}}/>
+                    <textarea ref={input} name="certificate" type="text" className="form-control" id="certificate" placeholder="Certificate" onChange={useDebounce}/>
                 </div>
                 <span id="cert"></span>
             </div>
             <br/>
             <br/>
             <div className="form-group">
-                <label for="NameId Format" className="col-sm-2 control-label">NameId Format</label>
+                <label htmlFor="NameId Format" className="col-sm-2 control-label">NameId Format</label>
                 <div className="col-sm-4">
                     <select name="nameId" onChange={(e)=>{handleInputChange(e)}}>
                         <option>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</option>
@@ -208,7 +207,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType"  className="col-sm-2 control-label">WantAuthnRequestsSigned</label>
+                <label htmlFor="inputType"  className="col-sm-2 control-label">WantAuthnRequestsSigned</label>
                 <div className="col-sm-4">
                     <select name="authnRequestNeeded" onChange={(e)=>{handleInputChange(e)}} >
                         <option>True</option>
@@ -218,11 +217,11 @@ const BuildMetadata = ()=> {
             </div>
             <br/>
             <br/>
-            <label for="organisation info" className="col-sm-4">ORGANISATION INFO(optional)</label>
+            <label htmlFor="organisation info" className="col-sm-4">ORGANISATION INFO(optional)</label>
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Organisation Name</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Organisation Name</label>
                 <div className="col-sm-4">
                     <input name="organisationName" ref={input} type="text" className="form-control" id="input" placeholder="Organisation Name" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -230,7 +229,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Organisation Display Name</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Organisation Display Name</label>
                 <div className="col-sm-4">
                     <input name="organisationDisplayName" ref={input} type="text" className="form-control" id="input" placeholder="organisation display name" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -238,7 +237,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Organisation Url</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Organisation Url</label>
                 <div className="col-sm-4">
                     <input name="organisationurl" ref={input} type="text" className="form-control" id="input" placeholder="organisation url" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -249,7 +248,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Given Name</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Given Name</label>
                 <div className="col-sm-4">
                     <input name="tecnicalContactName" ref={input} type="text" className="form-control" id="input" placeholder="Name" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -257,7 +256,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Email</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Email</label>
                 <div className="col-sm-4">
                     <input ref={input} name="tecnicalContactEmail" type="text" className="form-control" id="input" placeholder="Email" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -268,7 +267,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Given Name</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Given Name</label>
                 <div className="col-sm-4">
                     <input name="supportContactName" ref={input} type="text" className="form-control" id="input" placeholder="Support Name" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -276,7 +275,7 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="form-group">
-                <label for="inputType" className="col-sm-2 control-label">Email</label>
+                <label htmlFor="inputType" className="col-sm-2 control-label">Email</label>
                 <div className="col-sm-4">
                     <input name="supportContactEmail" ref={input} type="text" className="form-control" id="input" placeholder="Email" onChange={(e)=>{handleInputChange(e)}}/>
                 </div>
@@ -284,13 +283,13 @@ const BuildMetadata = ()=> {
             <br/>
             <br/>
             <div className="col-sm-2">
-            <button className="btn btn-primary btn-center" onClick={(e)=>{generateMetadata(e)}}>Build IDP Metadata</button>
+              <button className="btn btn-primary btn-center" onClick={(e)=>{generateMetadata(e)}}>Build IDP Metadata</button>
             </div>
         </form>
         <br/>
         <br/>
         <div>
-            {xml != null ? <p><XMLViewer  xml={xml}/></p> : null}
+            {xml != null ? <p><XMLViewer xml={xml}/></p> : null}
         </div>
     </div>)
 }

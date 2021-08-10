@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
 
 const TestIdp = ()=> {
     const [entityid, setEntityid] = useState("");
@@ -30,11 +29,11 @@ const TestIdp = ()=> {
     }
     return <form>
         <div className="col-sm-4">
-        <p><label>Entity Id </label></p>
+        <label>Entity Id </label>
         <input className="form-control"  onChange={e=>{handleEntityid(e)} }></input>
         <br/>
         <div className="text-center">
-            <Link id="submit" className="btn btn-primary" onClick={(e)=>{validateEntityId(e)}}>Submit</Link>
+            <button id="submit" className="btn btn-primary" onClick={(e)=>{validateEntityId(e)}}>Submit</button>
         </div>
         {signOnUrl.data != null ? (signOnUrl.data.length > 1 ?  window.location.href = signOnUrl.data: <span className="col-sm-16"><br/>Entered entity id did not match. Please upload metadata First</span> ): null}
         </div>

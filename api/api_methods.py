@@ -21,7 +21,6 @@ class saml:
             elif(not xml_body.__contains__('X509Certificate')):
                 certificate_error += "Given file does not have any certificate."
 
-
             if(xml_body.__contains__('IDPSSODescriptor')):
                 if(not xml_body.__contains__('SingleSignOnService')):
                     sso_error += "Given file does not have single sign on service url."
@@ -46,7 +45,7 @@ class saml:
 
             elif(not xml_body.__contains__('SPSSODescriptor') or xml_body.__contains__('IDPSSODescriptor')):
                 error = "Given data is not a valid metadata."
-    
+
             return {
                 "metadata": metadata,
                 "error": error
@@ -96,7 +95,7 @@ class saml:
                     signOnUrl = str(metadata['singleSignonService'][0]['url'])
                     sql_query = "INSERT INTO metadata(entityId, signOnUrl) select \'" + entityID + "\', \'" + signOnUrl + "\' where not exists (select 1 from metadata where entityID = \'" + entityID + "\' and signOnUrl = \'" + signOnUrl + "\')"
 
-                
+
                 xml_content = parse_xml.format_metadata_with_certificate(xml_body)
                 database.execute_sql_query(sql_query)
             else:
@@ -108,7 +107,7 @@ class saml:
                 if(xml_body.__contains__('IDPSSODescriptor')):
                     if(not xml_body.__contains__('singleSignonService')):
                         error += "Given file does not have single sign on url.\n"
-                    
+
                 elif(xml_body.__contains__('SPSSODescriptor')):
                     if(not xml_body.__contains__('AssertionConsumerService')):
                         error += "Given file does not have acs url.\n"
@@ -133,7 +132,7 @@ class saml:
             cursor = database.execute_sql_query(sql_query)
             for row in cursor:
                 signOnUrl = row[0]
-            
+
             return signOnUrl
 
         else:
