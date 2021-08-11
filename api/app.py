@@ -10,6 +10,7 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+
 class saml_tool():
     @app.route("/parseMetadata", methods=['POST', 'GET'])
     @cross_origin()
@@ -22,12 +23,12 @@ class saml_tool():
     def format_certificate_with_header():
         certificate = saml.get_certificate_with_header()
         return {"certificate": certificate}
-        
+
     @app.route("/formatCertificate", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate():
         certificate = saml.format_certificate()
-        return {"certificate": certificate }
+        return {"certificate": certificate}
 
     @app.route("/uploadMetadata", methods=['POST', 'GET'])
     @cross_origin()

@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: ./docker/DockerFlask
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/code
+    environment:
+      FLASK_ENV: development
+  webapp:
+    container_name: webapp
+    build:
+      context: ./
+      dockerfile: ./docker/DockerNginx
+    ports:
+      - "8000:80"
