@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import Loader from "react-loader-spinner";
 import "../App.css";
 
 const XmlParser = () => {
@@ -16,6 +16,7 @@ const XmlParser = () => {
     metadata_error: null
   });
   const [data, setData] = useState(null);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
 
@@ -38,6 +39,7 @@ const XmlParser = () => {
     if (data === undefined || data == null) {
       alert("Please upload a valid url or file");
     } else {
+      setLoading(true)
       await fetch(`${REACT_APP_BACKEND_URL}/parseMetadata`, {
         method: "POST",
         mode: "cors",
@@ -55,6 +57,7 @@ const XmlParser = () => {
           metadata_error: json.metadata.error
         })
       )
+      setLoading(false)
     }
   };
   const handleUrl = (e) => {
@@ -70,6 +73,7 @@ const XmlParser = () => {
   };
 
   return (
+    <div>
     <form id="form">
       <div id="xml-parser" className="form-group col-sm-12">
         <div className="col-sm-6">
@@ -106,14 +110,17 @@ const XmlParser = () => {
 
           <br />
           <hr />
-
+          </div>
+          </div>
+          </form>
           <br/>
-          <div id="values">
+          {loading === true ? <p><Loader type="circle" color="#00BFFF" height={50} width={50} timeout={3000} /> </p>: 
+            <div id="values">
             <div>
               {resp.entityID != null ? (
                 <div>
                   {" "}
-                  <strong className="col-sm-4">Entity Id:</strong>
+                  <strong className="col-sm-3">Entity Id:</strong>
                   <div className="col-sm-8" >{resp.entityID.map(res => {
                     return <p key={res.index}>{res.content}</p>})}
                   </div>
@@ -126,10 +133,10 @@ const XmlParser = () => {
                 ? resp.singleLogoutService.map((url) => {
                     return (
                       <div key={url.index}>
-                        <strong className="col-sm-4">Single Logout Url:</strong>
+                        <strong className="col-sm-3">Single Logout Url:</strong>
                         <p className="col-sm-8">{url.Url}</p>
 
-                        <strong className="col-sm-4">
+                        <strong className="col-sm-3">
                           Single logout Binding:
                         </strong>
                         <p className="col-sm-8">{url.Binding}</p>
@@ -144,9 +151,9 @@ const XmlParser = () => {
                 ? resp.acsUrls.map((acsUrl) => {
                     return (
                       <div key={acsUrl.index}>
-                        <strong className="col-sm-4">Acs url: </strong>
+                        <strong className="col-sm-3">Acs url: </strong>
                         <p className="col-sm-8">{acsUrl.url} </p>
-                        <strong className="col-sm-4"> Acs url binding: </strong>
+                        <strong className="col-sm-3"> Acs url binding: </strong>
                         <p className="col-sm-8">{acsUrl.binding}</p>
                       </div>
                     );
@@ -159,12 +166,12 @@ const XmlParser = () => {
                 ? resp.singleSignonService.map((signon) => {
                     return (
                       <div key={signon.index}>
-                        <strong className="col-sm-4">
+                        <strong className="col-sm-3">
                           Single sign on url:{" "}
                         </strong>
                         <p className="col-sm-8">{signon.url}</p>
 
-                        <strong className="col-sm-4">
+                        <strong className="col-sm-3">
                           Single sign on Binding:{" "}
                         </strong>
                         <p className="col-sm-8">{signon.binding} </p>
@@ -174,26 +181,27 @@ const XmlParser = () => {
                   })
                 : null}{" "}
             </div>
-          </div>
-
-          <div className="certificate">
-            {resp.certificates != null
-              ? resp.certificates.map((cert) => {
-                  return (
-                    <div key={cert.index}>
-                      <strong className="col-sm-4">CERTIFICATE</strong>{" "}
-                      <p className="col-sm-8">{cert.content}</p>
-                    </div>
-                  );
-                })
-              : null}
-          </div>
-          <div className="col-sm-9">
+         
+            <div className="certificate">
+              {resp.certificates != null
+                ? resp.certificates.map((cert) => {
+                    return (
+                      <div key={cert.index}>
+                        <strong className="col-sm-3">CERTIFICATE</strong>{" "}
+                        <p className="col-sm-8">{cert.content}</p>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+            <div className="col-sm-9">
             { typeof resp.error === 'object' && resp.error !== null ? <span>{resp.error.entityID_error} <br/> {resp.error.certificate_error} <br/> {resp.error.sso_error} <br/> {resp.error.acs_error} </span> : <span>{resp.error}</span> }
           </div>
-        </div>
-      </div>
-    </form>
+          </div>
+          }
+    </div>
+          
+    
   );
 };
 export default XmlParser;

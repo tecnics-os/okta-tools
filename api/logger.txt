@@ -1,1 +1,3 @@
 
+no such table: metadata
+no such table: metadata

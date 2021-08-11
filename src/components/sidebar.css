@@ -76,3 +76,6 @@ span {
 textarea {
     resize: none;
 }
+.current {
+    background-color: #F2F5FF;
+}

@@ -29,7 +29,7 @@ const CertificateWithHeader = ()=> {
     var date = new Date();
     let present_date = date.getDate() + "" + (date.getMonth() + 1) + "" + date.getUTCFullYear() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
     let fileName = `certificate${present_date}.txt`
-    console.log(present_date)
+
     fileDownload(certificateWithHeader.data, fileName)
   }
     return <form>

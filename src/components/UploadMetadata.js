@@ -1,5 +1,8 @@
 import { useRef, useState } from "react"
 import XMLViewer from 'react-xml-viewer'
+import Loader from "react-loader-spinner";
+
+
 const UploadMetadata = ()=> {
     const [postData, setPostData] = useState();
     const [xml, setXml] = useState({
@@ -7,6 +10,7 @@ const UploadMetadata = ()=> {
         "error": undefined
     });
     const input = useRef();
+    const [loading,setLoading] = useState(false);
     const { REACT_APP_BACKEND_URL } = process.env;
     const handleUrl = (e)=> {
         setPostData(e.target.value)
@@ -22,8 +26,9 @@ const UploadMetadata = ()=> {
     const handleSubmission = async (e) => {
         e.preventDefault();
         if(postData === undefined) {
-            alert("Please upload a file or enter url")
+            alert("Please upload a file or enter the url")
         }else{
+            setLoading(true);
             await fetch(`${REACT_APP_BACKEND_URL}/uploadMetadata`, {
                 method: 'POST',
                 type: 'CORS',
@@ -38,6 +43,7 @@ const UploadMetadata = ()=> {
                   "content": data.content,
                   "error": data.error
               }))
+              setLoading(false)
         }
         input.current.value=null
 
@@ -45,21 +51,21 @@ const UploadMetadata = ()=> {
     return <form>
     <div className="form-group">
         <div className="col-xs-4">
-            <label>Enter the URL where your metadata is hosted(preferably the entityID):</label>
+            <label>Enter the URL where your metadata is hosted:</label>
             <br/>
             <input ref = {input} className="form-control" onChange={(e)=>{handleUrl(e)}}></input>
         <div/>
         <div>
         <legend>OR</legend>
-        <label>Select a metadata file from disk that you would like to upload directly.</label>
+        <label>Select a metadata file from disk that you would like to upload directly</label>
         <input ref={input} type="file" name="file" onChange ={(e)=>{handleFile(e)}} ></input>
         <br/>
         <button className="btn btn-primary" onClick={(e)=>{handleSubmission(e)}}>Fetch</button>
         <br/>
         <br/>
         <div>
-            {xml.error === "" ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
-            </div> : <div><br/><span className="col-sm-12">{xml.error}</span></div> }
+            {loading === true ? <p><Loader type="circle" color="#00BFFF" height={50} width={50} timeout={3000} /> </p> : <div>{xml.error === "" ? <div className="wrap-xml"> Metadata uploaded successfully. <br/> Here is the copy of it <br/> <p className="col-sm-8"> <XMLViewer  xml={xml.content}/> </p>
+            </div> : <div><br/><span className="col-sm-12">{xml.error}</span></div> }</div>}
         </div>
     </div>
     </div>

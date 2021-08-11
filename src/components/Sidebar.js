@@ -8,28 +8,52 @@ import UploadMetadata from './UploadMetadata'
 import XmlParser from './XmlParser'
 import Home from './Home'
 import { BrowserRouter as Router } from 'react-router-dom'
+import lifecycle from 'react-pure-lifecycle'
 
+const methods = {
+  componentDidMount(props){
+    let header = document.getElementsByClassName("btn");
+    let fullpath = window.location.href;
+    let requiredPath = "/" + fullpath.split("/")[3]
+    for(let counter = 0; counter < (header.length - 1); counter ++) {
+      let getToAttribute = header[counter].attributes[1]
+      let toValue = getToAttribute.value
+      let value = requiredPath.localeCompare(toValue)
+      if(value === 0){
+        header[counter].className = "btn btn-sidebar current"
+      }
+    }
+  }
+}
 const Sidebar = ()=> {
-  
+    const removeClass = ((e)=> { 
+      let elements = document.getElementById("links")
+      Object.entries(elements.childNodes).forEach((elem) => {
+        elem[1].childNodes[0].className = "btn btn-sidebar"
+      });
+      e.target.className = "btn btn-sidebar current"
+      
+    })
+
     return <Router>
-      <div className='sidebar-header'>
+      <div id="links" className='sidebar-header'>
           <li>
-            <Link className="btn btn-sidebar" to="/parse-xml">Parse Metadata</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/parse-xml">Parse Metadata</Link>
           </li>
           <li>
-            <Link className="btn btn-sidebar" to="/build-metadata">Build IDP Metadata</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/build-metadata">Build IDP Metadata</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/certificateWithHeader">Format X509 Certificate</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/certificateWithHeader">Format X509 Certificate</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/upload-metadata">Upload IDP Metadata</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/upload-metadata">Upload IDP Metadata</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/download-metadata">Download Metadata</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/download-metadata">Download Metadata</Link>
           </li>
           <li >
-            <Link className="btn btn-sidebar" to="/test-idp">Test IDP</Link>
+            <Link onClick={(e)=>{removeClass(e)}} className="btn btn-sidebar" to="/test-idp">Test IDP</Link>
           </li>
         </div>
         <div className="components overflow-auto">
@@ -59,4 +83,4 @@ const Sidebar = ()=> {
     </div>
     </Router>
 }
-export default Sidebar;
+export default lifecycle(methods)(Sidebar);

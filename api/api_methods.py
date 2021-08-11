@@ -82,7 +82,7 @@ class saml:
             xml_content = None
             error = ""
             metadata = ""
-            if(xml_body.__contains__('entityID') & xml_body.__contains__('X509Certificate') & xml_body.__contains__('SingleSignOnService') or xml_body.__contains__('AssertionConsumerService')):
+            if(xml_body.startswith("<") and xml_body.endswith(">") and  xml_body.__contains__('entityID') and xml_body.__contains__('X509Certificate') and (xml_body.__contains__('SingleSignOnService') or xml_body.__contains__('AssertionConsumerService'))):
                 entityID = ""
                 signOnUrl = ""
                 metadata = parse_xml.parse_metadata(xml_body)
