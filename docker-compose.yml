@@ -7,7 +7,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./api:/code
+      - ./api/:/code
     environment:
       FLASK_ENV: development
   webapp:

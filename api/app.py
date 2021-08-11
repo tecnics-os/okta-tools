@@ -7,30 +7,31 @@ from flask_cors import CORS, cross_origin
 
 sys.path.append(".")
 app = Flask(__name__)
+# app.config["APPLICATION_ROOT"] = "/api"
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 class saml_tool():
-    @app.route("/parseMetadata", methods=['POST', 'GET'])
+    @app.route("/api/parseMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parser():
         metadata = saml.extract_xml_attributes()
         return metadata
 
-    @app.route("/certificateWithHeader", methods=['POST', 'GET'])
+    @app.route("/api/certificateWithHeader", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate_with_header():
         certificate = saml.get_certificate_with_header()
         return {"certificate": certificate}
 
-    @app.route("/formatCertificate", methods=['POST', 'GET'])
+    @app.route("/api/formatCertificate", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate():
         certificate = saml.format_certificate()
         return {"certificate": certificate}
 
-    @app.route("/uploadMetadata", methods=['POST', 'GET'])
+    @app.route("/api/uploadMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parse():
         xml = saml.get_xml_content()
@@ -39,7 +40,7 @@ class saml_tool():
             "error": xml['error']
         }
 
-    @app.route("/validateEntityId", methods=['POST', 'GET'])
+    @app.route("/api/validateEntityId", methods=['POST', 'GET'])
     @cross_origin()
     def validate_entity_id():
         signOnUrl = saml.validate_entity_id()
