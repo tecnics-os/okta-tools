@@ -14,6 +14,11 @@ body {
   border-radius: 50%;
 }
 
+.circle-logo-icon {
+  border: 8px solid #00297a;
+  padding: 4px;
+  border-radius: 50%;
+}
 .sidebar-hover:hover {
   background-color: #f2f5ff;
 }
