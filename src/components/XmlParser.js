@@ -159,7 +159,7 @@ const XmlParser = () => {
                           Single Logout Url
                         </label>
                         <div className="col-sm-9">
-                          <label className="col-sm-2 col-form-label">
+                          <label className="col-sm-8 col-form-label">
                             {url.Url}
                           </label>
                         </div>
@@ -172,7 +172,7 @@ const XmlParser = () => {
                           Single Logout Binding
                         </label>
                         <div className="col-sm-9">
-                          <label className="col-sm-2 col-form-label">
+                          <label className="col-sm-8 col-form-label">
                             {url.Binding}
                           </label>
                         </div>
@@ -193,7 +193,7 @@ const XmlParser = () => {
                           Acs url
                         </label>
                         <div className="col-sm-9">
-                          <label className="col-sm-2 col-form-label">
+                          <label className="col-sm-8 col-form-label">
                             {acsUrl.url}
                           </label>
                         </div>
@@ -228,7 +228,7 @@ const XmlParser = () => {
                           Single sign on url
                         </label>
                         <div className="col-sm-9">
-                          <label className="col-sm-2 col-form-label">
+                          <label className="col-sm-8 col-form-label">
                             {signon.url}
                           </label>
                         </div>
@@ -241,7 +241,7 @@ const XmlParser = () => {
                           Single sign on Binding
                         </label>
                         <div className="col-sm-9">
-                          <label className="col-sm-2 col-form-label">
+                          <label className="col-sm-8 col-form-label">
                             {signon.binding}
                           </label>
                         </div>
@@ -262,7 +262,7 @@ const XmlParser = () => {
                         Certificate
                       </label>
                       <div className="col-sm-9">
-                        <label className="col-sm-2 col-form-label">
+                        <label className="col-sm-8 col-form-label">
                           {cert.content}
                         </label>
                       </div>
@@ -277,21 +277,21 @@ const XmlParser = () => {
             <div className="col-sm-6">
               {typeof resp.error === "object" && resp.error !== null ? (
                 <>
-                  <div className="alert alert-danger" role="alert">
+                  {resp.error.entityID_error !== "" ? <div className="alert alert-danger" role="alert">
                     {resp.error.entityID_error}
-                  </div>
-                  <div className="alert alert-danger" role="alert">
+                  </div>:  null}
+                  {resp.error.certificate_error !== "" ? <div className="alert alert-danger" role="alert">
                     {resp.error.certificate_error}
-                  </div>
-                  <div className="alert alert-danger" role="alert">
+                  </div>: null}
+                  {resp.error.sso_error !== undefined && resp.error.sso_error !== "" ? <div className="alert alert-danger" role="alert">
                     {resp.error.sso_error}
-                  </div>
-                  <div className="alert alert-danger" role="alert">
+                  </div>: null}
+                  {resp.error.acs_error !== "" && resp.error.acs_error !== undefined ? <div className="alert alert-danger" role="alert">
                     {resp.error.acs_error}
-                  </div>
+                  </div>: null}
                 </>
               ) : (
-                <div>{resp.error}</div>
+                <div>{resp.error !== "" ? <>{resp.error}</>: null}</div>
               )}
             </div>
           </form>
@@ -301,99 +301,3 @@ const XmlParser = () => {
   );
 };
 export default XmlParser;
-
-//Previous code
-
-// <div id="values">
-//   <div>
-//     {resp.entityID != null ? (
-//       <div className="row mb-3">
-//         <label className="col-sm-2 col-form-label">Entity Id</label>
-//         <div className="col-sm-10">
-//           {resp.entityID.map((res) => {
-//             return (
-//               <label className="col-sm-2 col-form-label" key={res.index}>
-//                 {res.content}
-//               </label>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     ) : null}
-//   </div>
-
-//   <div>
-//     {resp.singleLogoutService != null
-//       ? resp.singleLogoutService.map((url) => {
-//           return (
-//             <div key={url.index}>
-//               <strong className="col-sm-3">Single Logout Url:</strong>
-//               <p className="col-sm-8">{url.Url}</p>
-
-//               <strong className="col-sm-3">
-//                 Single logout Binding:
-//               </strong>
-//               <p className="col-sm-8">{url.Binding}</p>
-//             </div>
-//           );
-//         })
-//       : null}
-//   </div>
-
-//   <div>
-//     {resp.acsUrls != null
-//       ? resp.acsUrls.map((acsUrl) => {
-//           return (
-//             <div key={acsUrl.index}>
-//               <strong className="col-sm-3">Acs url: </strong>
-//               <p className="col-sm-8">{acsUrl.url} </p>
-//               <strong className="col-sm-3"> Acs url binding: </strong>
-//               <p className="col-sm-8">{acsUrl.binding}</p>
-//             </div>
-//           );
-//         })
-//       : null}
-//   </div>
-
-//   <div className="signon">
-//     {resp.singleSignonService != null
-//       ? resp.singleSignonService.map((signon) => {
-//           return (
-//             <div key={signon.index}>
-//               <strong className="col-sm-3">Single sign on url: </strong>
-//               <p className="col-sm-8">{signon.url}</p>
-
-//               <strong className="col-sm-3">
-//                 Single sign on Binding:
-//               </strong>
-//               <p className="col-sm-8">{signon.binding} </p>
-//             </div>
-//           );
-//         })
-//       : null}
-//   </div>
-
-//   <div className="certificate">
-//     {resp.certificates != null
-//       ? resp.certificates.map((cert) => {
-//           return (
-//             <div key={cert.index}>
-//               <strong className="col-sm-3">CERTIFICATE</strong>
-//               <p className="col-sm-8">{cert.content}</p>
-//             </div>
-//           );
-//         })
-//       : null}
-//   </div>
-//   <div className="col-sm-9">
-//     {typeof resp.error === "object" && resp.error !== null ? (
-//       <span>
-//         {resp.error.entityID_error} <br />
-//         {resp.error.certificate_error} <br /> {resp.error.sso_error}
-//         <br /> {resp.error.acs_error}
-//       </span>
-//     ) : (
-//       <span>{resp.error}</span>
-//     )}
-//   </div>
-// </div>

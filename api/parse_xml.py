@@ -105,12 +105,13 @@ class parse_xml:
         return xml_body
 
     def format_certificate(certificate_in_string):
+
         certificate_with_no_whitespaces = certificate_in_string.replace(" ", "")
         certificate_with_no_newline_tag = certificate_with_no_whitespaces.replace("\n", "")
         counter = 0
         certificate_length = len(certificate_with_no_newline_tag)
         formatted_certificate = ""
         while (counter <= certificate_length):
-            formatted_certificate = formatted_certificate + certificate_with_no_newline_tag[counter: counter + 64] + "\n"
-            counter = counter + 64
+            formatted_certificate = formatted_certificate + certificate_with_no_newline_tag[counter: counter + 76] + "\n"
+            counter = counter + 76
         return formatted_certificate
