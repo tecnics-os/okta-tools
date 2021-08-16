@@ -1,47 +1,84 @@
-import { useState } from 'react'
-import '../App.css'
-import fileDownload from 'js-file-download';
-const CertificateWithHeader = ()=> {
-
+import { useState } from "react";
+import "../App.css";
+import fileDownload from "js-file-download";
+const CertificateWithHeader = () => {
   const [certificate, setCertificate] = useState();
   const [certificateWithHeader, setCertificateWithHeader] = useState();
   const { REACT_APP_BACKEND_URL } = process.env;
-  const handleCertificate = (e)=> {
-    setCertificate(e.target.value)
-  }
-  const formatCertificate = (e)=> {
+  const handleCertificate = (e) => {
+    setCertificate(e.target.value);
+  };
+  const formatCertificate = (e) => {
     e.preventDefault();
-    if(certificate === null || certificate === undefined){
-      alert("Please enter a valid certificate")
-    }else{
+    if (certificate === null || certificate === undefined) {
+      alert("Please enter a valid certificate");
+    } else {
       fetch(`${REACT_APP_BACKEND_URL}/certificateWithHeader`, {
-          method: 'POST',
-          body: certificate,
+        method: "POST",
+        body: certificate,
       })
-      .then(res => res.json())
-      .then(data => {
-          setCertificateWithHeader(data)
-      })
+        .then((res) => res.json())
+        .then((data) => {
+          setCertificateWithHeader(data);
+        });
     }
-
-  }
-  const handleCertificateSave = ()=> {
+  };
+  const handleCertificateSave = () => {
     var date = new Date();
-    let present_date = date.getDate() + "" + (date.getMonth() + 1) + "" + date.getUTCFullYear() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-    let fileName = `certificate${present_date}.txt`
+    let present_date =
+      date.getDate() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getUTCFullYear() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds();
+    let fileName = `certificate${present_date}.txt`;
 
-    fileDownload(certificateWithHeader.data, fileName)
-  }
-    return <form>
-        <div className="form-group">
-          <div className="col-sm-4">
-            <textarea id="certificate-text-area" className="form-control"  onChange={(e)=>{handleCertificate(e)}}></textarea>
-            <br/>
-            <button className="btn btn-primary" onClick={(e)=>{formatCertificate(e)}}>format certificate</button>
-            {certificateWithHeader != null ? <p className="col-sm-10">{certificateWithHeader.certificate} <br/><button className="btn btn-primary" onClick={handleCertificateSave}>download certificate</button></p>: null}
+    fileDownload(certificateWithHeader.data, fileName);
+  };
+  return (
+    <form>
+      <div className="mb-3 col-6 form-group">
+        <textarea
+          style={{ height: "400px" }}
+          id="certificate-text-area"
+          className="form-control"
+          onChange={(e) => {
+            handleCertificate(e);
+          }}
+        ></textarea>
+      </div>
+      <div className="mb-3 col-6 form-group">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={(e) => {
+            formatCertificate(e);
+          }}
+        >
+          Format certificate
+        </button>
+      </div>
+      {certificateWithHeader != null ? (
+        <>
+          <div className="mb-3 col-6 form-group">
+            <label htmlFor="supportContactName" className="form-label">
+              certificateWithHeader.certificate
+            </label>
           </div>
-        </div>
+          <div className="mb-3 col-6 form-group">
+            <button className="btn btn-primary" onClick={handleCertificateSave}>
+              Download certificate
+            </button>
+          </div>
+        </>
+      ) : null}
     </form>
-
-}
-export default CertificateWithHeader
+  );
+};
+export default CertificateWithHeader;
