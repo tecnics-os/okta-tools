@@ -83,7 +83,6 @@ const BuildMetadata = () => {
       supportContactName: values.supportContactName,
       supportContactEmail: values.supportContactEmail,
     };
-    console.log(metadata)
 
     if (
       values.entityID === null ||
