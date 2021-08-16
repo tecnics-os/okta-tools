@@ -144,9 +144,6 @@ const XmlParser = () => {
                     );
                   })}
                 </div>
-                <div className="col-sm-1">
-                  <i className="bi bi-question-circle"></i>
-                </div>
               </div>
             ) : null}
 
@@ -163,9 +160,7 @@ const XmlParser = () => {
                             {url.Url}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                       <div key={url.index} className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -176,9 +171,7 @@ const XmlParser = () => {
                             {url.Binding}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                     </>
                   );
@@ -197,9 +190,7 @@ const XmlParser = () => {
                             {acsUrl.url}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -210,9 +201,7 @@ const XmlParser = () => {
                             {acsUrl.binding}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                     </>
                   );
@@ -232,9 +221,7 @@ const XmlParser = () => {
                             {signon.url}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -245,9 +232,7 @@ const XmlParser = () => {
                             {signon.binding}
                           </label>
                         </div>
-                        <div className="col-sm-1">
-                          <i className="bi bi-question-circle"></i>
-                        </div>
+                        
                       </div>
                     </>
                   );
@@ -266,9 +251,7 @@ const XmlParser = () => {
                           {cert.content}
                         </label>
                       </div>
-                      <div className="col-sm-1">
-                        <i className="bi bi-question-circle"></i>
-                      </div>
+                      
                     </div>
                   );
                 })
