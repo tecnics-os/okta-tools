@@ -11,7 +11,7 @@ import lifecycle from "react-pure-lifecycle";
 
 const methods = {
   componentDidMount(props) {
-    let header = document.getElementsByClassName("btn");
+    let header = document.getElementsByClassName("nav-link");
     let fullpath = window.location.href;
     let requiredPath = "/" + fullpath.split("/")[3];
     for (let counter = 0; counter < header.length - 1; counter++) {
@@ -19,28 +19,23 @@ const methods = {
       let toValue = getToAttribute.value;
       let value = requiredPath.localeCompare(toValue);
       if (value === 0) {
-        header[counter].className = "btn btn-sidebar current";
+        header[counter].className = "nav-link active";
+      }else{
+        header[counter].className = "nav-link";
       }
     }
   },
 };
-const Sidebar = () => {
-  document.body.addEventListener("click", function (e) {
-    if (e.target.className === "nav-link") {
-      document
-        .getElementsByClassName("nav-link active")[0]
-        .classList.remove("active");
-      e.target.classList.add("active");
-    }
-  });
-  // const removeClass = (e) => {
-  //   let elements = document.getElementById("links");
-  //   Object.entries(elements.childNodes).forEach((elem) => {
-  //     elem[1].childNodes[0].className = "btn btn-sidebar";
-  //   });
-  //   e.target.className = "btn btn-sidebar current";
-  // };
 
+const Sidebar = () => {
+  const removeClass = ((e)=> { 
+    let elements = document.getElementById("list")
+    Object.entries(elements.childNodes).forEach((elem) => {
+      elem[1].childNodes[0].className = "nav-link"
+    });
+    e.target.className = "nav-link active"
+  })
+  
   return (
     <Router>
       <div className="row" style={{ height: "100%" }}>
@@ -48,39 +43,39 @@ const Sidebar = () => {
           id="sidebar"
           className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse p-0"
         >
-          <ul className="nav nav-pills flex-column">
+          <ul id="list" className="nav nav-pills flex-column">
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link active" to="/">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/">
                 Home
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/parse-xml">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/parse-xml">
                 Parse Metadata
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/build-metadata">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/build-metadata">
                 Build IDP Metadata
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/certificateWithHeader">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/certificateWithHeader">
                 Format X509 Certificate
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/upload-metadata">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/upload-metadata">
                 Upload IDP Metadata
               </Link>
             </li>
-            <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/download-metadata">
-                Download Metadata
+            <li className="nav-item sidebar-hover disabled">
+              <Link onClick={(e)=>{e.preventDefault()}} className="nav-link disabled" to="/download-metadata">
+                Download Metadata(coming soon)
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link className="nav-link" to="/test-idp">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/test-idp">
                 Test IDP
               </Link>
             </li>

@@ -24,22 +24,8 @@ const CertificateWithHeader = () => {
     }
   };
   const handleCertificateSave = () => {
-    var date = new Date();
-    let present_date =
-      date.getDate() +
-      "" +
-      (date.getMonth() + 1) +
-      "" +
-      date.getUTCFullYear() +
-      "" +
-      date.getHours() +
-      "" +
-      date.getMinutes() +
-      "" +
-      date.getSeconds();
-    let fileName = `certificate${present_date}.txt`;
-
-    fileDownload(certificateWithHeader.data, fileName);
+    let fileName = `certificate.pem`;
+    fileDownload(certificateWithHeader.certificate, fileName);
   };
   return (
     <form>
@@ -68,7 +54,7 @@ const CertificateWithHeader = () => {
         <>
           <div className="mb-3 col-6 form-group">
             <label htmlFor="supportContactName" className="form-label">
-              certificateWithHeader.certificate
+              {certificateWithHeader.certificate}
             </label>
           </div>
           <div className="mb-3 col-6 form-group">

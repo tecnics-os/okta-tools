@@ -83,6 +83,7 @@ const BuildMetadata = () => {
       supportContactName: values.supportContactName,
       supportContactEmail: values.supportContactEmail,
     };
+
     if (
       values.entityID === null ||
       values.signOnService === null ||
@@ -90,14 +91,14 @@ const BuildMetadata = () => {
     ) {
       window.scrollTo(0, 0);
       if (values.entityID === null) {
-        document.getElementById("entityId").innerHTML =
+        document.getElementById("entityIdHelp").innerHTML =
           "This field is required";
       }
       if (values.signOnService === null) {
-        document.getElementById("sso").innerHTML = "This field is required";
+        document.getElementById("ssisHelp").innerHTML = "This field is required";
       }
       if (cert === null) {
-        document.getElementById("cert").innerHTML = "This field is required";
+        document.getElementById("certHelp").innerHTML = "This field is required";
       }
     } else {
       formataDataToXml(metadata);
@@ -218,7 +219,7 @@ const BuildMetadata = () => {
             Single Sign In Service End Point
           </label>
           <input
-            name="signInService"
+            name="signOnService"
             ref={input}
             type="text"
             className="form-control"

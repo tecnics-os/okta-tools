@@ -13,7 +13,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-2 d-flex align-items-center">
-            <a href="#" className="btn btn-primary">
+            <a href="/parse-xml" className="btn btn-primary">
               View Tool
             </a>
           </div>
@@ -31,7 +31,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-2 d-flex align-items-center">
-            <a href="#" className="btn btn-primary">
+            <a href="/build-metadata" className="btn btn-primary">
               View Tool
             </a>
           </div>
@@ -49,7 +49,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-2 d-flex align-items-center">
-            <a href="#" className="btn btn-primary">
+            <a href="/certificateWithHeader" className="btn btn-primary">
               View Tool
             </a>
           </div>
@@ -68,7 +68,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-2 d-flex align-items-center">
-            <a href="#" className="btn btn-primary">
+            <a href="/test-idp" className="btn btn-primary">
               View Tool
             </a>
           </div>

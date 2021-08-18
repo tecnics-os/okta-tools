@@ -59,7 +59,7 @@ class saml:
             certificate_in_string = parse_xml.decode_request_body_to_string(certificate_data)
             formatted_certificate = parse_xml.format_certificate(certificate_in_string)
             header = "-----BEGIN CERTIFICATE-----\n"
-            footer= "\n-----END CERTIFICATE-----"
+            footer= "-----END CERTIFICATE-----\n"
             certificate_with_header = header + formatted_certificate + footer
             return certificate_with_header
         else:
