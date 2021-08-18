@@ -1,7 +1,8 @@
 from database import database
 from api_methods import saml
+from api_methods import parse_xml
 import sys
-
+from flask import request
 from flask import Flask
 from flask_cors import CORS, cross_origin
 
@@ -16,35 +17,58 @@ class saml_tool():
     @app.route("/api/parseMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parser():
-        metadata = saml.extract_xml_attributes()
-        return metadata
+        if request.method == 'POST':
+            request_body = request.get_data()
+            request_body_in_string = parse_xml.decode_request_body_to_string(request_body)
+            metadata = saml.extract_xml_attributes(request_body_in_string)
+            return metadata
+        else:
+            return "Invalid request"
 
+        
     @app.route("/api/certificateWithHeader", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate_with_header():
-        certificate = saml.get_certificate_with_header()
-        return {"certificate": certificate}
+        if request.method == 'POST':
+            certificate_data = request.get_data()
+            certificate_in_string = parse_xml.decode_request_body_to_string(certificate_data)
+            certificate = saml.get_certificate_with_header(certificate_in_string)
+            return {"certificate": certificate}
+        else:
+            return "Invalid request"
 
     @app.route("/api/formatCertificate", methods=['POST', 'GET'])
     @cross_origin()
     def format_certificate():
-        certificate = saml.format_certificate()
-        return {"certificate": certificate}
+        if request.method == 'POST':
+            certificate_data = request.get_data();
+            cert_data_in_string = parse_xml.decode_request_body_to_string(certificate_data)
+            certificate = saml.format_certificate(cert_data_in_string)
+            return {"certificate": certificate}
+        else:
+            return "Invalid request"
 
     @app.route("/api/uploadMetadata", methods=['POST', 'GET'])
     @cross_origin()
     def xml_parse():
-        xml = saml.get_xml_content()
-        return {
-            "content": xml['xml-content'],
-            "error": xml['error']
-        }
+        if request.method == 'POST':
+            request_body = request.get_data()
+            xml_body_in_string = parse_xml.decode_request_body_to_string(request_body)
+            xml = saml.get_xml_content(xml_body_in_string)
+            return xml
+        else:
+            return "Invalid request"
 
     @app.route("/api/validateEntityId", methods=['POST', 'GET'])
     @cross_origin()
     def validate_entity_id():
-        signOnUrl = saml.validate_entity_id()
-        return {"signOnUrl": signOnUrl}
+        if request.method == 'POST':
+            request_body = request.get_data()
+            entityId = parse_xml.decode_request_body_to_string(request_body)
+            signOnUrl = saml.validate_entity_id(entityId)
+            return {"signOnUrl": signOnUrl}
+        else:
+            return "Invalid request"
 
     @app.before_first_request
     def init_database():

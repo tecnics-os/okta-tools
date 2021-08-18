@@ -28,6 +28,7 @@ const methods = {
 };
 
 const Sidebar = () => {
+
   const removeClass = ((e)=> { 
     let elements = document.getElementById("list")
     Object.entries(elements.childNodes).forEach((elem) => {
@@ -45,7 +46,7 @@ const Sidebar = () => {
         >
           <ul id="list" className="nav nav-pills flex-column">
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link active" to="/">
                 Home
               </Link>
             </li>

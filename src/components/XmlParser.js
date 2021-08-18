@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import Loader from "react-loader-spinner";
 import "../App.css";
+import HelpPopper from "./HelpPopper";
+import { IoIosHelpCircle } from "react-icons/io";
+import DownloadLink from "react-download-link";
 
 const XmlParser = () => {
   const file = useRef("");
@@ -17,6 +20,8 @@ const XmlParser = () => {
   });
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isShown, setIsShown] = useState(false);
+  const [signOnShow, setSignOnShow] = useState(false);
 
   useEffect(() => {}, [resp]);
 
@@ -144,6 +149,12 @@ const XmlParser = () => {
                     );
                   })}
                 </div>
+                <div className="col-auto" onMouseEnter={() => setIsShown(true)}
+                      onMouseLeave={() => setIsShown(false)} ><IoIosHelpCircle></IoIosHelpCircle></div>
+                      <br></br>
+                      {isShown && (
+                            <div className="row-auto"><HelpPopper image="/images/entityId.png"></HelpPopper></div>         
+                          )} 
               </div>
             ) : null}
 
@@ -221,7 +232,13 @@ const XmlParser = () => {
                             {signon.url}
                           </label>
                         </div>
-                        
+                        <div className="col-auto" onMouseEnter={() => setSignOnShow(true)}
+                      onMouseLeave={() => setSignOnShow(false)} ><IoIosHelpCircle></IoIosHelpCircle></div>
+                      <br></br>
+                      {signOnShow && (
+                            <div className="row-auto"><HelpPopper image="/images/SingleSignOn.png"></HelpPopper>
+                            </div>         
+                          )}  
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -231,7 +248,7 @@ const XmlParser = () => {
                           <label className="col-sm-8 col-form-label">
                             {signon.binding}
                           </label>
-                        </div>
+                        </div>  
                         
                       </div>
                     </>
@@ -251,7 +268,13 @@ const XmlParser = () => {
                           {cert.content}
                         </label>
                       </div>
-                      
+                      <DownloadLink
+                              className="btn btn-primary"
+                              label="download"
+                              style={{ textDecoration: 'none' }}
+                              filename="certificate.crt"
+                              exportFile={()=>"".concat(cert.content)}
+                          />
                     </div>
                   );
                 })
