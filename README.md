@@ -13,6 +13,21 @@ Project is built on top of React and Flask.
 
 Starting the project need running a front-end and a backend.
 
+## running thr project with Docker
+
+Running the project with docker is the simple with docker
+
+pre prerequisites
+
+- Docker 20.10.x or later
+- docker-compose 1.29.X or later
+
+it would work on other docker versions, the above are the tested ones
+
+> `sudo docker-compose up`
+
+- visit the url http://localhost:8000
+
 ### starting the react project
 
 > `yarn start`
