@@ -2,6 +2,8 @@ from api_methods import saml
 import requests
 import xml.etree.ElementTree as ET
 import sys
+import bcrypt
+from bcrypt_password_checker import password_checker
 sys.path.append("../api")
 class TestAppMethods:
     API_URL = "http://127.0.0.1:5000/api"
@@ -10,6 +12,7 @@ class TestAppMethods:
     FORMAT_CERTIFICATE_URL = '{}/formatCertificate'.format(API_URL)
     UPLOAD_METDATA_URL = '{}/uploadMetadata'.format(API_URL)
     VALIDATE_ENTITYID_URL = '{}/validateEntityId'.format(API_URL)
+    PASSWORD_HASH_URL = '{}/verifyPasswordHash'.format(API_URL)
     urls = [PARSE_METADATA_URL, CERTIFICATE_URL, FORMAT_CERTIFICATE_URL, UPLOAD_METDATA_URL, VALIDATE_ENTITYID_URL]
     
     def get_url_test(url):
@@ -91,6 +94,14 @@ class TestAppMethods:
         assert certificate_data_in_string.startswith('-----BEGIN CERTIFICATE-----')
         assert certificate_data_in_string.endswith('-----END CERTIFICATE-----\n')
         assert certificate_data_in_string[(index_after_header + 1) + 76 ] == '\n'
+
+    def test_password_hash(self):
+        password = b"password"
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password, salt).decode('UTF-8')
+        status = password_checker.verify_password_hash("password", hashed)
+        assert status['status'] == 'success, Its a valid password hash'
+
 
 
 

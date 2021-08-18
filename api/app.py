@@ -1,7 +1,9 @@
 from database import database
 from api_methods import saml
 from api_methods import parse_xml
+from bcrypt_password_checker import password_checker
 import sys
+import ast
 from flask import request
 from flask import Flask
 from flask_cors import CORS, cross_origin
@@ -67,6 +69,19 @@ class saml_tool():
             entityId = parse_xml.decode_request_body_to_string(request_body)
             signOnUrl = saml.validate_entity_id(entityId)
             return {"signOnUrl": signOnUrl}
+        else:
+            return "Invalid request"
+
+    @app.route("/api/verifyPasswordHash", methods=['POST', 'GET'])
+    @cross_origin()
+    def verify_password_hash():
+        if request.method == 'POST':
+            request_json = request.get_json()
+            password = request_json['password']
+            hash_password = request_json['hashedpassword']
+            status = password_checker.verify_password_hash(password, hash_password)
+            return status
+
         else:
             return "Invalid request"
 

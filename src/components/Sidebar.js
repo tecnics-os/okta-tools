@@ -8,6 +8,7 @@ import XmlParser from "./XmlParser";
 import Home from "./Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import lifecycle from "react-pure-lifecycle";
+import PasswordHashVerifier from "./PasswordHashVerifier";
 
 const methods = {
   componentDidMount(props) {
@@ -77,7 +78,12 @@ const Sidebar = () => {
             </li>
             <li className="nav-item sidebar-hover">
               <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/test-idp">
-                Test IDP
+                Test Okta SAML App
+              </Link>
+            </li>
+            <li className="nav-item sidebar-hover">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/password-hash-verifier">
+                Password hash verifier
               </Link>
             </li>
           </ul>
@@ -105,6 +111,10 @@ const Sidebar = () => {
             <Route path="/test-idp" exact>
               <TestIdp />
             </Route>
+            <Route path="/password-hash-verifier" exact>
+              <PasswordHashVerifier />
+            </Route>
+
           </Switch>
         </main>
       </div>

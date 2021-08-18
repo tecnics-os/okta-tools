@@ -2,6 +2,7 @@ from logging import error
 from database import database
 from parse_xml import parse_xml
 from flask import request
+import ast
 
 class saml:
     def extract_xml_attributes(request_body_in_string):
@@ -114,3 +115,8 @@ class saml:
             signOnUrl = row[0]
 
         return signOnUrl
+
+    def convert_body_to_dict(request_body):
+        decode_request_body = request_body.decode('UTF-8')
+        dict_body = ast.literal_eval(decode_request_body)
+        return dict_body
