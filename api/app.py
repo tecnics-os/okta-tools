@@ -1,7 +1,9 @@
+from base64 import encode
 from database import database
 from api_methods import saml
 from api_methods import parse_xml
 from bcrypt_password_checker import password_checker
+from jwt_decoder import jwt_viewer
 import sys
 import ast
 from flask import request
@@ -84,6 +86,21 @@ class saml_tool():
 
         else:
             return "Invalid request"
+        
+    @app.route("/api/decodeJwtToken", methods=['POST', 'GET'])
+    @cross_origin()
+    def decode_jwt_token():
+        if request.method == 'POST':
+            req_body = request.get_json()
+            encoded_string = req_body['encoded_token']
+            signature = req_body['secret']
+            algorithm = req_body['algoritm'] 
+            data = jwt_viewer.decode_encoded_string(encoded_string, signature, algorithm)
+            return data
+        else:
+            return "Invalid request"
+
+
 
     @app.before_first_request
     def init_database():

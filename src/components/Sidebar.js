@@ -9,6 +9,7 @@ import Home from "./Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import lifecycle from "react-pure-lifecycle";
 import PasswordHashVerifier from "./PasswordHashVerifier";
+import JwtViewer from "./JwtViewer";
 
 const methods = {
   componentDidMount(props) {
@@ -83,7 +84,12 @@ const Sidebar = () => {
             </li>
             <li className="nav-item sidebar-hover">
               <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/password-hash-verifier">
-                Password hash verifier
+                Password Hash Verifier
+              </Link>
+            </li>
+            <li className="nav-item sidebar-hover">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/jwt-viewer">
+                JWT viewer
               </Link>
             </li>
           </ul>
@@ -113,6 +119,9 @@ const Sidebar = () => {
             </Route>
             <Route path="/password-hash-verifier" exact>
               <PasswordHashVerifier />
+            </Route>
+            <Route path="/jwt-viewer" exact>
+              <JwtViewer/>
             </Route>
 
           </Switch>
