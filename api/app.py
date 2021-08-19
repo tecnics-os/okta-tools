@@ -92,14 +92,10 @@ class saml_tool():
     def decode_jwt_token():
         if request.method == 'POST':
             req_body = request.get_json()
-            encoded_string = req_body['encoded_token']
-            signature = req_body['secret']
-            algorithm = req_body['algoritm'] 
-            data = jwt_viewer.decode_encoded_string(encoded_string, signature, algorithm)
+            data = jwt_viewer.decode_encoded_string(req_body)
             return data
         else:
             return "Invalid request"
-
 
 
     @app.before_first_request
