@@ -10,6 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import lifecycle from "react-pure-lifecycle";
 import PasswordHashVerifier from "./PasswordHashVerifier";
 import JwtViewer from "./JwtViewer";
+import HarViewer from "./HarViewer";
 
 const methods = {
   componentDidMount(props) {
@@ -92,6 +93,11 @@ const Sidebar = () => {
                 JWT viewer
               </Link>
             </li>
+            <li className="nav-item sidebar-hover">
+              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/har-viewer">
+                Har Viewer
+              </Link>
+            </li>
           </ul>
         </nav>
         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-2">
@@ -122,6 +128,9 @@ const Sidebar = () => {
             </Route>
             <Route path="/jwt-viewer" exact>
               <JwtViewer/>
+            </Route>
+            <Route path="/har-viewer" exact>
+              <HarViewer/>
             </Route>
 
           </Switch>
