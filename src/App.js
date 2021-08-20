@@ -23,10 +23,19 @@ function App() {
         <Sidebar />
       </div>
       <footer id="footer" className="footer mt-auto bg-light footer-border">
-        <div className="container-fluid d-flex justify-content-center align-items-center mt-3">
+        <div className="container-fluid d-flex justify-content-between align-items-center mt-3">
+          <p></p>
           <p className="text-secondary">
             © 2021, OktaTools made by Tecnics with <nbsp />
             <i style={{ color: "red" }} className="bi bi-heart-fill"></i>
+          </p>
+          <p>
+            <a
+              className="navbar-brand"
+              href="https://github.com/tecnics-os/okta-tools"
+            >
+              <i className="bi bi-github"></i>
+            </a>
           </p>
         </div>
       </footer>
