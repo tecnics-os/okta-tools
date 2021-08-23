@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 
 const initialValues = {
-    "encoded_token": null,
-    "secret": null,
-    "algoritm": "HS256",
-    "publickey": null,
-    "privatekey": null
+    "encoded_token": null
 }
 
 const JwtViewer = ()=> {
@@ -13,6 +9,7 @@ const JwtViewer = ()=> {
     const [values, setValues] = useState(initialValues);
     const [payload, setPayload] = useState();
     const { REACT_APP_BACKEND_URL } = process.env;
+
     useEffect(()=> {
         if(values.encoded_token !== null) {
             fetch(`${REACT_APP_BACKEND_URL}/decodeJwtToken`, {
@@ -48,18 +45,7 @@ const JwtViewer = ()=> {
                     <br/>
                     <textarea rows='10' name="encoded_token" onChange={(e)=> {handleInputChange(e)}} className="col-sm-5"></textarea>
                 </div>
-                
-                <div id="addkeys" style={{display: "None"}}>
-                    <div>
-                        <label className="col-sm-3">Public key </label>
-                        <textarea name="publickey" onChange={(e)=> {handleInputChange(e)}}></textarea>
-                    </div>
-                    <div>
-                        <label className="col-sm-3">private key </label>
-                        <textarea name="privatekey" onChange={(e)=> {handleInputChange(e)}}></textarea>
-                    </div>
-                </div>
-                
+
             </div>
             
             <hr/>

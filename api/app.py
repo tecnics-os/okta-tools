@@ -2,7 +2,7 @@ from base64 import encode
 from database import database
 from api_methods import saml
 from api_methods import parse_xml
-from bcrypt_password_checker import password_checker
+from hash_verifier import password_checker
 from jwt_decoder import jwt_viewer
 import sys
 import ast
@@ -78,10 +78,8 @@ class saml_tool():
     @cross_origin()
     def verify_password_hash():
         if request.method == 'POST':
-            request_json = request.get_json()
-            password = request_json['password']
-            hash_password = request_json['hashedpassword']
-            status = password_checker.verify_password_hash(password, hash_password)
+            request_json = request.get_json(force=True)
+            status = password_checker.verify_password_hash(request_json)
             return status
 
         else:

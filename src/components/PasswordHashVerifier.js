@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const initialValues = {
+    "hash_type": "bcrypt",
     "password": null,
     "hashedpassword": null
 }
@@ -37,13 +38,20 @@ const PasswordHashVerifier = ()=> {
                 This tool helps you to verify the password with bcrypt hash
             </div>
             <hr/>
+            <select name="hash_type" onChange={(e)=>{handleInputChange(e)}}>
+                <option>bcrypt</option>
+                <option>sha1</option>
+                <option>sha224</option>
+                <option>sha256</option>
+                <option>sha384</option>
+            </select>
             <div className="col-sm-14">
                 <label className="col-sm-2">Enter the password: </label>
                 <input name="password" className="col-sm-5" onChange={(e)=> {handleInputChange(e)}} placeholder="Enter the password"/>
             </div>
             <br/>
             <div className="col-sm-14">
-                <label className="col-sm-2">Enter the Bcrypt hash: </label>
+                <label className="col-sm-2">Enter the hash: </label>
                 <textarea name="hashedpassword" className="col-sm-5" onChange={(e)=>{handleInputChange(e)}} placeholder="Enter the hashed password"/>
             </div>
             <div>
