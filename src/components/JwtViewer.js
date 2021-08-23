@@ -1,17 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const initialValues = {
     "encoded_token": null
 }
 
-const JwtViewer = ()=> {
+const JwtViewer = () => {
 
     const [values, setValues] = useState(initialValues);
     const [payload, setPayload] = useState();
     const { REACT_APP_BACKEND_URL } = process.env;
 
-    useEffect(()=> {
-        if(values.encoded_token !== null) {
+    const handleInputChange = (
+        (e) => {
+            const { name, value } = e.target;
+            setValues({
+                ...values,
+                [name]: value,
+            })
+        }
+    );
+    const handleSubmit = ((e) => {
+        if (values.encoded_token !== null) {
             fetch(`${REACT_APP_BACKEND_URL}/decodeJwtToken`, {
                 method: "POST",
                 type: "CORS",
@@ -20,41 +29,34 @@ const JwtViewer = ()=> {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                 },
-                
             })
-            .then(res=> res.json())
+            .then(res => res.json())
             .then(data => setPayload(data))
+        }else{
+            alert("Please enter the token")
         }
-        
-    }, [values, REACT_APP_BACKEND_URL])
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setTimeout(setValues({
-            ...values,
-            [name]: value,
-          }), 2000)
-    };
-
+    })
 
     return (
         <div>
             <div>
+                <b>This tool helps to decrypt the JWT token</b>
+                <br />
                 <div className="col-sm-20">
                     <label className="col-sm-3">JWT Encoded token: </label>
-                    <br/>
-                    <textarea rows='10' name="encoded_token" onChange={(e)=> {handleInputChange(e)}} className="col-sm-5"></textarea>
+                    <br />
+                    <textarea placeholder="JWT Encoded token...." onChange={(e) => { handleInputChange(e) }} id="jwt-token" rows='10' name="encoded_token" className="col-sm-5"></textarea>
                 </div>
-
+                <button className="btn btn-primary" onClick={(e) => { handleSubmit(e) }}>Decode</button>
             </div>
-            
-            <hr/>
+
+            <hr />
             <div className="col-sm-12" id="results">
                 {payload !== undefined ? <div className="col-sm-5">
                     <pre className="col-sm-10">{JSON.stringify(payload, "\n", 4)}</pre>
-                </div>: null}
+                </div> : null}
             </div>
-        
+
         </div>
     )
 }

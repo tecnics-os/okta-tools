@@ -22,7 +22,7 @@ class password_checker:
             status = bcrypt.checkpw(password_encoded, hashed)
         except Exception as e:
             status = False
-            
+
         if status:
             return "success, Its a valid password hash"
         else:
@@ -39,6 +39,16 @@ class password_checker:
             hashed_m = hashlib.sha384(encoded_password).hexdigest()
         elif(hash_type == 'sha1'):
             hashed_m = hashlib.sha1(encoded_password).hexdigest()
+        elif(hash_type == 'sha3_224'):
+            hashed_m = hashlib.sha3_224(encoded_password).hexdigest()
+        elif(hash_type == 'sha3_256'):
+            hashed_m = hashlib.sha3_256(encoded_password).hexdigest()
+        elif(hash_type == 'sha3_384'):
+            hashed_m = hashlib.sha3_384(encoded_password).hexdigest()
+        elif(hash_type == 'sha512'):
+            hashed_m = hashlib.sha512(encoded_password).hexdigest()
+        elif(hash_type == 'sha3_512'):
+            hashed_m = hashlib.sha3_512(encoded_password).hexdigest()
         
         if(hashed_m == hash_password):
             return "success, Its a valid password hash"

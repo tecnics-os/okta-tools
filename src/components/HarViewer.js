@@ -6,7 +6,7 @@ function HarViewer() {
   const [urls, setUrls] = useState([]);
   const [entry, setEntry] = useState();
   const [currentUrl, setCurrentUrl] = useState(null);
-
+  
   const handleSubmit = (e) => {
     if(data === null) {
       alert("Please upload a file first.")
