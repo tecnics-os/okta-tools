@@ -31,9 +31,8 @@ const CertificateWithHeader = () => {
     <form>
       <div className="mb-3 col-6 form-group">
         <textarea
-          style={{ height: "400px" }}
           id="certificate-text-area"
-          className="form-control"
+          className="form-control certificate-height-400"
           onChange={(e) => {
             handleCertificate(e);
           }}

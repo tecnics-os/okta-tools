@@ -69,7 +69,7 @@ function HarViewer() {
       </div>
       <div className="row">
         <div className="col-6">
-          <div className="card" style={{ height: "500px", overflow: "auto" }}>
+          <div className="card overflow-auto h-500-px">
             <div className="card-body table-responsive">
               <h5 className="card-title">Network urls</h5>
               <table className="table table-striped table-hover">
@@ -84,9 +84,9 @@ function HarViewer() {
                 <tbody>
                   {urls.map((url) => {
                     return (
-                      <tr style={{ fontSize: "14px" }}>
+                      <tr className="fs-14-px">
                         <td scope="row">
-                          <div style={{ width: "180px" }}>
+                          <div className="date-time-width">
                             {url.startedDateTime}
                           </div>
                         </td>
@@ -98,27 +98,18 @@ function HarViewer() {
                               passUrl(url);
                             }}
                           >
-                            <div
-                              style={{
-                                width: "150px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
+                            <div className="request-url-width">
                               {url.request.url}
                             </div>
                           </Link>
                         </td>
                         <td>
-                          <div style={{ width: "100px" }}>
+                          <div className="response-width">
                             {url.response.status}
                           </div>
                         </td>
                         <td>
-                          <div style={{ width: "200px" }}>
-                            {url.serverIPAddress}
-                          </div>
+                          <div className="ip-width">{url.serverIPAddress}</div>
                         </td>
                       </tr>
                     );
@@ -129,7 +120,7 @@ function HarViewer() {
           </div>
         </div>
         <div class="col-6">
-          <div class="card" style={{ height: "500px", overflow: "auto" }}>
+          <div class="card overflow-auto h-500-px">
             <div class="card-body">
               <h5 class="card-title">Har file logs</h5>
               <div className="card-text">

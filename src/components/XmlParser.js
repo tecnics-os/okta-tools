@@ -149,12 +149,19 @@ const XmlParser = () => {
                     );
                   })}
                 </div>
-                <div className="col-auto" onMouseEnter={() => setIsShown(true)}
-                      onMouseLeave={() => setIsShown(false)} ><IoIosHelpCircle></IoIosHelpCircle></div>
-                      <br></br>
-                      {isShown && (
-                            <div className="row-auto"><HelpPopper image="/images/entityId.png"></HelpPopper></div>         
-                          )} 
+                <div
+                  className="col-auto"
+                  onMouseEnter={() => setIsShown(true)}
+                  onMouseLeave={() => setIsShown(false)}
+                >
+                  <IoIosHelpCircle></IoIosHelpCircle>
+                </div>
+                <br></br>
+                {isShown && (
+                  <div className="row-auto">
+                    <HelpPopper image="/images/entityId.png"></HelpPopper>
+                  </div>
+                )}
               </div>
             ) : null}
 
@@ -171,7 +178,6 @@ const XmlParser = () => {
                             {url.Url}
                           </label>
                         </div>
-                        
                       </div>
                       <div key={url.index} className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -182,7 +188,6 @@ const XmlParser = () => {
                             {url.Binding}
                           </label>
                         </div>
-                        
                       </div>
                     </>
                   );
@@ -201,7 +206,6 @@ const XmlParser = () => {
                             {acsUrl.url}
                           </label>
                         </div>
-                        
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -212,7 +216,6 @@ const XmlParser = () => {
                             {acsUrl.binding}
                           </label>
                         </div>
-                        
                       </div>
                     </>
                   );
@@ -232,13 +235,19 @@ const XmlParser = () => {
                             {signon.url}
                           </label>
                         </div>
-                        <div className="col-auto" onMouseEnter={() => setSignOnShow(true)}
-                      onMouseLeave={() => setSignOnShow(false)} ><IoIosHelpCircle></IoIosHelpCircle></div>
-                      <br></br>
-                      {signOnShow && (
-                            <div className="row-auto"><HelpPopper image="/images/SingleSignOn.png"></HelpPopper>
-                            </div>         
-                          )}  
+                        <div
+                          className="col-auto"
+                          onMouseEnter={() => setSignOnShow(true)}
+                          onMouseLeave={() => setSignOnShow(false)}
+                        >
+                          <IoIosHelpCircle></IoIosHelpCircle>
+                        </div>
+                        <br></br>
+                        {signOnShow && (
+                          <div className="row-auto">
+                            <HelpPopper image="/images/SingleSignOn.png"></HelpPopper>
+                          </div>
+                        )}
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">
@@ -248,8 +257,7 @@ const XmlParser = () => {
                           <label className="col-sm-8 col-form-label">
                             {signon.binding}
                           </label>
-                        </div>  
-                        
+                        </div>
                       </div>
                     </>
                   );
@@ -269,12 +277,11 @@ const XmlParser = () => {
                         </label>
                       </div>
                       <DownloadLink
-                              className="btn btn-primary"
-                              label="download"
-                              style={{ textDecoration: 'none' }}
-                              filename="certificate.crt"
-                              exportFile={()=>"".concat(cert.content)}
-                          />
+                        className="btn btn-primary text-decoration-none"
+                        label="download"
+                        filename="certificate.crt"
+                        exportFile={() => "".concat(cert.content)}
+                      />
                     </div>
                   );
                 })
@@ -283,21 +290,31 @@ const XmlParser = () => {
             <div className="col-sm-6">
               {typeof resp.error === "object" && resp.error !== null ? (
                 <>
-                  {resp.error.entityID_error !== "" ? <div className="alert alert-danger" role="alert">
-                    {resp.error.entityID_error}
-                  </div>:  null}
-                  {resp.error.certificate_error !== "" ? <div className="alert alert-danger" role="alert">
-                    {resp.error.certificate_error}
-                  </div>: null}
-                  {resp.error.sso_error !== undefined && resp.error.sso_error !== "" ? <div className="alert alert-danger" role="alert">
-                    {resp.error.sso_error}
-                  </div>: null}
-                  {resp.error.acs_error !== "" && resp.error.acs_error !== undefined ? <div className="alert alert-danger" role="alert">
-                    {resp.error.acs_error}
-                  </div>: null}
+                  {resp.error.entityID_error !== "" ? (
+                    <div className="alert alert-danger" role="alert">
+                      {resp.error.entityID_error}
+                    </div>
+                  ) : null}
+                  {resp.error.certificate_error !== "" ? (
+                    <div className="alert alert-danger" role="alert">
+                      {resp.error.certificate_error}
+                    </div>
+                  ) : null}
+                  {resp.error.sso_error !== undefined &&
+                  resp.error.sso_error !== "" ? (
+                    <div className="alert alert-danger" role="alert">
+                      {resp.error.sso_error}
+                    </div>
+                  ) : null}
+                  {resp.error.acs_error !== "" &&
+                  resp.error.acs_error !== undefined ? (
+                    <div className="alert alert-danger" role="alert">
+                      {resp.error.acs_error}
+                    </div>
+                  ) : null}
                 </>
               ) : (
-                <div>{resp.error !== "" ? <>{resp.error}</>: null}</div>
+                <div>{resp.error !== "" ? <>{resp.error}</> : null}</div>
               )}
             </div>
           </form>

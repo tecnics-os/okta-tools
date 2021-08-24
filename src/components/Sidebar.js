@@ -23,7 +23,7 @@ const methods = {
       let value = requiredPath.localeCompare(toValue);
       if (value === 0) {
         header[counter].className = "nav-link active";
-      }else{
+      } else {
         header[counter].className = "nav-link";
       }
     }
@@ -31,70 +31,129 @@ const methods = {
 };
 
 const Sidebar = () => {
-
-  const removeClass = ((e)=> { 
-    let elements = document.getElementById("list")
+  const removeClass = (e) => {
+    let elements = document.getElementById("list");
     Object.entries(elements.childNodes).forEach((elem) => {
-      elem[1].childNodes[0].className = "nav-link"
+      elem[1].childNodes[0].className = "nav-link";
     });
-    e.target.className = "nav-link active"
-  })
-  
+    e.target.className = "nav-link active";
+  };
+
   return (
     <Router>
-      <div className="row" style={{ height: "100%" }}>
+      <div className="row h-100">
         <nav
           id="sidebar"
           className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse p-0"
         >
           <ul id="list" className="nav nav-pills flex-column">
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link active" to="/">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link active"
+                to="/"
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/parse-xml">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/parse-xml"
+              >
                 Parse Metadata
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/build-metadata">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/build-metadata"
+              >
                 Build IDP Metadata
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/certificateWithHeader">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/certificateWithHeader"
+              >
                 Format X509 Certificate
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/upload-metadata">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/upload-metadata"
+              >
                 Upload IDP Metadata
               </Link>
             </li>
             <li className="nav-item sidebar-hover disabled">
-              <Link onClick={(e)=>{e.preventDefault()}} className="nav-link disabled" to="/download-metadata">
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                className="nav-link disabled"
+                to="/download-metadata"
+              >
                 Download Metadata(coming soon)
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/test-idp">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/test-idp"
+              >
                 Test Okta SAML App
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/password-hash-verifier">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/password-hash-verifier"
+              >
                 Password Hash Verifier
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/jwt-viewer">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/jwt-viewer"
+              >
                 JWT viewer
               </Link>
             </li>
             <li className="nav-item sidebar-hover">
-              <Link onClick={(e)=>{removeClass(e)}} className="nav-link" to="/har-viewer">
+              <Link
+                onClick={(e) => {
+                  removeClass(e);
+                }}
+                className="nav-link"
+                to="/har-viewer"
+              >
                 Har Viewer
               </Link>
             </li>
@@ -127,12 +186,11 @@ const Sidebar = () => {
               <PasswordHashVerifier />
             </Route>
             <Route path="/jwt-viewer" exact>
-              <JwtViewer/>
+              <JwtViewer />
             </Route>
             <Route path="/har-viewer" exact>
-              <HarViewer/>
+              <HarViewer />
             </Route>
-
           </Switch>
         </main>
       </div>

@@ -26,7 +26,7 @@ function App() {
         <div className="container-fluid d-flex justify-content-center align-items-center mt-3">
           <p className="text-secondary">
             © 2021, OktaTools made by Tecnics with <nbsp />
-            <i style={{ color: "red" }} className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill red-heart"></i>
           </p>
         </div>
       </footer>
