@@ -89,11 +89,12 @@ const XmlParser = () => {
             className="form-control"
             type="file"
             name="file"
+            accept=".xml"
             ref={file}
             onChange={(e) => {
               changeHandler(e);
             }}
-            accept="xml"
+            
           />
 
           <p className="text-uppercase text-primary fs-5 my-3">Or</p>

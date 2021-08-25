@@ -61,10 +61,10 @@ function HarViewer() {
           className="form-control col-sm-6"
           type="file"
           name="file"
+          accept=".har"
           onChange={(e) => {
             changeHandler(e);
           }}
-          accept="har"
         />
         <br></br>
         <button

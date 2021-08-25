@@ -73,6 +73,7 @@ const UploadMetadata = () => {
           className="form-control"
           ref={input}
           type="file"
+          accept=".xml"
           name="file"
           onChange={(e) => {
             handleFile(e);
