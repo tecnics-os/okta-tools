@@ -17,6 +17,7 @@ const JwtViewer = () => {
     });
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (values.encoded_token !== null) {
       fetch(`${REACT_APP_BACKEND_URL}/decodeJwtToken`, {
         method: "POST",
@@ -66,8 +67,8 @@ const JwtViewer = () => {
           </div>
           <div className="mb-3 col-6" id="results">
             {payload !== undefined ? (
-              <pre>
-                <code>{JSON.stringify(payload, "\n", 4)}</code>
+              <pre>                
+                {payload.error === null ? <p>{JSON.stringify(payload.header, "\n", 4)} {JSON.stringify(payload.payload, "\n", 4)}</p>: <p>{payload.error}</p>}
               </pre>
             ) : null}
           </div>

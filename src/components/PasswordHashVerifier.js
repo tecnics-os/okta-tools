@@ -19,18 +19,29 @@ const PasswordHashVerifier = () => {
   };
 
   const handleSubmit = async (e) => {
-    await fetch(`${REACT_APP_BACKEND_URL}/verifyPasswordHash`, {
-      method: "POST",
-      type: "CORS",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setStatus(data));
-  };
+    e.preventDefault();
+    if(values.password == null || values.hashedpassword == null){
+      if(values.password == null){
+        document.getElementById('password-help').innerHTML = "This field is required"
+      }
+      if(values.hashedpassword == null) {
+        document.getElementById('hash-help').innerHTML = "This field is required"
+      }
+    }else{
+      await fetch(`${REACT_APP_BACKEND_URL}/verifyPasswordHash`, {
+        method: "POST",
+        type: "CORS",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setStatus(data));
+    }
+  }
+    
 
   return (
     <div className="container-fluid">
@@ -64,6 +75,7 @@ const PasswordHashVerifier = () => {
             <label htmlFor="password" className="form-label">
               Enter the password
             </label>
+            
             <input
               id="password"
               name="password"
@@ -73,6 +85,7 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the password"
             />
+            <div className="form-text" id="password-help"></div>
           </div>
 
           <div className="mb-3 col-6">
@@ -87,6 +100,8 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the hashed password"
             />
+            <div className="form-text" id="hash-help"></div>
+
           </div>
           <div className="mb-3 col-6 form-group">
             <button
@@ -98,9 +113,9 @@ const PasswordHashVerifier = () => {
               Verify
             </button>
           </div>
-          <div className="mb-3 col-6 form-group">
+          <div className="mb-6 col-14 form-group">
             {status !== undefined ? (
-              <div className="col-sm-3 btn-primary">status.status</div>
+              <div className="col-sm-10">{status.status}</div>
             ) : null}
           </div>
         </fieldset>

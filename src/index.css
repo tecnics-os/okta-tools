@@ -8344,3 +8344,7 @@ html {
     font-size: 1rem;
   }
 }
+
+#har-results {
+  display: none;
+}
