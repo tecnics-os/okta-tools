@@ -6,7 +6,7 @@ const initialValues = {
 
 const JwtViewer = () => {
   const [values, setValues] = useState(initialValues);
-  const [payload, setPayload] = useState();
+  const [payload, setPayload] = useState(null);
   const { REACT_APP_BACKEND_URL } = process.env;
 
   const handleInputChange = (e) => {
@@ -18,7 +18,10 @@ const JwtViewer = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (values.encoded_token !== null) {
+    setPayload(null);
+    if(values.encoded_token === null || values.encoded_token === "") {
+      alert("Please enter the token.")
+    } else {
       fetch(`${REACT_APP_BACKEND_URL}/decodeJwtToken`, {
         method: "POST",
         type: "CORS",
@@ -30,8 +33,6 @@ const JwtViewer = () => {
       })
         .then((res) => res.json())
         .then((data) => setPayload(data));
-    } else {
-      alert("Please enter the token");
     }
   };
 
@@ -66,7 +67,7 @@ const JwtViewer = () => {
             </button>
           </div>
           <div className="mb-3 col-6" id="results">
-            {payload !== undefined ? (
+            {payload !== null ? (
               <pre>                
                 {payload.error === null ? <p>{JSON.stringify(payload.header, "\n", 4)} {JSON.stringify(payload.payload, "\n", 4)}</p>: <p>{payload.error}</p>}
               </pre>

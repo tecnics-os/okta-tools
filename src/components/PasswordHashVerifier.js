@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 const initialValues = {
-  hash_type: "bcrypt",
+  hash_type: "sha1",
   password: null,
   hashedpassword: null,
 };
 
 const PasswordHashVerifier = () => {
   const [values, setValues] = useState(initialValues);
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(null);
   const { REACT_APP_BACKEND_URL } = process.env;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,14 +20,19 @@ const PasswordHashVerifier = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(values.password == null || values.hashedpassword == null){
-      if(values.password == null){
+    setStatus(null)
+    console.log(values)
+    if(values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null){
+      if(values.password === null || values.password === ""){
         document.getElementById('password-help').innerHTML = "This field is required"
       }
-      if(values.hashedpassword == null) {
+      if(values.hashedpassword === null || values.hashedpassword === "") {
         document.getElementById('hash-help').innerHTML = "This field is required"
       }
     }else{
+      document.getElementById('password-help').innerHTML = ""
+      document.getElementById('hash-help').innerHTML = ""
+
       await fetch(`${REACT_APP_BACKEND_URL}/verifyPasswordHash`, {
         method: "POST",
         type: "CORS",
@@ -114,7 +119,7 @@ const PasswordHashVerifier = () => {
             </button>
           </div>
           <div className="mb-6 col-14 form-group">
-            {status !== undefined ? (
+            {status !== null ? (
               <div className="col-sm-10">{status.status}</div>
             ) : null}
           </div>
