@@ -34,74 +34,77 @@ const PasswordHashVerifier = () => {
 
   return (
     <div className="container-fluid">
-      <div className="col-sm-14">
-        This tool helps you to verify the password with hash
-      </div>
-      <hr />
-      <div>
-        <label className="col-sm-6">
-          Please select the algorithm type of hashing:{" "}
-        </label>
-        <div className="col-sm-3">
-          <select
-            className="form-control col-sm-5"
-            name="hash_type"
-            onChange={(e) => {
-              handleInputChange(e);
-            }}
-          >
-            <option>sha1</option>
-            <option>sha224</option>
-            <option>sha256</option>
-            <option>sha512</option>
-            <option>sha3_224</option>
-            <option>sha3_256</option>
-            <option>sha3_384</option>
-            <option>sha3_512</option>
-            <option>bcrypt</option>
-          </select>
-        </div>
-      </div>
-      <br />
-      <div className="col-sm-14">
-        <label className="col-sm-2">Enter the password: </label>
-        <input
-          name="password"
-          className="col-sm-5"
-          onChange={(e) => {
-            handleInputChange(e);
-          }}
-          placeholder="Enter the password"
-        />
-      </div>
-      <br />
-      <div className="col-sm-14">
-        <label className="col-sm-2">Enter the hash: </label>
-        <textarea
-          name="hashedpassword"
-          className="col-sm-5"
-          onChange={(e) => {
-            handleInputChange(e);
-          }}
-          placeholder="Enter the hashed password"
-        />
-      </div>
-      <div>
-        <button
-          className="btn btn-primary"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          Verify
-        </button>
-      </div>
-      <br />
-      <div>
-        {status !== undefined ? (
-          <div className="col-sm-3 btn-primary">{status.status}</div>
-        ) : null}
-      </div>
+      <form>
+        <fieldset>
+          <legend>This tool helps you to verify the password with hash</legend>
+          <div className="mb-3 col-6">
+            <label htmlFor="hash_type" className="form-label">
+              Please select the algorithm type of hashing:
+            </label>
+            <select
+              className="form-control form-select"
+              id="hash_type"
+              name="hash_type"
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+            >
+              <option>sha1</option>
+              <option>sha224</option>
+              <option>sha256</option>
+              <option>sha512</option>
+              <option>sha3_224</option>
+              <option>sha3_256</option>
+              <option>sha3_384</option>
+              <option>sha3_512</option>
+              <option>bcrypt</option>
+            </select>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="password" className="form-label">
+              Enter the password
+            </label>
+            <input
+              id="password"
+              name="password"
+              className="form-control"
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+              placeholder="Enter the password"
+            />
+          </div>
+
+          <div className="mb-3 col-6">
+            <label htmlFor="password" className="form-label">
+              Enter the hash
+            </label>
+            <textarea
+              name="hashedpassword"
+              className="form-control"
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+              placeholder="Enter the hashed password"
+            />
+          </div>
+          <div className="mb-3 col-6 form-group">
+            <button
+              className="btn btn-primary"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              Verify
+            </button>
+          </div>
+          <div className="mb-3 col-6 form-group">
+            {status !== undefined ? (
+              <div className="col-sm-3 btn-primary">status.status</div>
+            ) : null}
+          </div>
+        </fieldset>
+      </form>
     </div>
   );
 };
