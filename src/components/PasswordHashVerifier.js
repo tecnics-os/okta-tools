@@ -22,12 +22,16 @@ const PasswordHashVerifier = () => {
     e.preventDefault();
     setStatus(null)
     console.log(values)
+    let password_elem = document.getElementById('password-help')
+    let hash_elem = document.getElementById('hash-help')
+    hash_elem.innerHTML = "";
+    password_elem.innerHTML = ""
     if(values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null){
       if(values.password === null || values.password === ""){
-        document.getElementById('password-help').innerHTML = "This field is required"
+        password_elem.innerHTML = "This field is required"
       }
       if(values.hashedpassword === null || values.hashedpassword === "") {
-        document.getElementById('hash-help').innerHTML = "This field is required"
+        hash_elem.innerHTML = "This field is required"
       }
     }else{
       document.getElementById('password-help').innerHTML = ""

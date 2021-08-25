@@ -3,7 +3,7 @@ import requests
 import xml.etree.ElementTree as ET
 import sys
 import bcrypt
-from bcrypt_password_checker import password_checker
+from hash_verifier import password_checker
 sys.path.append("../api")
 class TestAppMethods:
     API_URL = "http://127.0.0.1:5000/api"
@@ -99,8 +99,8 @@ class TestAppMethods:
         password = b"password"
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password, salt).decode('UTF-8')
-        status = password_checker.verify_password_hash("password", hashed)
-        assert status['status'] == 'success, Its a valid password hash'
+        status = password_checker.bcrypt_verify("password", hashed)
+        assert status == 'success, Its a valid password hash'
 
 
 
