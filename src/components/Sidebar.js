@@ -33,8 +33,12 @@ const methods = {
 const Sidebar = () => {
   const removeClass = (e) => {
     let elements = document.getElementById("list");
+    let subelements = document.getElementById("sub-list");
     Object.entries(elements.childNodes).forEach((elem) => {
       elem[1].childNodes[0].className = "nav-link";
+    });
+    Object.entries(subelements.childNodes).forEach((subelm) => {
+      subelm[1].childNodes[0].className = "nav-link";
     });
     e.target.className = "nav-link active";
   };
@@ -58,72 +62,86 @@ const Sidebar = () => {
                 Home
               </Link>
             </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/parse-xml"
-              >
-                Parse Metadata
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/build-metadata"
-              >
-                Build IDP Metadata
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/certificateWithHeader"
-              >
-                Format X509 Certificate
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/upload-metadata"
-              >
-                Upload IDP Metadata
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover disabled">
-              <Link
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                className="nav-link disabled"
-                to="/download-metadata"
-              >
-                Download Metadata(coming soon)
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/test-idp"
-              >
-                Test Okta SAML App
-              </Link>
-            </li>
+            <div className="accordion accordion-flush" id="accordionExample">
+              <div className="accordion-item">
+                <h7 className="accordion-header" id="panelsStayOpen-headingThree">
+                  <button className="accordion-button collapsed btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    SAML TOOLS
+                  </button>
+                </h7>
+                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                  <div id="sub-list" class="accordion-body">
+                    <li className="nav-item sidebar-hover">
+                      <Link
+                        onClick={(e) => {
+                          removeClass(e);
+                        }}
+                        className="nav-link"
+                        to="/parse-xml"
+                      >
+                        Parse Metadata
+                      </Link>
+                    </li>
+                    <li className="nav-item sidebar-hover">
+                      <Link
+                        onClick={(e) => {
+                          removeClass(e);
+                        }}
+                        className="nav-link"
+                        to="/build-metadata"
+                      >
+                        Build IDP Metadata
+                      </Link>
+                    </li>
+                    <li className="nav-item sidebar-hover">
+                      <Link
+                        onClick={(e) => {
+                          removeClass(e);
+                        }}
+                        className="nav-link"
+                        to="/certificateWithHeader"
+                      >
+                        Format X509 Certificate
+                      </Link>
+                    </li>
+                    <li className="nav-item sidebar-hover">
+                      <Link
+                        onClick={(e) => {
+                          removeClass(e);
+                        }}
+                        className="nav-link"
+                        to="/upload-metadata"
+                      >
+                        Upload IDP Metadata
+                      </Link>
+                    </li>
+                    <li className="nav-item sidebar-hover disabled">
+                      <Link
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                        className="nav-link disabled"
+                        to="/download-metadata"
+                      >
+                        Download Metadata(coming soon)
+                      </Link>
+                    </li>
+                    <li className="nav-item sidebar-hover">
+                    <Link
+                      onClick={(e) => {
+                        removeClass(e);
+                      }}
+                      className="nav-link"
+                      to="/test-idp"
+                    >
+                      Test Okta SAML App
+                    </Link>
+                  </li>
+
+                  </div>
+              </div>
+            </div>
+            </div>
             <li className="nav-item sidebar-hover">
               <Link
                 onClick={(e) => {
@@ -159,6 +177,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </nav>
+
         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-2">
           <Switch>
             <Route path="/" exact>
