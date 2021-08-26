@@ -8348,3 +8348,10 @@ html {
 #har-results {
   display: none;
 }
+
+.accordion-button {
+  height: 40px;
+  width: 100%;
+  background-color: #F2F5FF;
+  align-items: center;
+}

@@ -64,11 +64,11 @@ const Sidebar = () => {
             </li>
             <div className="accordion accordion-flush" id="accordionExample">
               <div className="accordion-item">
-                <h7 className="accordion-header" id="panelsStayOpen-headingThree">
+                <p className="accordion-header" id="panelsStayOpen-headingOne">
                   <button className="accordion-button collapsed btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                    SAML TOOLS
+                    Saml Tools{"  "}
                   </button>
-                </h7>
+                </p>
                 <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                   <div id="sub-list" class="accordion-body">
                     <li className="nav-item sidebar-hover">
