@@ -85,13 +85,13 @@ class saml:
             xml_content = parse_xml.format_metadata_with_certificate(xml_body)
             database.execute_sql_query(sql_query)
         else:
-            if(not xml_body.__contains__('entityId')):
+            if(not xml_body.__contains__('entityID')):
                     error += "Given file does not have Entity ID.\n"
             elif(not xml_body.__contains__('X509Certificate')):
                 error += "Given file does not have certificate.\n"
 
             if(xml_body.__contains__('IDPSSODescriptor')):
-                if(not xml_body.__contains__('singleSignonService')):
+                if(not xml_body.__contains__('SingleSignOnService')):
                     error += "Given file does not have single sign on url.\n"
 
             elif(xml_body.__contains__('SPSSODescriptor')):
@@ -116,7 +116,3 @@ class saml:
 
         return signOnUrl
 
-    def convert_body_to_dict(request_body):
-        decode_request_body = request_body.decode('UTF-8')
-        dict_body = ast.literal_eval(decode_request_body)
-        return dict_body
