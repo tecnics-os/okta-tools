@@ -32,7 +32,7 @@ const methods = {
 
 const Sidebar = () => {
   const removeClass = (e) => {
-    let elements = document.getElementById("list");
+    let elements = document.getElementById("other-list");
     let subelements = document.getElementById("sub-list");
     Object.entries(elements.childNodes).forEach((elem) => {
       elem[1].childNodes[0].className = "nav-link";
@@ -142,6 +142,7 @@ const Sidebar = () => {
               </div>
             </div>
             </div>
+            <div id="other-list">
             <li className="nav-item sidebar-hover">
               <Link
                 onClick={(e) => {
@@ -175,6 +176,7 @@ const Sidebar = () => {
                 Har Viewer
               </Link>
             </li>
+            </div>
           </ul>
         </nav>
 
