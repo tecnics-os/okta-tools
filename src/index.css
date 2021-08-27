@@ -31,6 +31,41 @@ body {
   border-top: 1px solid #ced4da;
 }
 
+.red-heart {
+  color: red;
+}
+
+.certificate-height-400 {
+  height: 400px;
+}
+
+.h-500-px {
+  height: 500px;
+}
+
+.fs-14-px {
+  font-size: 14px;
+}
+
+.date-time-width {
+  width: 180px;
+}
+
+.request-url-width {
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.response-width {
+  width: 100px;
+}
+
+.ip-width {
+  width: 200px;
+}
+
 /*! `Custom` Bootstrap 5 theme */ /*!
  * Bootstrap v5.0.1 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -8308,4 +8343,24 @@ html {
   html {
     font-size: 1rem;
   }
+}
+
+#har-results {
+  display: none;
+}
+
+.accordion-button {
+  height: 40px;
+  width: 100%;
+  background-color: #F2F5FF;
+  align-items: center;
+}
+
+#help-popper {
+  width: 20px;
+  height: 20px;
+}
+#help {
+  width: 50px;
+  height: 50px;
 }

@@ -27,7 +27,7 @@ function App() {
           <p></p>
           <p className="text-secondary">
             © 2021, OktaTools made by Tecnics with <nbsp />
-            <i style={{ color: "red" }} className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill red-heart"></i>
           </p>
           <p>
             <a

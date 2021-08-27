@@ -24,7 +24,7 @@ class parse_xml:
                 else:
                     error = "Given Xml does not have entityID."
             entityID.append({
-                "index": str(entityID) + "entityId",
+                "index": str(entityID_index) + "entityId",
                 "content": entityid
             })
             entityID_index = entityID_index + 1

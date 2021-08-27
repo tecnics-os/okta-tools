@@ -40,8 +40,8 @@ const UploadMetadata = () => {
         .then((res) => res.json())
         .then((data) =>
           setXml({
-            content: data.content,
-            error: data.error,
+            content: data.xml_content,
+            error: data.error
           })
         );
       setLoading(false);
@@ -73,6 +73,7 @@ const UploadMetadata = () => {
           className="form-control"
           ref={input}
           type="file"
+          accept=".xml"
           name="file"
           onChange={(e) => {
             handleFile(e);
