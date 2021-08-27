@@ -4,6 +4,7 @@ import "../App.css";
 import HelpPopper from "./HelpPopper";
 import { IoIosHelpCircle } from "react-icons/io";
 import DownloadLink from "react-download-link";
+import helper from '../assets/helper.png'
 
 const XmlParser = () => {
   const file = useRef("");
@@ -150,19 +151,7 @@ const XmlParser = () => {
                     );
                   })}
                 </div>
-                <div
-                  className="col-auto"
-                  onMouseEnter={() => setIsShown(true)}
-                  onMouseLeave={() => setIsShown(false)}
-                >
-                  <IoIosHelpCircle></IoIosHelpCircle>
-                </div>
-                <br></br>
-                {isShown && (
-                  <div className="row-auto">
-                    <HelpPopper image="/images/entityId.png"></HelpPopper>
-                  </div>
-                )}
+
               </div>
             ) : null}
 
@@ -236,19 +225,6 @@ const XmlParser = () => {
                             {signon.url}
                           </label>
                         </div>
-                        <div
-                          className="col-auto"
-                          onMouseEnter={() => setSignOnShow(true)}
-                          onMouseLeave={() => setSignOnShow(false)}
-                        >
-                          <IoIosHelpCircle></IoIosHelpCircle>
-                        </div>
-                        <br></br>
-                        {signOnShow && (
-                          <div className="row-auto">
-                            <HelpPopper image="/images/SingleSignOn.png"></HelpPopper>
-                          </div>
-                        )}
                       </div>
                       <div className="row mb-2">
                         <label className="col-sm-2 col-form-label">

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import UrlDataViewer from "./UrlDataViewer";
+
 function HarViewer() {
   const [data, setData] = useState(null);
   const [urls, setUrls] = useState([]);
@@ -40,7 +40,7 @@ function HarViewer() {
     setCurrentUrl(url);
     setAnyNetworkUrlClick(true);
   };
-
+  
   const changeHandler = (e) => {
     let file = e.target.files[0];
     let reader = new FileReader();
