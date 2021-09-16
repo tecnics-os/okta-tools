@@ -90,7 +90,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/build-metadata"
                       >
-                        Build IDP Metadata
+                        Build IdP Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover">
@@ -101,7 +101,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/certificateWithHeader"
                       >
-                        Format X509 Certificate
+                        Format X.509 Certificate
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover">
@@ -112,7 +112,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/upload-metadata"
                       >
-                        Upload IDP Metadata
+                        Upload IdP Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover disabled">

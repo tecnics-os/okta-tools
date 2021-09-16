@@ -52,9 +52,16 @@ const CertificateWithHeader = () => {
       {certificateWithHeader != null ? (
         <>
           <div className="mb-3 col-6 form-group">
-            <label htmlFor="supportContactName" className="form-label">
+            {/* <label htmlFor="supportContactName" className="form-label">
               {certificateWithHeader.certificate}
-            </label>
+            </label> */}
+            <textarea
+          id="certificate"
+          className="form-control certificate-height-400"
+          readOnly={true}
+        >
+          {certificateWithHeader.certificate}
+        </textarea>
           </div>
           <div className="mb-3 col-6 form-group">
             <button className="btn btn-primary" onClick={handleCertificateSave}>
