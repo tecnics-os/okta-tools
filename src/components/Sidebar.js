@@ -24,7 +24,7 @@ const methods = {
       if (value === 0) {
         header[counter].className = "nav-link active";
       } else {
-        header[counter].className = "nav-link";
+        header[counter].className = "nav-link.";
       }
     }
   },
@@ -90,7 +90,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/build-metadata"
                       >
-                        Build IDP Metadata
+                        Build Idp Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover">
@@ -101,7 +101,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/certificateWithHeader"
                       >
-                        Format X509 Certificate
+                        Format X.509 Certificate
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover">
@@ -112,7 +112,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/upload-metadata"
                       >
-                        Upload IDP Metadata
+                        Upload Idp Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover disabled">
