@@ -125,7 +125,7 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the password"
             />
-              <p class="help_text_style"> Sample Password: pass123</p>
+              <p class="help_text_style">Sample Password: pass123</p>
             <div className="form-text" id="password-help"></div>
           </div>
 
