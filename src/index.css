@@ -35,6 +35,22 @@ body {
   color: red;
 }
 
+.download-link {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+#password-help {
+  color: red;
+}
+#hash-help {
+  color: red;
+}
+
+.example-message {
+  color: gray;
+}
+
 .certificate-height-400 {
   height: 400px;
 }
@@ -776,6 +792,7 @@ progress {
 .form-label {
   margin-bottom: 0.5rem;
 }
+
 .col-form-label {
   padding-top: calc(0.375rem + 1px);
   padding-bottom: calc(0.375rem + 1px);

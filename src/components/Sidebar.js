@@ -24,7 +24,7 @@ const methods = {
       if (value === 0) {
         header[counter].className = "nav-link active";
       } else {
-        header[counter].className = "nav-link.";
+        header[counter].className = "nav-link";
       }
     }
   },
@@ -90,7 +90,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/build-metadata"
                       >
-                        Build Idp Metadata
+                        Build IdP Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover">
@@ -112,7 +112,7 @@ const Sidebar = () => {
                         className="nav-link"
                         to="/upload-metadata"
                       >
-                        Upload Idp Metadata
+                        Upload IdP Metadata
                       </Link>
                     </li>
                     <li className="nav-item sidebar-hover disabled">
@@ -137,7 +137,17 @@ const Sidebar = () => {
                       Test Okta SAML App
                     </Link>
                   </li>
-
+                  <li className="nav-item sidebar-hover disabled">
+                      <Link
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                        className="nav-link disabled"
+                        to="/download-metadata"
+                      >
+                        OIDC Client(coming soon)
+                      </Link>
+                    </li>
                   </div>
               </div>
             </div>
