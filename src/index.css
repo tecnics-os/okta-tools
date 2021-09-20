@@ -822,6 +822,10 @@ progress {
   /* clear: both; */
   color: darkseagreen;
 }
+.mb-3.col-6 .form-label:after {
+  content:"*";
+  color:red;
+}
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

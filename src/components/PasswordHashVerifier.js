@@ -45,7 +45,8 @@ const PasswordHashVerifier = () => {
       setHashedPassword("$2b$10$mG8o2k5C3Rrhq2vuSkHxPerZ7YXFABdDVOSrDkwfKsIEmB9OZZyG.");
     }
   };
-
+  const successMessage = "Success, its a valid password hash!";
+  const failureMessage = "Failure, please enter a valid password hash!";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,10 +58,10 @@ const PasswordHashVerifier = () => {
     password_elem.innerHTML = ""
     if(values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null){
       if(values.password === null || values.password === ""){
-        password_elem.innerHTML = "This field is required"
+        password_elem.innerHTML = '<p style="color:red;">Please enter a valid password!</p>';
       }
       if(values.hashedpassword === null || values.hashedpassword === "") {
-        hash_elem.innerHTML = "This field is required"
+        hash_elem.innerHTML = '<p style="color:red;">Please enter a valid hashed password!</p>';
       }
     }else{
       document.getElementById('password-help').innerHTML = ""
@@ -79,10 +80,7 @@ const PasswordHashVerifier = () => {
         .then((data) => setStatus(data));
     }
   }
-  //  const showHashedPassword = () => {
-
-  //  }
-
+  // console.log(status.status);
   return (
     <div className="container-fluid">
       <form>
@@ -125,8 +123,8 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the password"
             />
-              <p class="help_text_style">Sample Password: pass123</p>
             <div className="form-text" id="password-help"></div>
+              <p class="help_text_style">Sample Password: pass123</p>
           </div>
 
           <div className="mb-3 col-6">
@@ -156,9 +154,13 @@ const PasswordHashVerifier = () => {
             </button>
           </div>
           <div className="mb-6 col-14 form-group">
-            {status !== null ? (
-              <div className="col-sm-10">{status.status}</div>
-            ) : null}
+            <>
+            {
+              status !== null ? 
+              (status.status === 1 ? <div className="alert alert-success">{successMessage}</div> : <div className="alert alert-danger">{failureMessage}</div>)
+              : null
+            }
+            </>
           </div>
         </fieldset>
       </form>
