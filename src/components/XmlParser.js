@@ -255,8 +255,8 @@ const XmlParser = () => {
                       </div>
                       <div className="text-center">
                       <DownloadLink
-                        className="btn btn-primary col-sm-2 center"
-                        label="download"
+                        className="btn btn-primary col-sm-2 center download-link"
+                        label="Download"
                         filename="certificate.crt"
                         exportFile={() => "".concat(cert.content)}
                       />
