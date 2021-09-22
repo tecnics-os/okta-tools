@@ -51,10 +51,8 @@ class password_checker:
             hashed_m = hashlib.sha3_512(encoded_password).hexdigest()
         
         if(hashed_m == hash_password):
-            # return "Success, Its a valid password hash!"
             return 1
         else:
-            # return "Failure, Its not a valid password hash!"
             return 0
 
 
