@@ -35,6 +35,11 @@ body {
   color: red;
 }
 
+.download-link {
+  color: white !important;
+  text-decoration: none !important;
+}
+
 .certificate-height-400 {
   height: 400px;
 }
@@ -773,6 +778,26 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+.jwt-header {
+  color: #05716c;
+}
+
+.jwt-payload {
+  color: #1978a5;
+}
+
+.text-line {
+  color: grey;
+  /* border: 1px solid #ced4da; */
+  /* padding: 8px; */
+}
+
+.border-style {
+  border: 1px solid #ced4da;
+  padding: 8px;
+}
+
 .form-label {
   margin-bottom: 0.5rem;
   /* max-width: 200px; */
@@ -822,10 +847,10 @@ progress {
   /* clear: both; */
   color: darkseagreen;
 }
-.mb-3.col-6 .form-label:after {
+/* .mb-3.col-6 .form-label:after {
   content:"*";
   color:red;
-}
+} */
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

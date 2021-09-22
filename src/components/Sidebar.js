@@ -126,17 +126,7 @@ const Sidebar = () => {
                         Download Metadata(Coming Soon...)
                       </Link>
                     </li>
-                    <li className="nav-item sidebar-hover disabled">
-                      <Link
-                        onClick={(e) => {
-                          e.preventDefault();
-                        }}
-                        className="nav-link"
-                        to="/oidc-client"
-                      >
-                        OIDC Client(Coming Soon...)
-                      </Link>
-                    </li>
+                    
                     <li className="nav-item sidebar-hover">
                     <Link
                       onClick={(e) => {
@@ -185,6 +175,17 @@ const Sidebar = () => {
                 to="/har-viewer"
               >
                 Har Viewer
+              </Link>
+            </li>
+            <li className="nav-item sidebar-hover disabled">
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                className="nav-link"
+                to="/oidc-client"
+              >
+                OIDC Client(Coming Soon...)
               </Link>
             </li>
             </div>
