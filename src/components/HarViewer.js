@@ -98,9 +98,10 @@ function HarViewer() {
                 <tbody>
                   {urls.map((url) => {
                     return (
-                      <tr className="fs-14-px">
+                        (url.request.method === 'GET') ? 
+                        <tr className="fs-14-px">
                         <td scope="row">
-                          <div className="date-time-width">
+                          <div className="date-time-width" id="get-url">
                             {url.startedDateTime}
                           </div>
                         </td>
@@ -112,21 +113,60 @@ function HarViewer() {
                               passUrl(url);
                             }}
                           >
-                            <div className="request-url-width">
+                            <div className="request-url-width" id="get-url">
                               {url.request.url}
                             </div>
                           </Link>
                         </td>
                         <td>
-                          <div className="response-width">
+                          <div className="response-width" id="get-url">
                             {url.response.status}
                           </div>
                         </td>
                         <td>
-                          <div className="ip-width">{url.serverIPAddress}</div>
+                          <div className="ip-width" id="get-url">{url.serverIPAddress}</div>
                         </td>
-                      </tr>
-                    );
+                        </tr>: 
+                        <tr className="fs-14-px">
+                        <td scope="row">
+                          <div className="date-time-width" id="post-url">
+                            {url.startedDateTime}
+                          </div>
+                        </td>
+                        <td>
+                        {url.request.postData.params[0].name === "SAMLRequest" ?
+                          <><Link
+                            className="card-text"
+                            value={url}
+                            onClick={() => {
+                              passUrl(url);
+                            }}
+                          >
+                            <div className="request-url-width" id="post-url">
+                               {url.request.url}
+                            </div>
+                          </Link><div className="saml-url"><b>saml</b></div></>:
+                          <Link
+                            className="card-text"
+                            value={url}
+                            onClick={() => {
+                              passUrl(url);
+                            }}
+                          >
+                            <div className="request-url-width" id="post-url">
+                               {url.request.url}
+                            </div>
+                          </Link>}
+                        </td>
+                        <td>
+                          <div className="response-width" id="post-url">
+                            {url.response.status}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="ip-width" id="post-url">{url.serverIPAddress}</div>
+                        </td>
+                        </tr>)
                   })}
                 </tbody>
               </table>
@@ -234,10 +274,13 @@ function HarViewer() {
                         id="request"
                         role="tabpanel"
                         aria-labelledby="request-tab"
-                      >
-                        <br /> <b>Method: </b> {currentUrl.request.method}
-                        <br /> <b>Request Url: </b> {currentUrl.request.url}
-                        <br /> <b>HTTP version: </b>
+                      > 
+                        <br />{(currentUrl.request.method === 'GET') ?
+                            <p id="get-url"><b>Method: </b> {currentUrl.request.method}
+                            <br /><b>Request Url: </b> {currentUrl.request.url}</p>:
+                            <p id="post-url"><b>Method: </b> {currentUrl.request.method}<br />
+                            <b>Request Url: </b> {currentUrl.request.url}</p>}
+                        <b>HTTP version: </b>
                         {currentUrl.request.httpVersion}
                         <br />
                         <b>Request Headers: </b>
