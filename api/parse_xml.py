@@ -105,7 +105,6 @@ class parse_xml:
         return xml_body
 
     def format_certificate(certificate_in_string):
-
         certificate_with_no_whitespaces = certificate_in_string.replace(" ", "")
         certificate_with_no_newline_tag = certificate_with_no_whitespaces.replace("\n", "")
         counter = 0

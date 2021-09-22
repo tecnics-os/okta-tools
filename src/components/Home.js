@@ -44,7 +44,7 @@ const Home = () => {
             <div className="card-body">
               <h5 className="card-title">Format certificate</h5>
               <p className="card-text">
-                Helper tool to format X509 certificate to different styles.
+                Helper tool to format X.509 certificate to different styles.
               </p>
             </div>
           </div>
