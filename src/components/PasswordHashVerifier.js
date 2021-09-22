@@ -10,6 +10,7 @@ const PasswordHashVerifier = () => {
   const [examplePassword, setExample] = useState("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
   const [values, setValues] = useState(initialValues);
   const [status, setStatus] = useState(null);
+  const [hashedPassword, setHashedPassword] = useState("aafdc23870ecbcd3d557b6423a8982134e17927e");
   const { REACT_APP_BACKEND_URL } = process.env;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -17,35 +18,36 @@ const PasswordHashVerifier = () => {
       ...values,
       [name]: value,
     });
-    if(e.target.value === "bcrypt") {
-      setExample("$2a$04$jpWkdTB8Fx0BQlg5kdhi5eal7zh5obxOhXlyP3WtDNjeYF4r1jDDm");
+    if(e.target.value === 'sha1') {
+      setHashedPassword("aafdc23870ecbcd3d557b6423a8982134e17927e");
     }
-    else if(e.target.value === "sha256") {
-      setExample("008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601");
+    if(e.target.value === 'sha224') {
+      setHashedPassword("749c542d6544666a76eb695b8aeeb379e0d9108fe3a1988f7b234cd2");
     }
-    else if(e.target.value === "sha224") {
-      setExample("c9a2f5d2d923b4ce105ee3e1943ff5bff91ecd4c15960054752eb2f0");
+    if(e.target.value === 'sha256') {
+      setHashedPassword("9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c");
     }
-    else if(e.target.value === "sha512") {
-      setExample("804f50ddbaab7f28c933a95c162d019acbf96afde56dba10e4c7dfcfe453dec4bacf5e78b1ddbdc1695a793bcb5d7d409425db4cc3370e71c4965e4ef992e8c4");
+    if(e.target.value === 'sha512') {
+      setHashedPassword("fd37ca5ca8763ae077a5e9740212319591603c42a08a60dcc91d12e7e457b024f6bdfdc10cdc1383e1602ff2092b4bc1bb8cac9306a9965eb352435f5dfe8bb0");
     }
-    else if(e.target.value === "sha3_224") {
-      setExample("96dc79212c6415df2536c4a4ed4905c3b0a25e803cb609375eb0a6ae");
+    if(e.target.value === 'sha3_224') {
+      setHashedPassword("635f1505477aa5324f0d94db8dd873e41f0fc4a3bf7995759f872a85");
     }
-    else if(e.target.value === "sha3_256") {
-      setExample("5464c64a7c1c8f0a05a8cd2382415898d3a2c5e7b2fc1c22cf30ac230b7801ab");
+    if(e.target.value === 'sha3_256') {
+      setHashedPassword("cab2029413d0d52c2dc4ba60003b5f737ee6e211bd61db76a2af5415e8adbde7");
+    } 
+    if(e.target.value === 'sha3_384') {
+      setHashedPassword("3f7cb0545775e1ad58573c8497731b5dc403f59c68081835cb9c820c3fc2087475e91aeafe2e367cd5c8edfeddc1e428");
     }
-    else if(e.target.value === "sha3_384") {
-      setExample("c75121bf587b6ce29d05dbff92c5a85eb4eb9264fb4edd69b07c9a19e589ba24088dff4a5ce2be8c7b34361c54d58db0");
+    if(e.target.value === 'sha3_512') {
+      setHashedPassword("c913c9134bc98f58fdc9fbf8a891c6dfb38b40f91afc02c957045567ff5bb754ebd7cd5a963d0e9093ce24ce6520b845d97f1666323dce736598e1a27a90bcd3");
     }
-    else if(e.target.value === "sha3_512") {
-      setExample("bcc03f9763a44e3f3123441603395c2267c019f44d1a82e2915416804c9f8889ed2b543404ae4c6d22b7b8bf829ab8c60b02c593058191d274e5425234e7d5cc");
-    }
-    else if(e.target.value === "sha1")
-    {
-      setExample("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
+    if(e.target.value === 'bcrypt') {
+      setHashedPassword("$2b$10$mG8o2k5C3Rrhq2vuSkHxPerZ7YXFABdDVOSrDkwfKsIEmB9OZZyG.");
     }
   };
+  const successMessage = "Success, its a valid password hash!";
+  const failureMessage = "Failure, please enter a valid password hash!";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,10 +59,10 @@ const PasswordHashVerifier = () => {
     password_elem.innerHTML = ""
     if(values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null){
       if(values.password === null || values.password === ""){
-        password_elem.innerHTML = "This field is required"
+        password_elem.innerHTML = '<p style="color:red;">Please enter a valid password!</p>';
       }
       if(values.hashedpassword === null || values.hashedpassword === "") {
-        hash_elem.innerHTML = "This field is required"
+        hash_elem.innerHTML = '<p style="color:red;">Please enter a valid hashed password!</p>';
       }
     }else{
       document.getElementById('password-help').innerHTML = ""
@@ -79,7 +81,6 @@ const PasswordHashVerifier = () => {
         .then((data) => setStatus(data));
     }
   }
-
   return (
     <div className="container-fluid">
       <form>
@@ -123,7 +124,7 @@ const PasswordHashVerifier = () => {
               placeholder="Enter the password"
             />
             <div className="form-text" id="password-help"></div>
-            <p className="example-message">Example Password:Password123</p>
+              <p class="help_text_style">Sample Password: pass123</p>
           </div>
 
           <div className="mb-3 col-6">
@@ -139,9 +140,9 @@ const PasswordHashVerifier = () => {
               placeholder="Enter the hashed password"
             />
             <div className="form-text" id="hash-help"></div>
-            <p className="example-message">Example hash: {examplePassword}</p>
-
+            <p class="help_text_style">Hashed Sample Password: {hashedPassword}</p>
           </div>
+
           <div className="mb-3 col-6 form-group">
             <button
               className="btn btn-primary"
@@ -153,13 +154,18 @@ const PasswordHashVerifier = () => {
             </button>
           </div>
           <div className="mb-6 col-14 form-group">
-            {status !== null ? (
-              (status.status === "success, Its a valid password hash" ? <div className="alert alert-success">{status.status}</div> : <div className="alert alert-danger">{status.status}</div> )
-            ) : null}
+            <>
+            {
+              status !== null ? 
+              (status.status === 1 ? <div className="alert alert-success">{successMessage}</div> : <div className="alert alert-danger">{failureMessage}</div>)
+              : null
+            }
+            </>
           </div>
         </fieldset>
       </form>
     </div>
   );
 };
+
 export default PasswordHashVerifier;
