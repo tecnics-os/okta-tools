@@ -803,6 +803,7 @@ progress {
   /* max-width: 200px; */
   text-align: justify;
 }
+
 .col-form-label {
   padding-top: calc(0.375rem + 1px);
   padding-bottom: calc(0.375rem + 1px);
