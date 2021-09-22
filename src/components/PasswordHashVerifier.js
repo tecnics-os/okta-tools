@@ -7,7 +7,7 @@ const initialValues = {
 };
 
 const PasswordHashVerifier = () => {
-  const [examplePassword, setExample] = useState("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
+  const [hashedPassword, setExample] = useState("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
   const [values, setValues] = useState(initialValues);
   const [status, setStatus] = useState(null);
   const { REACT_APP_BACKEND_URL } = process.env;
@@ -122,8 +122,8 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the password"
             />
-            <div className="form-text error-msg" id="password-help"></div>
-            <p className="example-message">Example Password:Password123</p>
+            <div className="form-text" id="password-help"></div>
+              <p class="help_text_style">Sample Password: pass123</p>
           </div>
 
           <div className="mb-3 col-6">
@@ -138,9 +138,8 @@ const PasswordHashVerifier = () => {
               }}
               placeholder="Enter the hashed password"
             />
-            <div className="form-text error-msg" id="hash-help"></div>
-            <p className="example-message">Example hash: {examplePassword}</p>
-
+            <div className="form-text" id="hash-help"></div>
+            <p class="help_text_style">Hashed Sample Password: {hashedPassword}</p>
           </div>
           <div className="mb-3 col-6 form-group">
             <button
