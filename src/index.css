@@ -38,14 +38,14 @@ body {
 .error-msg {
   color: red !important;
 }
-.download-link {
-  color: white !important;
-  text-decoration: none !important;
-}
-
 
 .help_text_style {
   color: gray;
+}
+
+.download-link {
+  color: white !important;
+  text-decoration: none !important;
 }
 
 #get-url {
