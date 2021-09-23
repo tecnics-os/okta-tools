@@ -43,11 +43,6 @@ body {
   color: gray;
 }
 
-.download-link {
-  color: white !important;
-  text-decoration: none !important;
-}
-
 #get-url {
   color: green;
 }
@@ -63,6 +58,11 @@ body {
   border-radius: 5px;
   text-align: center;
   background-color: lightcoral;
+}
+
+.download-link {
+  color: white !important;
+  text-decoration: none !important;
 }
 
 .certificate-height-400 {
