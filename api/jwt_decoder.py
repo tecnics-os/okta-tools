@@ -9,7 +9,7 @@ class jwt_viewer:
             print(header);
             decoded = jwt.decode(encoded_string, options={"verify_signature": False})
         except Exception as e:
-            error = "Token is invalid"
+            error = "Please Enter a valid token!"
         data = {
             "header": header,
             "payload": decoded,

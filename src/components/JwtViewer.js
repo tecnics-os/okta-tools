@@ -69,7 +69,18 @@ const JwtViewer = () => {
           <div className="mb-3 col-6" id="results">
             {payload !== null ? (
               <pre>                
-                {payload.error === null ? <p>{JSON.stringify(payload.header, "\n", 4)} {JSON.stringify(payload.payload, "\n", 4)}</p>: <p>{payload.error}</p>}
+                {payload.error === null 
+                ? <div>
+                    <div class="border-style">
+                      <label>HEADER: <span class="text-line">Algorithm and Token Type</span></label>
+                      <p class="jwt-header">{JSON.stringify(payload.header, "\n", 5)}</p>
+                    </div>
+                    <div class="border-style">
+                      <label>PAYLOAD: <span class="text-line">Data</span></label>
+                      <p class="jwt-payload">{JSON.stringify(payload.payload, "\n", 5)}</p>
+                    </div>
+                  </div> 
+                : <p class="alert alert-danger">{payload.error}</p>}
               </pre>
             ) : null}
           </div>
