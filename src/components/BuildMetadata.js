@@ -211,7 +211,7 @@ const BuildMetadata = () => {
             }}
             required
           />
-          <div id="entityIdHelp" className="form-text"></div>
+          <div id="entityIdHelp" className="form-text error-msg"></div>
         </div>
 
         <div className="mb-3 col-6 form-group required">
@@ -229,7 +229,7 @@ const BuildMetadata = () => {
               handleInputChange(e);
             }}
           />
-          <div id="ssisHelp" className="form-text"></div>
+          <div id="ssisHelp" className="form-text error-msg"></div>
         </div>
 
         <div className="mb-3 col-6 form-group">
@@ -247,7 +247,7 @@ const BuildMetadata = () => {
               handleInputChange(e);
             }}
           />
-          <div id="ssosHelp" className="form-text"></div>
+          <div id="ssosHelp" className="form-text error-msg"></div>
         </div>
 
         <div className="mb-3 col-6 form-group required">
@@ -263,7 +263,7 @@ const BuildMetadata = () => {
             placeholder="Certificate"
             onChange={useDebounce}
           />
-          <div id="certHelp" className="form-text"></div>
+          <div id="certHelp" className="form-text error-msg"></div>
         </div>
 
         <div className="mb-3 col-6 form-group">

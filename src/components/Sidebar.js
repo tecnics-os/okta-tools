@@ -138,7 +138,12 @@ const Sidebar = () => {
                       Test Okta SAML App
                     </Link>
                   </li>
-                  <li className="nav-item sidebar-hover disabled">
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div id="other-list">
+            <li className="nav-item sidebar-hover disabled">
                       <Link
                         onClick={(e) => {
                           e.preventDefault();
@@ -149,11 +154,6 @@ const Sidebar = () => {
                         OIDC Client(coming soon)
                       </Link>
                     </li>
-                  </div>
-              </div>
-            </div>
-            </div>
-            <div id="other-list">
             <li className="nav-item sidebar-hover">
               <Link
                 onClick={(e) => {

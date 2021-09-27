@@ -35,6 +35,31 @@ body {
   color: red;
 }
 
+.error-msg {
+  color: red !important;
+}
+
+.help_text_style {
+  color: gray;
+}
+
+#get-url {
+  color: green;
+}
+#post-url {
+  color: blue;
+}
+
+.saml-url {
+  color:black;
+  width: 40px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  background-color: lightcoral;
+}
+
 .download-link {
   color: white !important;
   text-decoration: none !important;
