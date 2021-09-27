@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Base64 } from 'js-base64';
 
 function HarViewer() {
   const [data, setData] = useState(null);
@@ -265,6 +266,20 @@ function HarViewer() {
                       Timings
                     </button>
                   </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="xml-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#xml"
+                      type="button"
+                      role="tab"
+                      aria-controls="xml"
+                      aria-selected="false"
+                    >
+                      XML
+                    </button>
+                  </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                   {currentUrl !== null ? (
@@ -422,6 +437,22 @@ function HarViewer() {
                           )}
                         </pre>
                       </div>
+                      {currentUrl.request.method === 'POST' ?
+                      <div
+                        class="tab-pane fade"
+                        id="xml"
+                        role="tabpanel"
+                        aria-labelledby="xml-tab"
+                      >
+                        {Base64.decode(currentUrl.request.postData.params[0].value)}
+                      </div>:
+                      <div
+                      class="tab-pane fade"
+                      id="xml"
+                      role="tabpanel"
+                      aria-labelledby="xml-tab"
+                    >
+                    </div>}
                     </>
                   ) : null}
                 </div>
