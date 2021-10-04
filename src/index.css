@@ -126,7 +126,7 @@ body {
   --bs-dark: #212529;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Syol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(
@@ -803,8 +803,30 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+.jwt-header {
+  color: #05716c;
+}
+
+.jwt-payload {
+  color: #1978a5;
+}
+
+.text-line {
+  color: grey;
+  /* border: 1px solid #ced4da; */
+  /* padding: 8px; */
+}
+
+.border-style {
+  border: 1px solid #ced4da;
+  padding: 8px;
+}
+
 .form-label {
   margin-bottom: 0.5rem;
+  /* max-width: 200px; */
+  text-align: justify;
 }
 
 .col-form-label {
@@ -813,6 +835,8 @@ progress {
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.5;
+  /* text-align: justify;
+  max-width: 200px; */
 }
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
@@ -844,6 +868,15 @@ progress {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.help_text_style {
+  /* margin-top: 0%; */
+  /* clear: both; */
+  color: darkseagreen;
+}
+/* .mb-3.col-6 .form-label:after {
+  content:"*";
+  color:red;
+} */
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

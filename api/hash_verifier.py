@@ -24,9 +24,9 @@ class password_checker:
             status = False
 
         if status:
-            return "success, Its a valid password hash"
+            return 1
         else:
-            return "Failure, Its not a valid password hash"
+            return 0
     
     def hashlib_verify(password, hash_password, hash_type):
         encoded_password = password.encode()
@@ -51,9 +51,9 @@ class password_checker:
             hashed_m = hashlib.sha3_512(encoded_password).hexdigest()
         
         if(hashed_m == hash_password):
-            return "success, Its a valid password hash"
+            return 1
         else:
-            return "Failure, Its not a valid password hash"
+            return 0
 
 
 

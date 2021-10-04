@@ -455,7 +455,7 @@ const BuildMetadata = () => {
               generateMetadata(e);
             }}
           >
-            Build IDP Metadata
+            Build IdP Metadata
           </button>
         </div>
       </form>
