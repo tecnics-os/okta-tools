@@ -7,7 +7,6 @@ const initialValues = {
 };
 
 const PasswordHashVerifier = () => {
-  const [hashedPassword, setExample] = useState("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
   const [values, setValues] = useState(initialValues);
   const [status, setStatus] = useState(null);
   const [hashedPassword, setHashedPassword] = useState("aafdc23870ecbcd3d557b6423a8982134e17927e");
