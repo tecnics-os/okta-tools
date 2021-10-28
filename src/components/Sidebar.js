@@ -11,6 +11,7 @@ import lifecycle from "react-pure-lifecycle";
 import PasswordHashVerifier from "./PasswordHashVerifier";
 import JwtViewer from "./JwtViewer";
 import HarViewer from "./HarViewer";
+import OidcClient from "./OidcClient"
 
 const methods = {
   componentDidMount(props) {
@@ -176,15 +177,15 @@ const Sidebar = () => {
                 Har Viewer
               </Link>
             </li>
-            <li className="nav-item sidebar-hover disabled">
+            <li className="nav-item sidebar-hover">
               <Link
                 onClick={(e) => {
-                  e.preventDefault();
+                  removeClass(e);
                 }}
                 className="nav-link"
                 to="/oidc-client"
               >
-                OIDC Client(Coming Soon...)
+                OIDC Client
               </Link>
             </li>
             </div>
@@ -222,6 +223,9 @@ const Sidebar = () => {
             </Route>
             <Route path="/har-viewer" exact>
               <HarViewer />
+            </Route>
+            <Route path="/oidc-client" exact>
+              <OidcClient />
             </Route>
           </Switch>
         </main>
