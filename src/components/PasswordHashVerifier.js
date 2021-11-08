@@ -7,7 +7,6 @@ const initialValues = {
 };
 
 const PasswordHashVerifier = () => {
-  const [hashedPassword, setExample] = useState("b2e98ad6f6eb8508dd6a14cfa704bad7f05f6fb1");
   const [values, setValues] = useState(initialValues);
   const [status, setStatus] = useState(null);
   const [hashedPassword, setHashedPassword] = useState("aafdc23870ecbcd3d557b6423a8982134e17927e");
@@ -18,31 +17,31 @@ const PasswordHashVerifier = () => {
       ...values,
       [name]: value,
     });
-    if(e.target.value === 'sha1') {
+    if (e.target.value === 'sha1') {
       setHashedPassword("aafdc23870ecbcd3d557b6423a8982134e17927e");
     }
-    if(e.target.value === 'sha224') {
+    if (e.target.value === 'sha224') {
       setHashedPassword("749c542d6544666a76eb695b8aeeb379e0d9108fe3a1988f7b234cd2");
     }
-    if(e.target.value === 'sha256') {
+    if (e.target.value === 'sha256') {
       setHashedPassword("9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c");
     }
-    if(e.target.value === 'sha512') {
+    if (e.target.value === 'sha512') {
       setHashedPassword("fd37ca5ca8763ae077a5e9740212319591603c42a08a60dcc91d12e7e457b024f6bdfdc10cdc1383e1602ff2092b4bc1bb8cac9306a9965eb352435f5dfe8bb0");
     }
-    if(e.target.value === 'sha3_224') {
+    if (e.target.value === 'sha3_224') {
       setHashedPassword("635f1505477aa5324f0d94db8dd873e41f0fc4a3bf7995759f872a85");
     }
-    if(e.target.value === 'sha3_256') {
+    if (e.target.value === 'sha3_256') {
       setHashedPassword("cab2029413d0d52c2dc4ba60003b5f737ee6e211bd61db76a2af5415e8adbde7");
-    } 
-    if(e.target.value === 'sha3_384') {
+    }
+    if (e.target.value === 'sha3_384') {
       setHashedPassword("3f7cb0545775e1ad58573c8497731b5dc403f59c68081835cb9c820c3fc2087475e91aeafe2e367cd5c8edfeddc1e428");
     }
-    if(e.target.value === 'sha3_512') {
+    if (e.target.value === 'sha3_512') {
       setHashedPassword("c913c9134bc98f58fdc9fbf8a891c6dfb38b40f91afc02c957045567ff5bb754ebd7cd5a963d0e9093ce24ce6520b845d97f1666323dce736598e1a27a90bcd3");
     }
-    if(e.target.value === 'bcrypt') {
+    if (e.target.value === 'bcrypt') {
       setHashedPassword("$2b$10$mG8o2k5C3Rrhq2vuSkHxPerZ7YXFABdDVOSrDkwfKsIEmB9OZZyG.");
     }
   };
@@ -56,15 +55,15 @@ const PasswordHashVerifier = () => {
     let password_elem = document.getElementById('password-help')
     let hash_elem = document.getElementById('hash-help')
     hash_elem.innerHTML = "";
-    password_elem.innerHTML = ""
-    if(values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null){
-      if(values.password === null || values.password === ""){
+    password_elem.innerHTML = "";
+    if (values.password === "" || values.password === null || values.hashedpassword === "" || values.hashedpassword === null) {
+      if (values.password === null || values.password === "") {
         password_elem.innerHTML = '<p style="color:red;">Please enter a valid password!</p>';
       }
-      if(values.hashedpassword === null || values.hashedpassword === "") {
+      if (values.hashedpassword === null || values.hashedpassword === "") {
         hash_elem.innerHTML = '<p style="color:red;">Please enter a valid hashed password!</p>';
       }
-    }else{
+    } else {
       document.getElementById('password-help').innerHTML = ""
       document.getElementById('hash-help').innerHTML = ""
 
@@ -113,7 +112,7 @@ const PasswordHashVerifier = () => {
             <label htmlFor="password" className="form-label">
               Enter the password
             </label>
-            
+
             <input
               id="password"
               name="password"
@@ -124,7 +123,7 @@ const PasswordHashVerifier = () => {
               placeholder="Enter the password"
             />
             <div className="form-text" id="password-help"></div>
-              <p class="help_text_style">Sample Password: pass123</p>
+            <p class="help_text_style">Sample Password: pass123</p>
           </div>
 
           <div className="mb-3 col-6">
@@ -155,11 +154,11 @@ const PasswordHashVerifier = () => {
           </div>
           <div className="mb-6 col-14 form-group">
             <>
-            {
-              status !== null ? 
-              (status.status === 1 ? <div className="alert alert-success">{successMessage}</div> : <div className="alert alert-danger">{failureMessage}</div>)
-              : null
-            }
+              {
+                status !== null ?
+                  (status.status === 1 ? <div className="alert alert-success">{successMessage}</div> : <div className="alert alert-danger">{failureMessage}</div>)
+                  : null
+              }
             </>
           </div>
         </fieldset>

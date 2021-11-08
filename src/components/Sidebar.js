@@ -11,6 +11,7 @@ import lifecycle from "react-pure-lifecycle";
 import PasswordHashVerifier from "./PasswordHashVerifier";
 import JwtViewer from "./JwtViewer";
 import HarViewer from "./HarViewer";
+import OidcClient from "./OidcClient";
 
 const methods = {
   componentDidMount(props) {
@@ -32,14 +33,7 @@ const methods = {
 
 const Sidebar = () => {
   const removeClass = (e) => {
-    let elements = document.getElementById("other-list");
-    let subelements = document.getElementById("sub-list");
-    Object.entries(elements.childNodes).forEach((elem) => {
-      elem[1].childNodes[0].className = "nav-link";
-    });
-    Object.entries(subelements.childNodes).forEach((subelm) => {
-      subelm[1].childNodes[0].className = "nav-link";
-    });
+    let none = document.getElementsByClassName("active")[0] ? document.getElementsByClassName("active")[0].className = "nav-link" : ''
     e.target.className = "nav-link active";
   };
 
@@ -126,78 +120,69 @@ const Sidebar = () => {
                         Download Metadata(Coming Soon...)
                       </Link>
                     </li>
-                    
+
                     <li className="nav-item sidebar-hover">
-                    <Link
-                      onClick={(e) => {
-                        removeClass(e);
-                      }}
-                      className="nav-link"
-                      to="/test-idp"
-                    >
-                      Test Okta SAML App
-                    </Link>
-                  </li>
-                  </div>
-              </div>
-            </div>
-            </div>
-            <div id="other-list">
-            <li className="nav-item sidebar-hover disabled">
                       <Link
                         onClick={(e) => {
-                          e.preventDefault();
+                          removeClass(e);
                         }}
-                        className="nav-link disabled"
-                        to="/download-metadata"
+                        className="nav-link"
+                        to="/test-idp"
                       >
-                        OIDC Client(coming soon)
+                        Test Okta SAML App
                       </Link>
                     </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/password-hash-verifier"
-              >
-                Password Hash Verifier
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/jwt-viewer"
-              >
-                JWT viewer
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover">
-              <Link
-                onClick={(e) => {
-                  removeClass(e);
-                }}
-                className="nav-link"
-                to="/har-viewer"
-              >
-                Har Viewer
-              </Link>
-            </li>
-            <li className="nav-item sidebar-hover disabled">
-              <Link
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                className="nav-link"
-                to="/oidc-client"
-              >
-                OIDC Client(Coming Soon...)
-              </Link>
-            </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="other-list">
+              <li className="nav-item sidebar-hover disabled">
+              </li>
+              <li className="nav-item sidebar-hover">
+                <Link
+                  onClick={(e) => {
+                    removeClass(e);
+                  }}
+                  className="nav-link"
+                  to="/password-hash-verifier"
+                >
+                  Password Hash Verifier
+                </Link>
+              </li>
+              <li className="nav-item sidebar-hover">
+                <Link
+                  onClick={(e) => {
+                    removeClass(e);
+                  }}
+                  className="nav-link"
+                  to="/jwt-viewer"
+                >
+                  JWT viewer
+                </Link>
+              </li>
+              <li className="nav-item sidebar-hover">
+                <Link
+                  onClick={(e) => {
+                    removeClass(e);
+                  }}
+                  className="nav-link"
+                  to="/har-viewer"
+                >
+                  Har Viewer
+                </Link>
+              </li>
+              <li className="nav-item sidebar-hover disabled">
+                <Link
+                  onClick={(e) => {
+                    removeClass(e);
+                  }}
+                  className="nav-link"
+                  to="/oidc-client"
+                >
+                  OIDC Client
+                </Link>
+              </li>
             </div>
           </ul>
         </nav>
@@ -233,6 +218,9 @@ const Sidebar = () => {
             </Route>
             <Route path="/har-viewer" exact>
               <HarViewer />
+            </Route>
+            <Route path="/oidc-client" exact>
+              <OidcClient />
             </Route>
           </Switch>
         </main>
