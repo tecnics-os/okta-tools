@@ -16,6 +16,7 @@
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "http-proxy-middleware": "^2.0.1",
+    "js-base64": "^3.7.2",
     "js-file-download": "^0.4.12",
     "json-viewer-js": "^1.0.7",
     "lodash.debounce": "^4.0.8",

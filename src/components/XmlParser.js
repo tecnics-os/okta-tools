@@ -23,6 +23,7 @@ const XmlParser = () => {
   const [loading, setLoading] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [signOnShow, setSignOnShow] = useState(false);
+   const [certificateWithHeader, setCertificateWithHeader] = useState();
 
   useEffect(() => {}, [resp]);
 
@@ -52,7 +53,7 @@ const XmlParser = () => {
         .then((res) => {
           return res.json();
         })
-        .then((json) =>
+        .then((json) => {
           setResp({
             entityID: json.metadata.entityId,
             certificates: json.metadata.certificate,
@@ -62,6 +63,15 @@ const XmlParser = () => {
             error: json.error,
             metadata_error: json.metadata.error,
           })
+          fetch(`${REACT_APP_BACKEND_URL}/certificateWithHeader`, {
+            method: "POST",
+            body: json.metadata.certificate[0].content,
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setCertificateWithHeader(data);
+            });
+        }
         );
       setLoading(false);
     }
@@ -241,30 +251,27 @@ const XmlParser = () => {
                 })
               : null}
 
-            {resp.certificates != null
-              ? resp.certificates.map((cert) => {
-                  return (
-                    <div key={cert.index} className="row mb-2">
-                      <label className="col-sm-2 col-form-label">
-                        Certificate
-                      </label>
-                      <div className="col-sm-9">
-                        <label className="col-sm-8 col-form-label">
-                          {cert.content}
-                        </label>
-                      </div>
-                      <div className="text-center">
-                      <DownloadLink
-                        className="btn btn-primary col-sm-2 center download-link"
-                        label="download"
-                        filename="certificate.crt"
-                        exportFile={() => "".concat(cert.content)}
-                      />
-                      </div>
-                    </div>
-                  );
-                })
-              : null}
+              {certificateWithHeader != null ? (
+                <>
+                  <label className="col-sm-2 col-form-label">
+                    Certificate
+                  </label>
+                  <div className="col-sm-9">
+                  <textarea className="col-sm-8 col-form-label certificate-height-400" readOnly={true}>
+                      {certificateWithHeader.certificate}
+                    </textarea>
+                  </div>
+                  <div className="text-center">
+                  <DownloadLink
+                    className="btn btn-primary col-sm-2 center download-link"
+                    label="Download"
+                    filename="certificate.crt"
+                    exportFile={() => "".concat(certificateWithHeader.certificate)}
+                  />
+                  </div>
+                </>
+              )
+            : null}
 
             <div className="col-sm-6">
               {typeof resp.error === "object" && resp.error !== null ? (
