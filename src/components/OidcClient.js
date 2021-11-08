@@ -172,7 +172,7 @@ const OidcClient = () => {
                     </div>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio" id="responseMode-fragment" name="responseMode-fragment" value="fragment" onChange={handleInputChange}/>
-                        <label for="responseMode-fragment" class="form-check-label">id_token</label>
+                        <label for="responseMode-fragment" class="form-check-label">fragment</label>
                     </div>
                 </div>
                 <div id="responseModeHelp" className="form-text error-msg"></div>
