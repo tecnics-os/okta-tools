@@ -1,4 +1,6 @@
 import jwt
+
+
 class jwt_viewer:
     def decode_encoded_string(encoded_string):
         error = None
@@ -6,14 +8,14 @@ class jwt_viewer:
         decoded = None
         try:
             header = jwt.get_unverified_header(encoded_string)
-            print(header);
-            decoded = jwt.decode(encoded_string, options={"verify_signature": False})
+            print(header)
+            decoded = jwt.decode(encoded_string, options={
+                                 "verify_signature": False})
         except Exception as e:
-            error = "Please Enter a valid token!"
+            error = "Please enter a valid token!"
         data = {
             "header": header,
             "payload": decoded,
             "error": error
         }
         return data
-
