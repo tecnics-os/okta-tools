@@ -20,8 +20,8 @@ const OidcClient = () => {
         // responseType: string;
         // responseMode: string;
     };
-    const redirectUrl = process.env.REACT_APP_OIDC_CLIENT_REDIRECT_URL;
-    console.log(redirectUrl);
+
+    const redirectUrl = process.env.REACT_APP_OIDC_CLIENT_REDIRECT_URL ?? "";
 
     const preloadedValues = {
         redirectUri: redirectUrl
